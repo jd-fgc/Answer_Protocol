@@ -1,0 +1,49 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"net"
+	"os"
+	"strings"
+)
+
+func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: go run clien.go <port>")
+		os.Exit(1)
+	}
+
+	port := fmt.Sprintf(":%s", os.Args[1])
+	addr := "localhost" + port
+
+	conn, err := net.Dial("tcp", addr)
+	if err != nil {
+		fmt.Println("Connection failed, err: ", err)
+		os.Exit(1)
+	}
+	defer conn.Close()
+
+	stdinReader := bufio.NewReader(os.Stdin)
+	connReader := bufio.NewReader(conn)
+
+	for {
+		fmt.Print(">>>")
+		input, err := stdinReader.ReadString('\n')
+		if err != nil {
+			fmt.Println("ERROR failed to read input, err: ", err)
+			break
+		}
+		conn.Write([]byte(input))
+		input = strings.TrimSpace(input)
+		if input == "exit" {
+			break
+		}
+
+		response, err := connReader.ReadString('\n')
+		if err != nil {
+			fmt.Println("ERROR failed to read response, err: ", err)
+		}
+		fmt.Print("Reponse recieved :", response)
+	}
+}
