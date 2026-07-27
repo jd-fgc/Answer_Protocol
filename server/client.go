@@ -9,13 +9,14 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: go run clien.go <port>")
+	if len(os.Args) < 3 {
+		fmt.Println("Usage: go run clien.go <address><port>")
 		os.Exit(1)
 	}
 
-	port := fmt.Sprintf(":%s", os.Args[1])
-	addr := "localhost" + port
+	ip := fmt.Sprintf("%s", os.Args[1])
+	port := fmt.Sprintf(":%s", os.Args[2])
+	addr := ip + port
 
 	conn, err := net.Dial("tcp", addr)
 	if err != nil {
