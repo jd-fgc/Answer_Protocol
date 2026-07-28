@@ -8,14 +8,17 @@ import (
 	"strings"
 )
 
+var ip string
+var port string
+
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Println("Usage: go run clien.go <address><port>")
+		fmt.Println("Usage: go run client.go <address><port>")
 		os.Exit(1)
 	}
 
-	ip := fmt.Sprintf("%s", os.Args[1])
-	port := fmt.Sprintf(":%s", os.Args[2])
+	ip = fmt.Sprintf("%s", os.Args[1])
+	port = fmt.Sprintf(":%s", os.Args[2])
 	addr := ip + port
 
 	conn, err := net.Dial("tcp", addr)
