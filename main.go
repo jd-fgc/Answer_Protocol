@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 	// "io"
-	"os"
-	"bufio"
+	// "os"
+	// "bufio"
 )
 
 
@@ -69,7 +69,6 @@ func update_players(player Player, players *Players) error {
 func main() {
 	var user_input string
 	var online_player Players
-	scanner := bufio.NewScanner(os.Stdin)
 	rooms, err := load_map("world_map.json")
 	if err != nil {
 		fmt.Println(err)
@@ -88,36 +87,5 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	for {
-		var user_choice string
-		fmt.Scan(&user_input)
-		switch user_input {
-			case "MOVE":
-				scanner.Scan()
-				user_choice = scanner.Text()
-				err := MOVE(&usr, rooms, user_choice, &online_player)
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
-			case "LOOK":
-				res, err := LOOK(usr, rooms, online_player)
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
-				if res != "" {
-					fmt.Println(res)
-				}
-			case "TALK":
-				scanner.Scan()
-				user_choice = scanner.Text()
-				res := TALK(usr.Zone, rooms, user_choice)
-				if res != "" {
-					fmt.Println(res)
-				}
-			case "\n":
-				return
-		}
-	}
+	get_user_input(usr, rooms, online_player)
 }
