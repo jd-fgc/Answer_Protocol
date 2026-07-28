@@ -1,0 +1,48 @@
+{
+    "world": [
+        {
+            "name": "test_1",
+            "NPC": [
+                {
+                    "name": "abdul",
+                    "talk": "imma talk to you bro",
+                    "hp": 40,
+                    "ennemy": false
+                },
+                {
+                    "name": "JD",
+                    "talk": "Eh Nico pas de dinguerie hein",
+                    "hp": 666,
+                    "ennemy": false
+                },
+                {
+                    "name": "Ryan",
+                    "talk": "Qu'est-ce qui dirait Ryan, d'apres toi ?",
+                    "hp": 9999,
+                    "ennemy": false
+                }
+            ],
+            "item": ["potion", "sword"],
+            "North": "",
+            "South": "",
+            "East": "test_2",
+            "West": ""
+        },
+        {
+            "name": "test_2",
+            "NPC": [
+                {
+                    "name": "Jean-Pierre Polnareff",
+                    "talk": "Oui oui, baguette, omelette de fromage",
+                    "hp": 40,
+                    "ennemy": false
+                }
+            ],
+            "item": ["potion"],
+            "North": "",
+            "South": "",
+            "East": "",
+            "West": "test_1"
+        }
+    ]
+}

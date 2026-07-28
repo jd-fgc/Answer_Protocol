@@ -1,0 +1,13 @@
+{
+    "quests": [
+        {
+            "name": "test_quest",
+            "type": "boss",
+            "description": "This is a test quest",
+            "completed": false
+        },
+        {
+            "name": "test_quest_2"
+        }
+    ]
+}

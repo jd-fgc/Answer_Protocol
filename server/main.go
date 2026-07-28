@@ -8,6 +8,10 @@ import (
 	"os"
 )
 
+var online_players Players
+var playable_characters Players
+var rooms Rooms
+
 type Message struct {
 	From      string
 	Text      string
@@ -17,7 +21,8 @@ type Message struct {
 func hub(incoming chan Message) {
 	for {
 		msg := <-incoming
-		fmt.Printf("request: %s", msg.Text)
+		fmt.Print("DEBUT HUB: ", playable_characters.Players)
+		go get_user_input(playable_characters.Players[0], rooms, &online_players, msg.Text)
 		reply := msg.Text
 		msg.ReplyChan <- reply
 	}
@@ -51,10 +56,16 @@ func main() {
 	}
 
 	port := fmt.Sprintf(":%s", os.Args[1])
-
+	rooms, err := load_map("data/world_map.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	playable_characters, err = read_character_file("data/Characters.json", rooms.Rooms[0].Name)
+	fmt.Print("DEBUG MAIN:", playable_characters.Players)
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
-		fmt.Println("failed to create listenet, err:", err)
+		fmt.Println("failed to create listener, err:", err)
 		os.Exit(1)
 	}
 	defer listener.Close()
@@ -65,6 +76,7 @@ func main() {
 
 	for {
 		conn, err := listener.Accept()
+
 		if err != nil {
 			fmt.Println("Failed to accep connection, err:", err)
 			continue
