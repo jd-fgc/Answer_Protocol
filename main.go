@@ -27,6 +27,7 @@ type Player struct {
 	Deal_chance int
 	Respawn int
 	Zone string
+	Damage_Reduction float32
 }
 
 
@@ -51,6 +52,24 @@ type NPC struct {
 	Talk string `json:"talk"`
 	HP int `json:"hp"`
 	Ennemy bool `json:"ennemy"`
+	Zone string `json:"room"`
+	ATK int `json:"attack"`
+	Quest string `json:"quest"`
+}
+
+
+type QUESTS struct {
+	Quest []Quest
+}
+
+
+type Quest struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Description string `json:"description"`
+	Completed bool `json:"completed"`
+	Active bool `json:"active"`
+	taken bool
 }
 
 
@@ -65,16 +84,26 @@ func update_players(player Player, players *Players) error {
 	return errors.New("Player not found")
 }
 
+var rooms Rooms
+var charac Players
+var online_player Players
+var quests QUESTS
+
 
 func main() {
 	var user_input string
-	var online_player Players
-	rooms, err := load_map("world_map.json")
+	var err error
+	rooms, err = load_map("world_map.json")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	charac, err := read_character_file("Characters.json", rooms.Rooms[0].Name)
+	charac, err = read_character_file("Characters.json", rooms.Rooms[0].Name)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	quests, err = load_quests("quests.json")
 	if err != nil {
 		fmt.Println(err)
 		return

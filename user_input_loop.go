@@ -45,6 +45,17 @@ func get_user_input(usr Player, rooms Rooms, online_player Players) error {
 			case "INVENTORY":
 				res, inv := INVENTORY(usr)
 				fmt.Println(res, inv)
+			case "ATTACK":
+				scanner.Scan()
+				user_choice = scanner.Text()
+				res := ATTACK(usr, &rooms, user_choice)
+				fmt.Println(res)
+			case "DEFEND":
+				res := DEFEND(usr, &online_player)
+				fmt.Println(res)
+			case "STATUS":
+				res := STATUS(usr)
+				fmt.Println(res)
 			case "\n":
 				return nil
 		}

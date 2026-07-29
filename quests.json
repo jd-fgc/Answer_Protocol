@@ -1,13 +1,12 @@
-{
-    "quests": [
-        {
-            "name": "test_quest",
-            "type": "boss",
-            "description": "This is a test quest",
-            "completed": false
-        },
-        {
-            "name": "test_quest_2"
-        }
-    ]
-}
+[
+    {
+        "name": "fetch",
+        "type": "boss",
+        "description": "Fetch me the boss's soul",
+        "completed": false,
+        "active": false
+    },
+    {
+        "name": "test_quest_2"
+    }
+]

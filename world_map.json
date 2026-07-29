@@ -4,22 +4,29 @@
             "name": "test_1",
             "NPC": [
                 {
-                    "name": "abdul",
-                    "talk": "imma talk to you bro",
+                    "name": "Sheldon",
+                    "talk": "BRR BRR PATAPIM TRALALELO TRALALA",
                     "hp": 40,
-                    "ennemy": false
+                    "ennemy": true,
+                    "room": "test_1",
+                    "attack": 10
                 },
                 {
                     "name": "JD",
                     "talk": "Eh Nico pas de dinguerie hein",
                     "hp": 666,
-                    "ennemy": false
+                    "ennemy": false,
+                    "room": "test_1",
+                    "attack": 0,
+                    "quest": "fetch"
                 },
                 {
                     "name": "Ryan",
                     "talk": "Qu'est-ce qui dirait Ryan, d'apres toi ?",
                     "hp": 9999,
-                    "ennemy": false
+                    "ennemy": false,
+                    "room": "test_1",
+                    "attack": 0
                 }
             ],
             "item": ["potion", "sword"],
@@ -33,9 +40,11 @@
             "NPC": [
                 {
                     "name": "Jean-Pierre Polnareff",
-                    "talk": "Oui oui, baguette, omelette de fromage",
+                    "talk": "Are you going to eat that croissant ?",
                     "hp": 40,
-                    "ennemy": false
+                    "ennemy": false,
+                    "room": "test_2",
+                    "attack": 0
                 }
             ],
             "item": ["potion"],
