@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -30,15 +29,15 @@ func check_next_zone(zone Room, zone_name string) bool {
 }
 
 
-func MOVE(player *Player, zones Rooms, zone_name string, players *Players) error {
+func MOVE(player *Player, zones Rooms, zone_name string, players *Players) string {
 	for _, val := range zones.Rooms {
 		if val.Name == player.Zone {
 			if check_next_zone(val, zone_name) {
 				player.Zone = zone_name
 				update_players(*player, players)
-				return nil
+				return "OK room=" + zone_name
 			}
 		}
 	}
-	return errors.New("This zone isn't accessible or does not exist")
+	return "ERR 301 NO_EXIT"
 }

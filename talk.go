@@ -13,7 +13,7 @@ func TALK(player_zone string, zones Rooms, npc_name string) string {
 	}
 	for _, val := range zone.NPC {
 		if val.Name == npc_name {
-			return val.Talk
+			return "OK " + val.Talk
 		}
 	}
 	return "ERR 404 NPC_NOT_FOUND"
