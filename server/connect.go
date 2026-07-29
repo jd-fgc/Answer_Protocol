@@ -36,6 +36,11 @@ func handleConnect(from string, args []string) string {
 	return "OK connected\n" + string(data) + "\n"
 }
 
+func handleQuit(from string) string {
+
+	return "OK bye"
+}
+
 func handleChoose(from string, args []string) string {
 	if len(args) == 0 {
 		return "ERR missing character name\n"
@@ -59,4 +64,9 @@ func handleChoose(from string, args []string) string {
 	online_players.Players = append(online_players.Players, template)
 
 	return "OK character=" + args[0] + "\n"
+}
+
+func handleWho(From string) string {
+	session, ok := sessions[From]
+
 }

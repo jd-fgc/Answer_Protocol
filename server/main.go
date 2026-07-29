@@ -37,6 +37,14 @@ func hub(incoming chan Message) {
 			reply = handleLook(msg.From)
 		case "TALK":
 			reply = handleTalk(msg.From, args)
+		case "TAKE":
+			reply = handleTake(msg.From, args)
+		case "DROP":
+			reply = handleDrop(msg.From, args)
+		case "INVENTORY":
+			reply = handleInventory(msg.From)
+		case "QUIT":
+			reply = handleQuit(msg.From)
 		default:
 			reply = "ERR unknown command\n"
 		}

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -37,22 +36,19 @@ func handleMove(from string, args []string) string {
 		return "ERR missing direction\n"
 	}
 
-	err := MOVE(session.Player, rooms, args[0], &online_players)
-	if err != nil {
-		return "ERR " + err.Error() + "\n"
-	}
-	return "OK room=" + session.Player.Zone + "\n"
+	res := MOVE(session.Player, rooms, args[0])
+	return res + "\n"
 }
 
-func MOVE(player *Player, zones Rooms, zone_name string, players *Players) error {
+func MOVE(player *Player, zones Rooms, zone_name string) string {
 	for _, val := range zones.Rooms {
 		if val.Name == player.Zone {
 			if check_next_zone(val, zone_name) {
 				player.Zone = zone_name
-				update_players(*player, players)
-				return nil
+				update_players(*player, &online_players)
+				return "OK room=" + zone_name
 			}
 		}
 	}
-	return errors.New("This zone isn't accessible or does not exist")
+	return "ERR 301 NO_EXIT"
 }
