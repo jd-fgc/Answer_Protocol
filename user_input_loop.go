@@ -42,6 +42,9 @@ func get_user_input(usr Player, rooms Rooms, online_player Players) error {
 				user_choice = scanner.Text()
 				res := DROP(&usr, &rooms, &online_player, user_choice)
 				fmt.Println(res)
+			case "INVENTORY":
+				res, inv := INVENTORY(usr)
+				fmt.Println(res, inv)
 			case "\n":
 				return nil
 		}

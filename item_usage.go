@@ -33,6 +33,11 @@ func DROP(usr *Player, zones *Rooms, online_players *Players, item_name string) 
 	return "ERR 404 ITEM_NOT_IN_INVENTORY"
 }
 
+
+func INVENTORY(usr Player) (string, []string) {
+	return "OK", usr.Inventory
+}
+
 // func USE(usr Player, zones Rooms, online_players Players, item_name string) error {
 	
 // }
