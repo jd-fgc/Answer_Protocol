@@ -40,7 +40,7 @@ func main() {
 		}
 		conn.Write([]byte(input))
 		input = strings.TrimSpace(input)
-		if input == "EXIT" {
+		if input == "EXIT" || input == "QUIT" {
 			os.Exit(1)
 		}
 
