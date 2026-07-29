@@ -5,29 +5,26 @@ import (
 	"encoding/json"
 )
 
-
 type Look_Struct struct {
-	Room Room_Description `json:"room"`
-	Players []string `json:"players"`
-	Items []string `json:"items"`
-	NPCs []string `json:"npcs"`
+	Room    Room_Description `json:"room"`
+	Players []string         `json:"players"`
+	Items   []string         `json:"items"`
+	NPCs    []string         `json:"npcs"`
 }
 
-
 type Room_Description struct {
-	Id string `json:"id"`
-	Name string `json:"name"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
 	Description string `json:"description"`
-	Exits Exits `json:"exits"`
+	Exits       Exits  `json:"exits"`
 }
 
 type Exits struct {
 	North string `json:"north,omitempty"`
 	South string `json:"south,omitempty"`
-	East string `json:"east,omitempty"`
-	West string `json:"west,omitempty"`
+	East  string `json:"east,omitempty"`
+	West  string `json:"west,omitempty"`
 }
-
 
 func fill_desc(players Players, zone Room) Look_Struct {
 	var look_struct Look_Struct
@@ -58,6 +55,18 @@ func fill_desc(players Players, zone Room) Look_Struct {
 	return look_struct
 }
 
+func handleLook(from string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
+	}
+
+	result, err := LOOK(*session.Player, rooms, online_players)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
+	}
+	return result + "\n"
+}
 
 func LOOK(player Player, zones Rooms, players Players) (string, error) {
 	for _, val := range zones.Rooms {

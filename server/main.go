@@ -2,10 +2,12 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"net"
 	"os"
+	"strings"
 )
 
 var online_players Players
@@ -21,11 +23,42 @@ type Message struct {
 func hub(incoming chan Message) {
 	for {
 		msg := <-incoming
-		fmt.Print("DEBUT HUB: ", playable_characters.Players)
-		go get_user_input(playable_characters.Players[0], rooms, &online_players, msg.Text)
-		reply := msg.Text
+		cmd, args := parseCommand(msg.Text)
+
+		var reply string
+		switch cmd {
+		case "CONNECT":
+			reply = handleConnect(msg.From, args)
+		case "CHOOSE":
+			reply = handleChoose(msg.From, args)
+		case "MOVE":
+			reply = handleMove(msg.From, args)
+		case "LOOK":
+			reply = handleLook(msg.From)
+		case "TALK":
+			reply = handleTalk(msg.From, args)
+		default:
+			reply = "ERR unknown command\n"
+		}
+
 		msg.ReplyChan <- reply
 	}
+}
+
+func parseCommand(line string) (string, []string) {
+	parts := strings.Fields(strings.TrimSpace(line))
+	if len(parts) == 0 {
+		return "", nil
+	}
+	return parts[0], parts[1:]
+}
+
+func getConnectedPlayer(from string) (*Player, error) {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return nil, errors.New("not connected")
+	}
+	return session.Player, nil
 }
 
 func handleConnection(conn net.Conn, incoming chan Message) {
@@ -55,14 +88,20 @@ func main() {
 		os.Exit(1)
 	}
 
+	var err error
+
 	port := fmt.Sprintf(":%s", os.Args[1])
-	rooms, err := load_map("data/world_map.json")
+	rooms, err = load_map("data/world_map.json")
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 	playable_characters, err = read_character_file("data/Characters.json", rooms.Rooms[0].Name)
-	fmt.Print("DEBUG MAIN:", playable_characters.Players)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
 		fmt.Println("failed to create listener, err:", err)

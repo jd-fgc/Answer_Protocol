@@ -1,12 +1,12 @@
 GO=go
 
 SRC = \
+		server/connect.go \
 		server/look.go \
 		server/models.go \
 		server/move.go \
 		server/players_charac.go \
-		server/talk.go \
-		server/user_input_loop.go
+		server/talk.go
 
 APP_EXECUTABLE=Answer_Protocol
 

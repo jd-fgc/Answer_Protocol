@@ -12,7 +12,6 @@ func print_available_zone(zone Room) {
 	fmt.Println("West: " + zone.West)
 }
 
-
 func check_next_zone(zone Room, zone_name string) bool {
 	if zone.North == zone_name {
 		return true
@@ -29,6 +28,21 @@ func check_next_zone(zone Room, zone_name string) bool {
 	return false
 }
 
+func handleMove(from string, args []string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
+	}
+	if len(args) == 0 {
+		return "ERR missing direction\n"
+	}
+
+	err := MOVE(session.Player, rooms, args[0], &online_players)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
+	}
+	return "OK room=" + session.Player.Zone + "\n"
+}
 
 func MOVE(player *Player, zones Rooms, zone_name string, players *Players) error {
 	for _, val := range zones.Rooms {

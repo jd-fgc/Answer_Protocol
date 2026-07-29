@@ -48,6 +48,14 @@ func main() {
 		if err != nil {
 			fmt.Println("ERROR failed to read response, err: ", err)
 		}
-		fmt.Print("Reponse recieved :", response)
+		fmt.Print(response)
+
+		for connReader.Buffered() > 0 {
+			extra, err := connReader.ReadString('\n')
+			if err != nil {
+				break
+			}
+			fmt.Print(extra)
+		}
 	}
 }

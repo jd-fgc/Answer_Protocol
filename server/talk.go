@@ -1,5 +1,17 @@
 package main
 
+func handleTalk(from string, args []string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
+	}
+	if len(args) == 0 {
+		return "ERR missing npc name\n"
+	}
+
+	result := TALK(session.Player.Zone, rooms, args[0])
+	return result + "\n"
+}
 
 func TALK(player_zone string, zones Rooms, npc_name string) string {
 	var zone Room
