@@ -1,1 +1,1 @@
-- Quit quand quelqu'un exit ou ctrl C il est toujours dans la liste de player
+- Coté si QUIT coupé la boucle 

@@ -40,8 +40,8 @@ func main() {
 		}
 		conn.Write([]byte(input))
 		input = strings.TrimSpace(input)
-		if input == "exit" {
-			break
+		if input == "EXIT" {
+			os.Exit(1)
 		}
 
 		response, err := connReader.ReadString('\n')

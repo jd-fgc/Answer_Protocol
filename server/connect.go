@@ -36,9 +36,39 @@ func handleConnect(from string, args []string) string {
 	return "OK connected\n" + string(data) + "\n"
 }
 
-func handleQuit(from string) string {
+func handleDisconnect(from string) {
+	session, ok := sessions[from]
+	if !ok {
+		return
+	}
+	if session.Player != nil {
+		for i, p := range online_players.Players {
+			if p.Name == session.Player.Name {
+				online_players.Players = append(online_players.Players[:i], online_players.Players[i+1:]...)
+				break
+			}
+		}
+	}
+	delete(sessions, from)
+}
 
-	return "OK bye"
+func handleQuit(from string) string {
+	session, ok := sessions[from]
+	if !ok {
+		return "ERR not connected\n"
+	}
+
+	if session.Player != nil {
+		for i, p := range online_players.Players {
+			if p.Name == session.Player.Name {
+				online_players.Players = append(online_players.Players[:i], online_players.Players[i+1:]...)
+				break
+			}
+		}
+	}
+
+	delete(sessions, from)
+	return "OK bye\n"
 }
 
 func handleChoose(from string, args []string) string {
@@ -66,7 +96,7 @@ func handleChoose(from string, args []string) string {
 	return "OK character=" + args[0] + "\n"
 }
 
-func handleWho(From string) string {
-	session, ok := sessions[From]
+// func handleWho(From string) string {
+// 	session, ok := sessions[From]
 
-}
+// }

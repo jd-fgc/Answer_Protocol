@@ -72,6 +72,7 @@ func getConnectedPlayer(from string) (*Player, error) {
 func handleConnection(conn net.Conn, incoming chan Message) {
 	defer conn.Close()
 	reader := bufio.NewReader(conn)
+	from := conn.RemoteAddr().String()
 
 	for {
 		bytes, err := reader.ReadBytes(byte('\n'))
@@ -79,14 +80,21 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 			if err != io.EOF {
 				fmt.Println("failed to read data, err:", err)
 			}
+			replyChan := make(chan string, 1)
+			incoming <- Message{From: from, Text: "QUIT\n", ReplyChan: replyChan}
 			return
 		}
 
 		replyChan := make(chan string)
-		incoming <- Message{From: conn.RemoteAddr().String(), Text: string(bytes), ReplyChan: replyChan}
+		incoming <- Message{From: from, Text: string(bytes), ReplyChan: replyChan}
 		response := <-replyChan
 
 		conn.Write([]byte(response))
+
+		cmd, _ := parseCommand(string(bytes))
+		if cmd == "QUIT" {
+			return
+		}
 	}
 }
 
