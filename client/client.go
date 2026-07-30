@@ -13,7 +13,7 @@ var port string
 
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Println("Usage: go run client.go <address><port>")
+		fmt.Println("Usage: go run client.go <address> <port>")
 		os.Exit(1)
 	}
 
