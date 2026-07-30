@@ -7,7 +7,8 @@ SRC = \
 		server/move.go \
 		server/players_charac.go \
 		server/talk.go \
-		server/item_usage.go
+		server/item_usage.go \
+		server/users.go
 
 APP_EXECUTABLE=Answer_Protocol
 

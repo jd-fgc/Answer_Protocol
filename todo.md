@@ -1,5 +1,4 @@
 Server :
-- WHO
 - CHAT
 - GROUP
 - USE
@@ -17,3 +16,9 @@ Faite a implementer :
 - ATTACK
 - DEFENSE
 - STATUS
+
+Gerer si le client n'a pas la bonne version ?
+
+
+
+

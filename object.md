@@ -28,6 +28,9 @@ Session
 
 3. JOUEURS / PERSONNAGES (models.go)
 
+online_player
+  '-- Liste de player
+
 Players
   '-- Players  []Player
 
