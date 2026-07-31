@@ -7,10 +7,10 @@ import (
 	"os"
 )
 
-func update_players(player Player, players *Players) error {
-	for i, val := range players.Players {
+func update_players(player Player) error {
+	for i, val := range online_players.Players {
 		if val.Name == player.Name {
-			players.Players[i] = player
+			online_players.Players[i] = player
 			return nil
 		}
 	}
