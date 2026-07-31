@@ -26,7 +26,8 @@
                     "hp": 9999,
                     "ennemy": false,
                     "room": "test_1",
-                    "attack": 0
+                    "attack": 0,
+                    "quest": "bring_item_Ryan"
                 }
             ],
             "item": ["potion", "sword"],

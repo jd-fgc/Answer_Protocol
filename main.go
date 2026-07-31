@@ -28,6 +28,7 @@ type Player struct {
 	Respawn int
 	Zone string
 	Damage_Reduction float32
+	Quests []Quest
 }
 
 
@@ -58,7 +59,7 @@ type NPC struct {
 }
 
 
-type QUESTS struct {
+type Quests struct {
 	Quest []Quest
 }
 
@@ -68,16 +69,15 @@ type Quest struct {
 	Type string `json:"type"`
 	Description string `json:"description"`
 	Completed bool `json:"completed"`
-	Active bool `json:"active"`
 	taken bool
 }
 
 
 // CALL THIS FUNCTION EVERYTIME A PLAYER'S DATA IS MODIFIED
-func update_players(player Player, players *Players) error {
-	for i, val := range players.Players {
+func update_players(player Player) error {
+	for i, val := range online_player.Players {
 		if val.Name == player.Name {
-			players.Players[i] = player
+			online_player.Players[i] = player
 			return nil
 		}
 	}
@@ -87,7 +87,7 @@ func update_players(player Player, players *Players) error {
 var rooms Rooms
 var charac Players
 var online_player Players
-var quests QUESTS
+var quests Quests
 
 
 func main() {
@@ -116,5 +116,5 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	get_user_input(usr, rooms, online_player)
+	get_user_input(usr)
 }

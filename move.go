@@ -29,13 +29,43 @@ func check_next_zone(zone Room, zone_name string) bool {
 }
 
 
-func MOVE(player *Player, zones Rooms, zone_name string, players *Players) string {
-	for _, val := range zones.Rooms {
+func check_dir(zone Room, dir string) bool {
+	if dir == "north" && zone.North != "" {
+		return true
+	}
+	if dir == "south" && zone.South != "" {
+		return true
+	}
+	if dir == "east" && zone.East != "" {
+		return true
+	}
+	if dir == "west" && zone.West != "" {
+		return true
+	}
+	return false
+}
+
+
+func MOVE(player *Player, zone_name string) string {
+	for _, val := range rooms.Rooms {
 		if val.Name == player.Zone {
 			if check_next_zone(val, zone_name) {
 				player.Zone = zone_name
-				update_players(*player, players)
+				update_players(*player)
 				return "OK room=" + zone_name
+			} else if check_dir(val, zone_name) {
+				switch zone_name {
+					case "north" :
+						player.Zone = val.North
+					case "south":
+						player.Zone = val.South
+					case "east":
+						player.Zone = val.East
+					case"west": 
+						player.Zone = val.West
+				}
+				update_players(*player)
+				return "OK room=" + player.Zone
 			}
 		}
 	}

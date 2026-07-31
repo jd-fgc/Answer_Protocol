@@ -34,15 +34,15 @@ func fill_attack_info(usr Player, npc NPC, damage int) string {
 }
 
 
-func ATTACK(usr Player, zones *Rooms, npc_name string) string {
-	for i, val := range zones.Rooms {
+func ATTACK(usr Player, npc_name string) string {
+	for i, val := range rooms.Rooms {
 		for j, npc := range val.NPC {
 			if npc.Name == npc_name && npc.Ennemy == true {
 				npc.HP = npc.HP - int(usr.ATK * usr.DMG_Mult)
-				zones.Rooms[i].NPC[j] = npc
+				rooms.Rooms[i].NPC[j] = npc
 				if npc.HP <= 0 {
 					npc.HP = 0
-					zones.Rooms[i].NPC = append(zones.Rooms[i].NPC[:j], zones.Rooms[i].NPC[j+1:]...)
+					rooms.Rooms[i].NPC = append(rooms.Rooms[i].NPC[:j], rooms.Rooms[i].NPC[j+1:]...)
 				}
 				return fill_attack_info(usr, npc, int(usr.ATK * usr.DMG_Mult))
 			}
@@ -55,9 +55,9 @@ func ATTACK(usr Player, zones *Rooms, npc_name string) string {
 }
 
 
-func DEFEND(usr Player, online_player *Players) string {
+func DEFEND(usr *Player) string {
 	usr.Damage_Reduction = 0.25
-	update_players(usr, online_player)
+	update_players(*usr)
 	return "OK " + usr.Name + " ready to defend"
 }
 

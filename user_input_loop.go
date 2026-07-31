@@ -7,7 +7,7 @@ import (
 )
 
 
-func get_user_input(usr Player, rooms Rooms, online_player Players) error {
+func get_user_input(usr Player) error {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		var user_input string
@@ -17,10 +17,10 @@ func get_user_input(usr Player, rooms Rooms, online_player Players) error {
 			case "MOVE":
 				scanner.Scan()
 				user_choice = scanner.Text()
-				res := MOVE(&usr, rooms, user_choice, &online_player)
+				res := MOVE(&usr, user_choice)
 				fmt.Println(res)
 			case "LOOK":
-				res, err := LOOK(usr, rooms, online_player)
+				res, err := LOOK(usr)
 				if err != nil {
 					fmt.Println(err)
 				}
@@ -30,17 +30,17 @@ func get_user_input(usr Player, rooms Rooms, online_player Players) error {
 			case "TALK":
 				scanner.Scan()
 				user_choice = scanner.Text()
-				res := TALK(usr.Zone, rooms, user_choice)
+				res := TALK(usr.Zone, user_choice)
 				fmt.Println(res)
 			case "TAKE":
 				scanner.Scan()
 				user_choice = scanner.Text()
-				res := TAKE(&usr, &rooms, &online_player, user_choice)
+				res := TAKE(&usr, user_choice)
 				fmt.Println(res)
 			case "DROP":
 				scanner.Scan()
 				user_choice = scanner.Text()
-				res := DROP(&usr, &rooms, &online_player, user_choice)
+				res := DROP(&usr, user_choice)
 				fmt.Println(res)
 			case "INVENTORY":
 				res, inv := INVENTORY(usr)
@@ -48,13 +48,21 @@ func get_user_input(usr Player, rooms Rooms, online_player Players) error {
 			case "ATTACK":
 				scanner.Scan()
 				user_choice = scanner.Text()
-				res := ATTACK(usr, &rooms, user_choice)
+				res := ATTACK(usr, user_choice)
 				fmt.Println(res)
 			case "DEFEND":
-				res := DEFEND(usr, &online_player)
+				res := DEFEND(&usr)
 				fmt.Println(res)
 			case "STATUS":
 				res := STATUS(usr)
+				fmt.Println(res)
+			case "QUEST":
+				scanner.Scan()
+				user_choice = scanner.Text()
+				res := QUEST(&usr, user_choice)
+				fmt.Println(res)
+			case "QUESTS":
+				res := QUESTS()
 				fmt.Println(res)
 			case "\n":
 				return nil
