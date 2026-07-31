@@ -47,8 +47,8 @@ func hub(incoming chan Message) {
 			reply = handleQuit(msg.From)
 		case "WHO":
 			reply = WHO(msg.From)
-		case "CHAT":
-			reply = CHAT(msg.From)
+		// case "CHAT":
+		// 	reply = CHAT(msg.From)
 		default:
 			reply = "ERR unknown command\n"
 		}
