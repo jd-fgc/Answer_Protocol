@@ -26,7 +26,7 @@ type Exits struct {
 	West  string `json:"west,omitempty"`
 }
 
-func fill_desc(players Players, zone Room) Look_Struct {
+func fill_desc(zone Room) Look_Struct {
 	var look_struct Look_Struct
 	var room_desc Room_Description
 	var exits Exits
@@ -42,7 +42,7 @@ func fill_desc(players Players, zone Room) Look_Struct {
 	room_desc.Exits = exits
 
 	look_struct.Room = room_desc
-	for _, val := range players.Players {
+	for _, val := range online_players.Players {
 		if val.Zone == zone.Name {
 			look_struct.Players = append(look_struct.Players, val.Name)
 		}
@@ -61,17 +61,17 @@ func handleLook(from string) string {
 		return "ERR not connected\n"
 	}
 
-	result, err := LOOK(*session.Player, rooms, online_players)
+	result, err := LOOK(*session.Player)
 	if err != nil {
 		return "ERR " + err.Error() + "\n"
 	}
 	return result + "\n"
 }
 
-func LOOK(player Player, zones Rooms, players Players) (string, error) {
-	for _, val := range zones.Rooms {
+func LOOK(player Player) (string, error) {
+	for _, val := range rooms.Rooms {
 		if val.Name == player.Zone {
-			desc := fill_desc(players, val)
+			desc := fill_desc(val)
 			data, err := json.Marshal(desc)
 			return string(data), err
 		}

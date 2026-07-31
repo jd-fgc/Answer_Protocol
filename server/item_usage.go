@@ -20,7 +20,7 @@ func TAKE(usr *Player, item_name string) string {
 				if item == item_name {
 					usr.Inventory = append(usr.Inventory, item)
 					rooms.Rooms[i].Items = append(rooms.Rooms[i].Items[:j], rooms.Rooms[i].Items[j+1:]...)
-					update_players(*usr, &online_players)
+					update_players(*usr)
 					return "OK taken=" + item_name
 				}
 			}
@@ -49,7 +49,7 @@ func DROP(usr *Player, item_name string) string {
 				if item == item_name {
 					usr.Inventory = append(usr.Inventory[:j], usr.Inventory[j+1:]...)
 					rooms.Rooms[i].Items = append(rooms.Rooms[i].Items, item_name)
-					update_players(*usr, &online_players)
+					update_players(*usr)
 					return "OK dropped=" + item_name
 				}
 			}

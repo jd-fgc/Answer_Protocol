@@ -52,7 +52,7 @@ func handleMove(from string, args []string) string {
 		return "ERR missing direction\n"
 	}
 
-	res := MOVE(session.Player, rooms, args[0])
+	res := MOVE(session.Player, args[0])
 	return res + "\n"
 }
 

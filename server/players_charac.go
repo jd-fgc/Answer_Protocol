@@ -58,15 +58,6 @@ func load_map(filepath string) (Rooms, error) {
 	return rooms, nil
 }
 
-// func choose_your_character(characters Players) {
-// 	fmt.Println("Choose one of the following character:")
-// 	for _, val := range characters.Players {
-// 		fmt.Println("----------")
-// 		fmt.Println(val.Name)
-// 	}
-// 	fmt.Println("----------")
-// }
-
 func character_selection(characters Players, user_choice string) (Player, error) {
 	for _, val := range characters.Players {
 		if val.Name == user_choice {
