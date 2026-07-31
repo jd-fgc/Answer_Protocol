@@ -9,7 +9,14 @@ func handleTalk(from string, args []string) string {
 		return "ERR missing npc name\n"
 	}
 
-	result := TALK(session.Player.Zone, args[0])
+	var npc_name string
+	for i, w := range args {
+		npc_name += w
+		if len(args) > i + 1 {
+			npc_name += " "
+		}
+	}
+	result := TALK(session.Player.Zone, npc_name)
 	return result + "\n"
 }
 

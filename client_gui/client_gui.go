@@ -93,7 +93,7 @@ func main() {
 		NewPlayerView(&players.Player[2]),
 		NewPlayerView(&players.Player[3]),
 	}
-	img := canvas.NewImageFromFile("Title_screen.png")
+	img := canvas.NewImageFromFile("data/Title_screen.png")
 	img.FillMode = canvas.ImageFillOriginal
 	leftColumn := set_left_container(views)
 	rightColumn := set_right_container(views)
