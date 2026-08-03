@@ -115,8 +115,7 @@ func main() {
 	w.Resize(fyne.NewSize(1600, 900))
 
 	home := buildHomeScreen(func(username, ip, port string) {
-		// TODO: à terme, la vraie liste vient de la réponse CONNECT du serveur,
-		// pas de characterOptions codé en dur
+		// TODO: à terme, la vraie réponse CONNECT du serveur
 		charSelect := buildCharacterSelectScreen(username, func(character string) {
 			startGame(w, username, character)
 		})
@@ -161,11 +160,22 @@ func startGame(w fyne.Window, username string, character string) {
 	bg := canvas.NewImageFromFile("client_gui/assets/backgroundv2.png")
 	bg.FillMode = canvas.ImageFillStretch
 
-	gameLayout := container.NewHBox(
-		fixedSize(fyne.NewSize(437, 900), leftColumn),
-		fixedSize(fyne.NewSize(557, 900), minimapContainer),
-		fixedSize(fyne.NewSize(607, 900), rightColumn),
-	)
+	// Ajustement des blocs
+	leftBlock := fixedSize(fyne.NewSize(437, 870), leftColumn)
+	centerBlock := fixedSize(fyne.NewSize(557, 900), minimapContainer)
+	rightBlock := fixedSize(fyne.NewSize(580, 870), rightColumn)
+
+	leftBlock.Resize(fyne.NewSize(437, 870))
+	leftBlock.Move(fyne.NewPos(0, 0))
+
+	centerBlock.Resize(fyne.NewSize(557, 900))
+	centerBlock.Move(fyne.NewPos(437, 0))
+
+	rightOffset := float32(970)
+	rightBlock.Resize(fyne.NewSize(580, 870))
+	rightBlock.Move(fyne.NewPos(rightOffset, 0))
+
+	gameLayout := container.NewWithoutLayout(leftBlock, centerBlock, rightBlock)
 
 	content := container.NewStack(bg, gameLayout)
 	w.SetContent(content)

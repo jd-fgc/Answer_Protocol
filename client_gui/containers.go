@@ -9,7 +9,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// Force un CanvasObject à occuper exactement `size`, peu importe son contenu
 func fixedSize(size fyne.Size, content fyne.CanvasObject) fyne.CanvasObject {
 	sizer := canvas.NewRectangle(color.Transparent)
 	sizer.SetMinSize(size)
@@ -38,16 +37,6 @@ func set_actions() {
 	actions.Add(widget.NewButton("TALK", func() {
 		set_talk()
 	}))
-	actions.Add(widget.NewButton("TAKE", func() {
-		set_take()
-	}))
-	actions.Add(widget.NewButton("DROP", func() {
-		set_drop()
-	}))
-	actions.Add(widget.NewButton("INVENTORY", func() {
-		answer.cmd = "INVENTORY"
-		log_text.SetText(inventory_description())
-	}))
 	actions.Add(widget.NewButton("WHO", func() {
 		answer.cmd = "WHO"
 		log_text.SetText(who_description())
@@ -65,9 +54,16 @@ func set_actions() {
 // INITIALISE L'ONGLET INVENTORY
 func set_inventory() {
 	inventory.RemoveAll()
-	inventory.Add(widget.NewButton("TAKE", func() {}))
-	inventory.Add(widget.NewButton("DROP", func() {}))
-	inventory.Add(widget.NewButton("INVENTORY", func() {}))
+	inventory.Add(widget.NewButton("TAKE", func() {
+		set_take()
+	}))
+	inventory.Add(widget.NewButton("DROP", func() {
+		set_drop()
+	}))
+	inventory.Add(widget.NewButton("INVENTORY", func() {
+		answer.cmd = "INVENTORY"
+		log_text.SetText(inventory_description())
+	}))
 	inventory.Refresh()
 }
 
@@ -92,5 +88,19 @@ func set_right_container(views []*PlayerView) *fyne.Container {
 		container.NewTabItem("Combat", combat),
 	)
 
-	return container.NewBorder(nil, log, nil, nil, apps)
+	chatBtn := widget.NewButton("CHAT", func() {
+		log_text.SetText("Chat : pas encore branché")
+	})
+
+	thirdBtn := widget.NewButton("?", func() {})
+	thirdBtn.Disable()
+
+	quitBtn := widget.NewButton("QUIT", func() {
+		fyne.CurrentApp().Quit()
+	})
+
+	bottomButtons := container.NewGridWithColumns(3, chatBtn, thirdBtn, quitBtn)
+	bottomArea := container.NewVBox(log, bottomButtons)
+
+	return container.NewBorder(nil, bottomArea, nil, nil, apps)
 }
