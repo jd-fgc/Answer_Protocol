@@ -1,6 +1,10 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"strings"
+)
 
 type lookExits struct {
 	North string `json:"north,omitempty"`
@@ -44,4 +48,22 @@ func updateKnownRoom(name string, exits lookExits) {
 		}
 	}
 	rooms.Rooms = append(rooms.Rooms, Room{Name: name, North: exits.North, South: exits.South, East: exits.East, West: exits.West})
+}
+
+func refreshRoomState() {
+	resp, err := doLook()
+	if err != nil {
+		log_text.SetText("Erreur LOOK: " + err.Error())
+		return
+	}
+
+	player.Zone = resp.Room.Name
+	visitedRooms[resp.Room.Name] = true
+	updateKnownRoom(resp.Room.Name, resp.Room.Exits)
+
+	refreshMiniMap()
+	refreshRoomPlayers(leftColumnGlobal)
+
+	log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
+		resp.Room.Name, strings.Join(resp.Items, ", "), strings.Join(resp.NPCs, ", ")))
 }

@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"strings"
 
 	"fyne.io/fyne/v2/widget"
 )
@@ -30,15 +30,19 @@ func set_move() {
 		if dest == "" {
 			continue
 		}
-		dest := dest
+		label, dest := label, dest
 		actions.Add(widget.NewButton(label, func() {
-			answer.cmd = "MOVE " + dest
-			player.Zone = dest
-			visitedRooms[dest] = true
-			playerViews[0].Player.Zone = dest
-			playerViews[0].Refresh()
-			refreshMiniMap()
-			log_text.SetText(fmt.Sprintf("OK room=%s", dest))
+			lines, err := netClient.SendCommand("MOVE " + dest)
+			if err != nil || len(lines) == 0 {
+				log_text.SetText("Erreur réseau lors du MOVE")
+				return
+			}
+			if !strings.HasPrefix(lines[0], "OK") {
+				log_text.SetText(strings.TrimSpace(lines[0]))
+				return
+			}
+
+			refreshRoomState()
 			set_actions()
 		}))
 	}

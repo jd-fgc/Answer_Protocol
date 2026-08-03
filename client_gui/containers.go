@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
-	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
@@ -33,21 +31,7 @@ func set_actions() {
 		set_talk()
 	}))
 	actions.Add(widget.NewButton("LOOK", func() {
-		resp, err := doLook()
-		if err != nil {
-			log_text.SetText("Erreur LOOK: " + err.Error())
-			return
-		}
-
-		player.Zone = resp.Room.Name // ← Zone
-		visitedRooms[resp.Room.Name] = true
-		updateKnownRoom(resp.Room.Name, resp.Room.Exits)
-
-		refreshMiniMap()
-		refreshRoomPlayers(leftColumnGlobal)
-
-		log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
-			resp.Room.Name, strings.Join(resp.Items, ", "), strings.Join(resp.NPCs, ", ")))
+		refreshRoomState()
 	}))
 	actions.Add(widget.NewButton("QUEST", func() {
 		set_quests()
