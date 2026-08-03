@@ -162,8 +162,6 @@ func startGame(w fyne.Window, username string, character string) {
 	fmt.Println(rooms, err)
 
 	player = players.Player[0]
-	// player.NAME = username
-	// player.zone = "test"
 	visitedRooms[player.zone] = true
 
 	views := []*PlayerView{

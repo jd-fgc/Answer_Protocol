@@ -1,6 +1,6 @@
 GO=go
 PORT=9090
-IP=10.12.9.1
+IP=10.11.4.1
 
 build:
 	go build -o bin/server ./server
