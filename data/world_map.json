@@ -1,48 +1,76 @@
 {
     "world": [
         {
-            "name": "test_1",
-            "NPC": [
-                {
-                    "name": "abdul",
-                    "talk": "imma talk to you bro",
-                    "hp": 40,
-                    "ennemy": false
-                },
-                {
-                    "name": "JD",
-                    "talk": "Eh Nico pas de dinguerie hein",
-                    "hp": 666,
-                    "ennemy": false
-                },
-                {
-                    "name": "Ryan",
-                    "talk": "Qu'est-ce qui dirait Ryan, d'apres toi ?",
-                    "hp": 9999,
-                    "ennemy": false
-                }
-            ],
-            "item": ["potion", "sword"],
-            "North": "",
-            "South": "",
-            "East": "test_2",
-            "West": ""
-        },
-        {
-            "name": "test_2",
-            "NPC": [
-                {
-                    "name": "Jean-Pierre Polnareff",
-                    "talk": "Oui oui, baguette, omelette de fromage",
-                    "hp": 40,
-                    "ennemy": false
-                }
-            ],
-            "item": ["potion"],
+            "name": "Spawn",
+            "NPC": [],
+            "item": [],
             "North": "",
             "South": "",
             "East": "",
-            "West": "test_1"
+            "West": "Left_1"
+        },
+        {
+            "name": "Left_1",
+            "NPC": [],
+            "item": [],
+            "North": "",
+            "South": "",
+            "East": "Spawn",
+            "West": "Left_2"
+        },
+        {
+            "name": "Left_2",
+            "NPC": [],
+            "item": [],
+            "North": "",
+            "South": "",
+            "East": "Left_1",
+            "West": "Left_3"
+        },
+        {
+            "name": "Left_3",
+            "NPC": [],
+            "item": [],
+            "North": "",
+            "South": "Down_1",
+            "East": "Left_2",
+            "West": ""
+        },
+        {
+            "name": "Left_4",
+            "NPC": [],
+            "item": [],
+            "North": "",
+            "South": "Left_5",
+            "East": "Down_1",
+            "West": ""
+        },
+        {
+            "name": "Left_5",
+            "NPC": [],
+            "item": [],
+            "North": "Left_4",
+            "South": "Down_3",
+            "East": "Down_2",
+            "West": ""
+        },
+        {
+            "name": "Down_1",
+            "NPC": [],
+            "item": [],
+            "North": "Left_3",
+            "South": "Down_2",
+            "East": "",
+            "West": "Left_4"
+        },
+        {
+            "name": "Down_2",
+            "NPC": [],
+            "item": [],
+            "North": "Down_1",
+            "South": "",
+            "East": "",
+            "West": "Left_5"
         }
     ]
 }

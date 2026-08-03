@@ -60,15 +60,15 @@ type ANSWER struct {
 }
 
 type Room struct {
-	Name  string
-	NPC   []NPC
-	Items []string
-	North string
-	South string
-	East  string
-	West  string
+	Name  string   `json:"name"`
+	NPC   []NPC    `json:"NPC"`
+	Items []string `json:"item"`
+	North string   `json:"North"`
+	South string   `json:"South"`
+	East  string   `json:"East"`
+	West  string   `json:"West"`
 }
 
 type Rooms struct {
-	Rooms []Room
+	Rooms []Room `json:"world"`
 }

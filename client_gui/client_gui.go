@@ -2,12 +2,15 @@ package main
 
 import (
 	"fmt"
-
+	"os"
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
+	"errors"
+	"io"
+	"encoding/json"
 )
 
 var player PLAYER
@@ -22,6 +25,7 @@ var log_text *widget.Label
 var quests Quests
 var rooms Rooms
 var visitedRooms = make(map[string]bool)
+var err error
 
 // FONCTION INUTILE
 func load_quest() {
@@ -36,14 +40,23 @@ func set_npc() {
 var playerViews []*PlayerView
 var minimapContainer *fyne.Container
 
-func fill_rooms() {
-	rooms.Rooms = []Room{
-		{Name: "test", East: "east1", South: "south1", Items: []string{"Potion", "Sword"}},
-		{Name: "east1", West: "test", East: "east2"},
-		{Name: "east2", West: "east1", Items: []string{"Key"}},
-		{Name: "south1", North: "test", East: "south1east"},
-		{Name: "south1east", West: "south1"},
+func fill_rooms(filepath string) (Rooms, error) {
+	var r Rooms
+	file, err := os.Open(filepath)
+	if err != nil {
+		return Rooms{Rooms: nil}, errors.New(err.Error())
 	}
+	defer file.Close()
+
+	byteValue, err := io.ReadAll(file)
+	if err != nil {
+		return Rooms{Rooms: nil}, errors.New(err.Error())
+	}
+	err = json.Unmarshal(byteValue, &r)
+	if err != nil {
+		return Rooms{Rooms: nil}, errors.New(err.Error())
+	}
+	return r, nil
 }
 
 func refreshMiniMap() {
@@ -53,10 +66,10 @@ func refreshMiniMap() {
 }
 
 func fill_players() {
-	players.Player = append(players.Player, PLAYER{NAME: "Isaac", Image: "client_gui/assets/Isaac.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: "test"})
-	players.Player = append(players.Player, PLAYER{NAME: "Eve", Image: "client_gui/assets/Eve.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: "test"})
-	players.Player = append(players.Player, PLAYER{NAME: "Judas", Image: "client_gui/assets/Judas.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: "test"})
-	players.Player = append(players.Player, PLAYER{NAME: "Guppy", Image: "client_gui/assets/Guppy.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: "test"})
+	players.Player = append(players.Player, PLAYER{NAME: "Isaac", Image: "client_gui/assets/Isaac.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, PLAYER{NAME: "Eve", Image: "client_gui/assets/Eve.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, PLAYER{NAME: "Judas", Image: "client_gui/assets/Judas.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, PLAYER{NAME: "Guppy", Image: "client_gui/assets/Guppy.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
 }
 
 // CREATION D'UN OBJET PLAYER POUR CONTAINER
@@ -113,7 +126,7 @@ func main() {
 	a.Settings().SetTheme(&tapTheme{})
 	w := a.NewWindow("The TCP of Isaac")
 	w.Resize(fyne.NewSize(1600, 900))
-	// w.SetFixedSize(true)
+	w.SetFixedSize(true)
 
 	home := buildHomeScreen(func(username, ip, port string) {
 		// TODO: réponse CONNECT du serveur
@@ -134,14 +147,18 @@ func startGame(w fyne.Window, username string, character string) {
 	combat = container.NewVBox()
 	log = container.NewVBox()
 	log_text = widget.NewLabel("")
-	fill_players()
 	set_npc()
 	load_quest()
-	fill_rooms()
+	rooms, err = fill_rooms("data/world_map.json")
+	if err != nil {
+		return
+	}
+	fill_players()
+	fmt.Println(rooms, err)
 
 	player = players.Player[0]
-	player.NAME = username
-	player.zone = "test"
+	// player.NAME = username
+	// player.zone = "test"
 	visitedRooms[player.zone] = true
 
 	views := []*PlayerView{
