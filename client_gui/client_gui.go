@@ -121,6 +121,15 @@ func (pv *PlayerView) Refresh() {
 	pv.Bomb.SetText(fmt.Sprintf("Bombs : %d", p.BOMB))
 }
 
+func findPlayerTemplate(name string) PLAYER {
+	for _, p := range players.Player {
+		if p.NAME == name {
+			return p
+		}
+	}
+	return players.Player[0]
+}
+
 // LE MAIN
 func main() {
 	a := app.NewWithID("gleubeuskeufeu")
@@ -160,10 +169,10 @@ func startGame(w fyne.Window, username string, character string) {
 	}
 	fill_players()
 
-	player = players.Player[0]
+	player = findPlayerTemplate(character)
 	player.NAME = username
-	player.zone = "test"
-	visitedRooms[player.zone] = true
+	// player.zone = "test"
+	// visitedRooms[player.zone] = true
 
 	views := []*PlayerView{
 		NewPlayerView(&players.Player[0]),
@@ -197,7 +206,7 @@ func startGame(w fyne.Window, username string, character string) {
 
 	// bloc milieu
 	centerBlock.Resize(fyne.NewSize(557, 900))
-	centerBlock.Move(fyne.NewPos(437, 0))
+	centerBlock.Move(fyne.NewPos(280, -300))
 
 	// bloc de droite
 	right_xOffset := float32(1005)
