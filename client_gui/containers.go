@@ -15,24 +15,8 @@ func fixedSize(size fyne.Size, content fyne.CanvasObject) fyne.CanvasObject {
 	return container.NewStack(sizer, content)
 }
 
-func set_left_container(views []*PlayerView) *fyne.Container {
-	gap := float32(26)
-
-	spacer := func() fyne.CanvasObject {
-		s := canvas.NewRectangle(color.Transparent)
-		s.SetMinSize(fyne.NewSize(1, gap))
-		return s
-	}
-
-	return container.NewVBox(
-		views[0].Container,
-		spacer(),
-		views[1].Container,
-		spacer(),
-		views[2].Container,
-		spacer(),
-		views[3].Container,
-	)
+func set_left_container() *fyne.Container {
+	return container.NewVBox()
 }
 
 // INITIALISE L'ONGLET ACTION

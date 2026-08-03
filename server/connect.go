@@ -15,6 +15,10 @@ func handleConnect(from string, args []string) string {
 	}
 	username := args[0]
 
+	if len(online_players.Players) >= 4 {
+		return "ERR server full\n"
+	}
+
 	for _, s := range sessions {
 		if s.Username == username {
 			return "ERR name already taken\n"

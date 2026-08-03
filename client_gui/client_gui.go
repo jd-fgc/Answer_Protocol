@@ -127,7 +127,7 @@ func main() {
 	a.Settings().SetTheme(&tapTheme{})
 	w := a.NewWindow("The TCP of Isaac")
 	w.Resize(fyne.NewSize(1600, 900))
-	w.SetFixedSize(true)
+	// w.SetFixedSize(true)
 
 	home := buildHomeScreen(func(username string, characterListJSON string) {
 		charSelect := buildCharacterSelectScreen(username, characterListJSON, func(character string) {
@@ -159,9 +159,10 @@ func startGame(w fyne.Window, username string, character string) {
 		return
 	}
 	fill_players()
-	fmt.Println(rooms, err)
 
 	player = players.Player[0]
+	player.NAME = username
+	player.zone = "test"
 	visitedRooms[player.zone] = true
 
 	views := []*PlayerView{
@@ -172,8 +173,10 @@ func startGame(w fyne.Window, username string, character string) {
 	}
 	playerViews = views
 
-	leftColumn := set_left_container(views)
+	leftColumn := set_left_container()
 	rightColumn := set_right_container(views)
+
+	refreshRoomPlayers(leftColumn)
 
 	minimapContainer = container.NewStack()
 	refreshMiniMap()
