@@ -8,7 +8,7 @@ import (
 
 func current_room() Room {
 	for _, r := range rooms.Rooms {
-		if r.Name == player.zone {
+		if r.Name == player.Zone {
 			return r
 		}
 	}
@@ -33,9 +33,9 @@ func set_move() {
 		dest := dest
 		actions.Add(widget.NewButton(label, func() {
 			answer.cmd = "MOVE " + dest
-			player.zone = dest
+			player.Zone = dest
 			visitedRooms[dest] = true
-			playerViews[0].Player.zone = dest
+			playerViews[0].Player.Zone = dest
 			playerViews[0].Refresh()
 			refreshMiniMap()
 			log_text.SetText(fmt.Sprintf("OK room=%s", dest))

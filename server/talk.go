@@ -12,7 +12,7 @@ func handleTalk(from string, args []string) string {
 	var npc_name string
 	for i, w := range args {
 		npc_name += w
-		if len(args) > i + 1 {
+		if len(args) > i+1 {
 			npc_name += " "
 		}
 	}

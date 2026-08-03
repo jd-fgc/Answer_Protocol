@@ -29,8 +29,8 @@ func inventory_description() string {
 func who_description() string {
 	var names []string
 	for _, p := range players.Player {
-		if p.zone == player.zone {
-			names = append(names, p.NAME)
+		if p.Zone == player.Zone {
+			names = append(names, p.Name)
 		}
 	}
 	return "Room players: " + strings.Join(names, ", ")
@@ -41,7 +41,7 @@ func set_take() {
 
 	roomIdx := -1
 	for i, r := range rooms.Rooms {
-		if r.Name == player.zone {
+		if r.Name == player.Zone {
 			roomIdx = i
 		}
 	}
@@ -82,7 +82,7 @@ func set_drop() {
 				}
 			}
 			for i, r := range rooms.Rooms {
-				if r.Name == player.zone {
+				if r.Name == player.Zone {
 					rooms.Rooms[i].Items = append(rooms.Rooms[i].Items, item)
 				}
 			}

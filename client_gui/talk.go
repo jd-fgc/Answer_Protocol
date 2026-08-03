@@ -1,10 +1,8 @@
 package main
 
-
 import (
 	"fyne.io/fyne/v2/widget"
 )
-
 
 func set_talk() {
 	actions.RemoveAll()
@@ -12,7 +10,7 @@ func set_talk() {
 	for _, val := range npc {
 		n := val
 
-		if n.Zone == player.zone {
+		if n.Zone == player.Zone {
 			btn := widget.NewButton(n.Name, func() {
 				answer.cmd = "TALK " + n.Name
 				log_text.Text = n.Talk
@@ -23,7 +21,7 @@ func set_talk() {
 		}
 	}
 	actions.Add(widget.NewButton("RETURN", func() {
-				set_actions()
+		set_actions()
 	}))
 	actions.Refresh()
 }

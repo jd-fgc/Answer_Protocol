@@ -92,6 +92,7 @@ func handleChoose(from string, args []string) string {
 	if err != nil {
 		return "ERR character not found\n"
 	}
+	template.Character = args[0]
 	template.Name = session.Username
 
 	session.Player = &template
@@ -100,7 +101,33 @@ func handleChoose(from string, args []string) string {
 	return "OK character=" + args[0] + "\n"
 }
 
-// func handleWho(From string) string {
-// 	session, ok := sessions[From]
+type WhoPlayerInfo struct {
+	Name      string `json:"name"`
+	Character string `json:"character"`
+}
 
-// }
+type Who_Struct struct {
+	Room   []WhoPlayerInfo `json:"room"`
+	Server int             `json:"server"`
+}
+
+func handleWho(from string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
+	}
+
+	roomPlayers := []WhoPlayerInfo{}
+	for _, p := range online_players.Players {
+		if p.Zone == session.Player.Zone {
+			roomPlayers = append(roomPlayers, WhoPlayerInfo{Name: p.Name, Character: p.Character})
+		}
+	}
+
+	who := Who_Struct{Room: roomPlayers, Server: len(online_players.Players)}
+	data, err := json.Marshal(who)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
+	}
+	return string(data) + "\n"
+}

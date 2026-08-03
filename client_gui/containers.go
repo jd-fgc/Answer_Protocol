@@ -1,13 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
+	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 )
+
+var leftColumnGlobal *fyne.Container
 
 func fixedSize(size fyne.Size, content fyne.CanvasObject) fyne.CanvasObject {
 	sizer := canvas.NewRectangle(color.Transparent)
@@ -22,19 +26,28 @@ func set_left_container() *fyne.Container {
 // INITIALISE L'ONGLET ACTION
 func set_actions() {
 	actions.RemoveAll()
-	actions.Add(widget.NewButton("LOOK", func() {
-		answer.cmd = "LOOK"
-		log_text.SetText(look_room_description())
-	}))
 	actions.Add(widget.NewButton("MOVE", func() {
 		set_move()
 	}))
 	actions.Add(widget.NewButton("TALK", func() {
 		set_talk()
 	}))
-	actions.Add(widget.NewButton("WHO", func() {
-		answer.cmd = "WHO"
-		log_text.SetText(who_description())
+	actions.Add(widget.NewButton("LOOK", func() {
+		resp, err := doLook()
+		if err != nil {
+			log_text.SetText("Erreur LOOK: " + err.Error())
+			return
+		}
+
+		player.Zone = resp.Room.Name // ← Zone
+		visitedRooms[resp.Room.Name] = true
+		updateKnownRoom(resp.Room.Name, resp.Room.Exits)
+
+		refreshMiniMap()
+		refreshRoomPlayers(leftColumnGlobal)
+
+		log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
+			resp.Room.Name, strings.Join(resp.Items, ", "), strings.Join(resp.NPCs, ", ")))
 	}))
 	actions.Add(widget.NewButton("QUEST", func() {
 		set_quests()

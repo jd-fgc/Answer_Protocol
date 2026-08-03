@@ -1,10 +1,8 @@
 package main
 
-
 import (
 	"fyne.io/fyne/v2/widget"
 )
-
 
 func get_quest_info(quest_name string) string {
 	for _, val := range quests.Quest {
@@ -21,7 +19,7 @@ func set_quests() {
 	for _, val := range npc {
 		q := val.Quest
 
-		if q != "" && player.zone == val.Zone {
+		if q != "" && player.Zone == val.Zone {
 			btn := widget.NewButton(q, func() {
 				answer.cmd = "QUEST " + val.Name
 				log_text.Text = get_quest_info(q)
@@ -32,7 +30,7 @@ func set_quests() {
 		}
 	}
 	actions.Add(widget.NewButton("RETURN", func() {
-				set_actions()
+		set_actions()
 	}))
 	actions.Refresh()
 }

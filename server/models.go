@@ -6,6 +6,7 @@ type Players struct {
 
 type Player struct {
 	Name        string
+	Character   string
 	Item        string
 	Inventory   []string
 	MAX_HP      int

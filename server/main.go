@@ -46,7 +46,7 @@ func hub(incoming chan Message) {
 		case "QUIT":
 			reply = handleQuit(msg.From)
 		case "WHO":
-			reply = WHO(msg.From)
+			reply = handleWho(msg.From)
 		// case "CHAT":
 		// 	reply = CHAT(msg.From)
 		default:

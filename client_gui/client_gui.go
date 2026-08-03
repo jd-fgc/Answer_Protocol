@@ -14,8 +14,8 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-var player PLAYER
-var players PLAYERS
+var player Player
+var players Players
 var answer ANSWER
 var npc []NPC
 var actions *fyne.Container
@@ -62,20 +62,20 @@ func fill_rooms(filepath string) (Rooms, error) {
 
 func refreshMiniMap() {
 	minimapContainer.RemoveAll()
-	minimapContainer.Add(buildMiniMap(rooms, player.zone, visitedRooms))
+	minimapContainer.Add(buildMiniMap(rooms, player.Zone, visitedRooms))
 	minimapContainer.Refresh()
 }
 
 func fill_players() {
-	players.Player = append(players.Player, PLAYER{NAME: "Isaac", Image: "client_gui/assets/Isaac.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
-	players.Player = append(players.Player, PLAYER{NAME: "Eve", Image: "client_gui/assets/Eve.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
-	players.Player = append(players.Player, PLAYER{NAME: "Judas", Image: "client_gui/assets/Judas.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
-	players.Player = append(players.Player, PLAYER{NAME: "Guppy", Image: "client_gui/assets/Guppy.png", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, Player{Name: "Isaac", Character: "Isaac", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, Player{Name: "Eve", Character: "Eve", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, Player{Name: "Judas", Character: "Judas", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
+	players.Player = append(players.Player, Player{Name: "Guppy", Character: "Guppy", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
 }
 
 // CREATION D'UN OBJET PLAYER POUR CONTAINER
-func NewPlayerView(p *PLAYER) *PlayerView {
-	portrait := canvas.NewImageFromFile(p.Image)
+func NewPlayerView(p *Player) *PlayerView {
+	portrait := canvas.NewImageFromFile(characterImages[p.Character])
 	portrait.FillMode = canvas.ImageFillContain
 	portrait.ScaleMode = canvas.ImageScalePixels
 	portrait.SetMinSize(fyne.NewSize(247, 208))
@@ -90,20 +90,10 @@ func NewPlayerView(p *PLAYER) *PlayerView {
 		Bomb:     widget.NewLabel(""),
 	}
 
-	infoColumn := container.NewVBox(
-		pv.Name,
-		pv.HP,
-		pv.ATK,
-		pv.Coin,
-		pv.Bomb,
-	)
-
+	infoColumn := container.NewVBox(pv.Name, pv.HP, pv.ATK, pv.Coin, pv.Bomb)
 	row := container.NewHBox(pv.Portrait, infoColumn)
-
 	pv.Container = container.NewCenter(row)
-
 	pv.Refresh()
-
 	return pv
 }
 
@@ -111,19 +101,19 @@ func NewPlayerView(p *PLAYER) *PlayerView {
 func (pv *PlayerView) Refresh() {
 	p := pv.Player
 
-	pv.Portrait.File = p.Image
+	pv.Portrait.File = characterImages[p.Character]
 	pv.Portrait.Refresh()
 
-	pv.Name.SetText(p.NAME)
+	pv.Name.SetText(p.Name)
 	pv.HP.SetText(fmt.Sprintf("HP : %d", p.HP))
 	pv.ATK.SetText(fmt.Sprintf("ATK : %.1f", p.ATK))
 	pv.Coin.SetText(fmt.Sprintf("Coins : %d", p.COIN))
 	pv.Bomb.SetText(fmt.Sprintf("Bombs : %d", p.BOMB))
 }
 
-func findPlayerTemplate(name string) PLAYER {
+func findPlayerTemplate(name string) Player {
 	for _, p := range players.Player {
-		if p.NAME == name {
+		if p.Name == name {
 			return p
 		}
 	}
@@ -170,9 +160,8 @@ func startGame(w fyne.Window, username string, character string) {
 	fill_players()
 
 	player = findPlayerTemplate(character)
-	player.NAME = username
-	// player.zone = "test"
-	// visitedRooms[player.zone] = true
+	player.Name = username
+	visitedRooms[player.Zone] = true
 
 	views := []*PlayerView{
 		NewPlayerView(&players.Player[0]),
@@ -183,6 +172,7 @@ func startGame(w fyne.Window, username string, character string) {
 	playerViews = views
 
 	leftColumn := set_left_container()
+	leftColumnGlobal = leftColumn
 	rightColumn := set_right_container(views)
 
 	refreshRoomPlayers(leftColumn)

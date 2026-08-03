@@ -13,24 +13,23 @@ type NPC struct {
 	Quest string `json:"quest"`
 }
 
-type PLAYER struct {
-	NAME      string
-	Image     string
+type Player struct {
+	Name      string
+	Character string // nom du template choisi (Isaac, Eve...) — sert à retrouver le portrait
 	HP        int64
 	ATK       float64
 	COIN      int64
 	BOMB      int64
 	Inventory []string
-	zone      string
+	Zone      string
 }
 
-type PLAYERS struct {
-	Player []PLAYER
+type Players struct {
+	Player []Player
 }
 
 type PlayerView struct {
-	Player *PLAYER
-
+	Player   *Player
 	Portrait *canvas.Image
 	Name     *widget.Label
 	HP       *widget.Label
