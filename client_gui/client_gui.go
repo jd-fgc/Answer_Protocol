@@ -1,16 +1,17 @@
 package main
 
 import (
+	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"os"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
-	"errors"
-	"io"
-	"encoding/json"
 )
 
 var player PLAYER
@@ -128,9 +129,13 @@ func main() {
 	w.Resize(fyne.NewSize(1600, 900))
 	w.SetFixedSize(true)
 
-	home := buildHomeScreen(func(username, ip, port string) {
-		// TODO: réponse CONNECT du serveur
-		charSelect := buildCharacterSelectScreen(username, func(character string) {
+	home := buildHomeScreen(func(username string, characterListJSON string) {
+		charSelect := buildCharacterSelectScreen(username, characterListJSON, func(character string) {
+			lines, err := netClient.SendCommand("CHOOSE " + character)
+			if err != nil || len(lines) == 0 {
+				println("ERREUR : ", err)
+				return
+			}
 			startGame(w, username, character)
 		})
 		w.SetContent(charSelect)

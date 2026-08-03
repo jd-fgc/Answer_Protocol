@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func buildHomeScreen(onConnect func(username, ip, port string)) fyne.CanvasObject {
+func buildHomeScreen(onConnect func(username string, characterListJSON string)) fyne.CanvasObject {
 	bg := canvas.NewImageFromFile("client_gui/assets/title_screen.png")
 	bg.FillMode = canvas.ImageFillStretch
 
@@ -34,7 +34,19 @@ func buildHomeScreen(onConnect func(username, ip, port string)) fyne.CanvasObjec
 			return
 		}
 		status.SetText("Connexion en cours...")
-		onConnect(nameEntry.Text, ipEntry.Text, portEntry.Text)
+
+		lines, err := doConnect(ipEntry.Text, portEntry.Text, nameEntry.Text)
+		if err != nil {
+			status.SetText("Erreur : " + err.Error())
+			return
+		}
+
+		if len(lines) < 2 {
+			status.SetText("Réponse serveur incomplète")
+			return
+		}
+
+		onConnect(nameEntry.Text, lines[1])
 	})
 	connectBtn.Importance = widget.HighImportance
 
