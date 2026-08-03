@@ -16,10 +16,21 @@ func fixedSize(size fyne.Size, content fyne.CanvasObject) fyne.CanvasObject {
 }
 
 func set_left_container(views []*PlayerView) *fyne.Container {
-	return container.NewGridWithRows(4,
+	gap := float32(26)
+
+	spacer := func() fyne.CanvasObject {
+		s := canvas.NewRectangle(color.Transparent)
+		s.SetMinSize(fyne.NewSize(1, gap))
+		return s
+	}
+
+	return container.NewVBox(
 		views[0].Container,
+		spacer(),
 		views[1].Container,
+		spacer(),
 		views[2].Container,
+		spacer(),
 		views[3].Container,
 	)
 }

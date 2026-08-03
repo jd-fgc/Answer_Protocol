@@ -113,9 +113,10 @@ func main() {
 	a.Settings().SetTheme(&tapTheme{})
 	w := a.NewWindow("The TCP of Isaac")
 	w.Resize(fyne.NewSize(1600, 900))
+	// w.SetFixedSize(true)
 
 	home := buildHomeScreen(func(username, ip, port string) {
-		// TODO: à terme, la vraie réponse CONNECT du serveur
+		// TODO: réponse CONNECT du serveur
 		charSelect := buildCharacterSelectScreen(username, func(character string) {
 			startGame(w, username, character)
 		})
@@ -163,17 +164,24 @@ func startGame(w fyne.Window, username string, character string) {
 	// Ajustement des blocs
 	leftBlock := fixedSize(fyne.NewSize(437, 870), leftColumn)
 	centerBlock := fixedSize(fyne.NewSize(557, 900), minimapContainer)
-	rightBlock := fixedSize(fyne.NewSize(580, 870), rightColumn)
+	rightBlock := fixedSize(fyne.NewSize(555, 800), rightColumn)
 
+	// bloc gauche
+	left_xoffset := float32(-10)
+	left_yoffset := float32(26)
 	leftBlock.Resize(fyne.NewSize(437, 870))
-	leftBlock.Move(fyne.NewPos(0, 0))
+	leftBlock.Move(fyne.NewPos(left_xoffset, left_yoffset))
 
+	// bloc milieu
 	centerBlock.Resize(fyne.NewSize(557, 900))
 	centerBlock.Move(fyne.NewPos(437, 0))
 
-	rightOffset := float32(970)
-	rightBlock.Resize(fyne.NewSize(580, 870))
-	rightBlock.Move(fyne.NewPos(rightOffset, 0))
+	// bloc de droite
+	right_xOffset := float32(1005)
+	right_yOffset := float32(20)
+
+	rightBlock.Resize(fyne.NewSize(550, 870))
+	rightBlock.Move(fyne.NewPos(right_xOffset, right_yOffset))
 
 	gameLayout := container.NewWithoutLayout(leftBlock, centerBlock, rightBlock)
 
