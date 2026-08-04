@@ -66,11 +66,27 @@ func refreshMiniMap() {
 	minimapContainer.Refresh()
 }
 
-func fill_players() {
-	players.Player = append(players.Player, Player{Name: "Isaac", Character: "Isaac", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
-	players.Player = append(players.Player, Player{Name: "Eve", Character: "Eve", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
-	players.Player = append(players.Player, Player{Name: "Judas", Character: "Judas", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
-	players.Player = append(players.Player, Player{Name: "Guppy", Character: "Guppy", HP: 100, ATK: 3.5, COIN: 0, BOMB: 0, Zone: rooms.Rooms[0].Name})
+func read_character_file(filepath string, start_zone string) (Players, error) {
+	var charac []Player
+	file, err := os.Open(filepath)
+	if err != nil {
+		return Players{Player: nil}, errors.New(err.Error())
+	}
+	defer file.Close()
+
+	byteValue, err := io.ReadAll(file)
+	if err != nil {
+		return Players{Player: nil}, errors.New(err.Error())
+	}
+	err = json.Unmarshal(byteValue, &charac)
+	if err != nil {
+		return Players{Player: nil}, errors.New(err.Error())
+	}
+	for i, _ := range charac {
+		charac[i].Zone = start_zone
+		charac[i].Character = charac[i].Name
+	}
+	return Players{Player: charac}, nil
 }
 
 // CREATION D'UN OBJET PLAYER POUR CONTAINER
@@ -157,8 +173,8 @@ func startGame(w fyne.Window, username string, character string) {
 	if err != nil {
 		return
 	}
-	fill_players()
 
+	players, err = read_character_file("data/Characters.json", rooms.Rooms[0].Name)
 	player = findPlayerTemplate(character)
 	player.Name = username
 	visitedRooms[player.Zone] = true
@@ -170,10 +186,12 @@ func startGame(w fyne.Window, username string, character string) {
 		NewPlayerView(&players.Player[3]),
 	}
 	playerViews = views
+	chatTab := buildChatTab()
+	go listenChatEvents()
 
 	leftColumn := set_left_container()
 	leftColumnGlobal = leftColumn
-	rightColumn := set_right_container(views)
+	rightColumn := set_right_container(views, chatTab)
 
 	refreshRoomPlayers(leftColumn)
 

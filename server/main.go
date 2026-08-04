@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 )
 
 var online_players Players
@@ -47,8 +48,10 @@ func hub(incoming chan Message) {
 			reply = handleQuit(msg.From)
 		case "WHO":
 			reply = handleWho(msg.From)
-		// case "CHAT":
-		// 	reply = CHAT(msg.From)
+		case "CHAT":
+			reply = handleChat(msg.From, args)
+		case "GROUP":
+			reply = handleGroup(msg.From, args)
 		default:
 			reply = "ERR unknown command\n"
 		}
@@ -78,6 +81,26 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 	reader := bufio.NewReader(conn)
 	from := conn.RemoteAddr().String()
 
+	stop := make(chan struct{})
+	go func() {
+		for {
+			if s, ok := sessions[from]; ok && s.Events != nil {
+				select {
+				case evt := <-s.Events:
+					conn.Write([]byte(evt))
+				case <-stop:
+					return
+				}
+			} else {
+				select {
+				case <-time.After(50 * time.Millisecond):
+				case <-stop:
+					return
+				}
+			}
+		}
+	}()
+
 	for {
 		bytes, err := reader.ReadBytes(byte('\n'))
 		if err != nil {
@@ -86,17 +109,18 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 			}
 			replyChan := make(chan string, 1)
 			incoming <- Message{From: from, Text: "QUIT\n", ReplyChan: replyChan}
+			close(stop)
 			return
 		}
 
 		replyChan := make(chan string)
 		incoming <- Message{From: from, Text: string(bytes), ReplyChan: replyChan}
 		response := <-replyChan
-
 		conn.Write([]byte(response))
 
 		cmd, _ := parseCommand(string(bytes))
 		if cmd == "QUIT" {
+			close(stop)
 			return
 		}
 	}

@@ -31,7 +31,7 @@ func set_actions() {
 		set_talk()
 	}))
 	actions.Add(widget.NewButton("LOOK", func() {
-		refreshRoomState()
+		refreshRoomState(true)
 	}))
 	actions.Add(widget.NewButton("QUEST", func() {
 		set_quests()
@@ -68,7 +68,7 @@ func set_combat() {
 }
 
 // INITIALISE LE CONTAINER DE DROITE
-func set_right_container(views []*PlayerView) *fyne.Container {
+func set_right_container(views []*PlayerView, chatTab *fyne.Container) *fyne.Container {
 	set_actions()
 	set_inventory()
 	set_combat()
@@ -78,20 +78,14 @@ func set_right_container(views []*PlayerView) *fyne.Container {
 		container.NewTabItem("Actions", actions),
 		container.NewTabItem("Inventory", inventory),
 		container.NewTabItem("Combat", combat),
+		container.NewTabItem("Chat", chatTab),
 	)
-
-	chatBtn := widget.NewButton("CHAT", func() {
-		log_text.SetText("Chat : pas encore branché")
-	})
-
-	thirdBtn := widget.NewButton("?", func() {})
-	thirdBtn.Disable()
 
 	quitBtn := widget.NewButton("QUIT", func() {
 		fyne.CurrentApp().Quit()
 	})
 
-	bottomButtons := container.NewGridWithColumns(3, chatBtn, thirdBtn, quitBtn)
+	bottomButtons := container.NewGridWithColumns(1, quitBtn)
 	bottomArea := container.NewVBox(log, bottomButtons)
 
 	return container.NewBorder(nil, bottomArea, nil, nil, apps)

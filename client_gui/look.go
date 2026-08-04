@@ -50,7 +50,7 @@ func updateKnownRoom(name string, exits lookExits) {
 	rooms.Rooms = append(rooms.Rooms, Room{Name: name, North: exits.North, South: exits.South, East: exits.East, West: exits.West})
 }
 
-func refreshRoomState() {
+func refreshRoomState(is_look bool) {
 	resp, err := doLook()
 	if err != nil {
 		log_text.SetText("Erreur LOOK: " + err.Error())
@@ -64,6 +64,8 @@ func refreshRoomState() {
 	refreshMiniMap()
 	refreshRoomPlayers(leftColumnGlobal)
 
-	log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
-		resp.Room.Name, strings.Join(resp.Items, ", "), strings.Join(resp.NPCs, ", ")))
+	if is_look {
+		log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
+			resp.Room.Name, strings.Join(resp.Items, ", "), strings.Join(resp.NPCs, ", ")))
+	}
 }

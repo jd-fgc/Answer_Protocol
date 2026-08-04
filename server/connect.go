@@ -5,6 +5,8 @@ import "encoding/json"
 type Session struct {
 	Username string
 	Player   *Player
+	Group    string
+	Events   chan string
 }
 
 var sessions = make(map[string]*Session)
@@ -25,7 +27,7 @@ func handleConnect(from string, args []string) string {
 		}
 	}
 
-	sessions[from] = &Session{Username: username}
+	sessions[from] = &Session{Username: username, Events: make(chan string, 20)}
 
 	var names []string
 	for _, c := range playable_characters.Players {

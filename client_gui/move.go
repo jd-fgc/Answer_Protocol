@@ -15,34 +15,48 @@ func current_room() Room {
 	return Room{}
 }
 
+func get_room_dir(dest string, room Room) string {
+	switch dest {
+	case room.North:
+		return "North"
+	case room.South:
+		return "South"
+	case room.East:
+		return "East"
+	case room.West:
+		return "west"
+	default:
+		return "ERROR"
+	}
+}
+
 func set_move() {
 	actions.RemoveAll()
 
 	r := current_room()
-	dirs := map[string]string{
-		"North": r.North,
-		"South": r.South,
-		"East":  r.East,
-		"West":  r.West,
+	dirs := []string{
+		r.North,
+		r.South,
+		r.East,
+		r.West,
 	}
 
-	for label, dest := range dirs {
+	for _, dest := range dirs {
 		if dest == "" {
 			continue
 		}
-		label, dest := label, dest
+		label, dest := get_room_dir(dest, r), dest
 		actions.Add(widget.NewButton(label, func() {
 			lines, err := netClient.SendCommand("MOVE " + dest)
 			if err != nil || len(lines) == 0 {
 				log_text.SetText("Erreur réseau lors du MOVE")
 				return
 			}
-			if !strings.HasPrefix(lines[0], "OK") {
+			if strings.HasPrefix(lines[0], "OK") {
 				log_text.SetText(strings.TrimSpace(lines[0]))
-				return
 			}
 
-			refreshRoomState()
+			refreshRoomState(false)
 			set_actions()
 		}))
 	}
