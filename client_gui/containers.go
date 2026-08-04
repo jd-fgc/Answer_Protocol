@@ -68,7 +68,7 @@ func set_combat() {
 }
 
 // INITIALISE LE CONTAINER DE DROITE
-func set_right_container(views []*PlayerView, chatTab *fyne.Container) *fyne.Container {
+func set_right_container(views []*PlayerView, chatTab *fyne.Container, groupTab *fyne.Container) *fyne.Container {
 	set_actions()
 	set_inventory()
 	set_combat()
@@ -79,6 +79,7 @@ func set_right_container(views []*PlayerView, chatTab *fyne.Container) *fyne.Con
 		container.NewTabItem("Inventory", inventory),
 		container.NewTabItem("Combat", combat),
 		container.NewTabItem("Chat", chatTab),
+		container.NewTabItem("Group", groupTab),
 	)
 
 	quitBtn := widget.NewButton("QUIT", func() {

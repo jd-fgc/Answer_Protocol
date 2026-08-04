@@ -52,7 +52,7 @@ func (t *tapTheme) Size(name fyne.ThemeSizeName) float32 {
 	case theme.SizeNameText:
 		return 15
 	case theme.SizeNamePadding:
-		return 6
+		return 8
 	}
 	return theme.DefaultTheme().Size(name)
 }

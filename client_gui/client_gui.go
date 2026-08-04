@@ -187,11 +187,12 @@ func startGame(w fyne.Window, username string, character string) {
 	}
 	playerViews = views
 	chatTab := buildChatTab()
+	groupTab := buildGroupTab()
 	go listenChatEvents()
 
 	leftColumn := set_left_container()
 	leftColumnGlobal = leftColumn
-	rightColumn := set_right_container(views, chatTab)
+	rightColumn := set_right_container(views, chatTab, groupTab)
 
 	refreshRoomPlayers(leftColumn)
 
@@ -217,10 +218,10 @@ func startGame(w fyne.Window, username string, character string) {
 	centerBlock.Move(fyne.NewPos(280, -300))
 
 	// bloc de droite
-	right_xOffset := float32(1005)
-	right_yOffset := float32(20)
+	right_xOffset := float32(998)
+	right_yOffset := float32(23)
 
-	rightBlock.Resize(fyne.NewSize(550, 870))
+	rightBlock.Resize(fyne.NewSize(550, 965))
 	rightBlock.Move(fyne.NewPos(right_xOffset, right_yOffset))
 
 	gameLayout := container.NewWithoutLayout(leftBlock, centerBlock, rightBlock)

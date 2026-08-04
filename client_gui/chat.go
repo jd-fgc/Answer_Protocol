@@ -57,6 +57,11 @@ func appendChat(line string) {
 
 func listenChatEvents() {
 	for evt := range netClient.Events {
-		appendChat(strings.TrimSpace(evt))
+		trimmed := strings.TrimSpace(evt)
+		if strings.HasPrefix(trimmed, "EVT GROUP") {
+			appendGroupEvent(trimmed)
+		} else {
+			appendChat(trimmed)
+		}
 	}
 }

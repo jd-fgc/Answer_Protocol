@@ -1,5 +1,5 @@
 Server :
-- CHAT
+- CHAT 
 - GROUP
 - USE
 - Move direction cardinale a finir
@@ -17,8 +17,13 @@ Faite a implementer :
 - DEFENSE
 - STATUS
 
+INTERFACE :
+- enlever quit
+- ajouter QUESTS
+- ajouter Complete Quests
+- Ajouter GROUP
+- Ajouter USE
+- Bidouiller la map
+- Ajouter Status (onglet combat)
 
 FIX :
-- Pas le bon character de la personne connecter
-- Les directions 
-- Fix fullscreen
