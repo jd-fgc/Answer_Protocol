@@ -1,15 +1,25 @@
-SRC = \
-	combat.go \
-	item_usage.go \
-	look.go \
-	move.go \
-	players_charac.go \
-	quests.go \
-	talk.go \
-	user_input_loop.go \
-
-NAME = Client
-
+GO=go
+PORT=9090
+IP=10.11.4.1
 
 build:
-	go build -o $(NAME) main.go $(SRC)
+	go build -o bin/server ./server
+	go build -o bin/client_cli ./client_cli
+	go build -o bin/client_gui ./client_gui
+
+run-server: build
+	./bin/server $(PORT)
+
+run-client: build
+	./bin/client_cli $(IP) $(PORT)
+
+run-client-gui: build
+	./bin/client_gui $(IP) $(PORT)
+
+clean:
+	rm -rf bin/
+
+lint:
+	go vet ./...
+
+.PHONY: build run-server run-client run-client-gui clean lint
