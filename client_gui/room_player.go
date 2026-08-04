@@ -64,7 +64,7 @@ func refreshRoomPlayers(leftContainer *fyne.Container) {
 	}
 
 	leftContainer.RemoveAll()
-	gap := float32(15)
+	gap := float32(11)
 	for i, info := range infos {
 		leftContainer.Add(buildPlayerCard(info))
 		if i < len(infos)-1 {

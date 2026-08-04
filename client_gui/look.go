@@ -50,6 +50,9 @@ func updateKnownRoom(name string, exits lookExits) {
 	rooms.Rooms = append(rooms.Rooms, Room{Name: name, North: exits.North, South: exits.South, East: exits.East, West: exits.West})
 }
 
+var currentRoomItems []string
+var currentRoomNPCs []string
+
 func refreshRoomState(is_look bool) {
 	resp, err := doLook()
 	if err != nil {
@@ -60,6 +63,8 @@ func refreshRoomState(is_look bool) {
 	player.Zone = resp.Room.Name
 	visitedRooms[resp.Room.Name] = true
 	updateKnownRoom(resp.Room.Name, resp.Room.Exits)
+	currentRoomItems = resp.Items
+	currentRoomNPCs = resp.NPCs
 
 	refreshMiniMap()
 	refreshRoomPlayers(leftColumnGlobal)

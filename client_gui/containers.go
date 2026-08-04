@@ -6,6 +6,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -37,8 +38,9 @@ func set_actions() {
 		set_quests()
 	}))
 	actions.Add(widget.NewButton("QUIT", func() {
-		answer.cmd = "QUIT"
-		log_text.SetText("OK bye")
+		netClient.SendCommand("QUIT")
+		netClient.Close()
+		fyne.CurrentApp().Quit()
 	}))
 	actions.Refresh()
 }
@@ -53,7 +55,6 @@ func set_inventory() {
 		set_drop()
 	}))
 	inventory.Add(widget.NewButton("INVENTORY", func() {
-		answer.cmd = "INVENTORY"
 		log_text.SetText(inventory_description())
 	}))
 	inventory.Refresh()
@@ -83,11 +84,22 @@ func set_right_container(views []*PlayerView, chatTab *fyne.Container, groupTab 
 	)
 
 	quitBtn := widget.NewButton("QUIT", func() {
+		netClient.SendCommand("QUIT")
+		netClient.Close()
 		fyne.CurrentApp().Quit()
 	})
 
+	logInner := container.NewVBox(layout.NewSpacer(), log)
+	logBox := fixedSize(fyne.NewSize(1, 90), container.NewVScroll(logInner))
+
+	gap := canvas.NewRectangle(color.Transparent)
+	gap.SetMinSize(fyne.NewSize(1, 15))
+
 	bottomButtons := container.NewGridWithColumns(1, quitBtn)
-	bottomArea := container.NewVBox(log, bottomButtons)
+	bottomMargin := canvas.NewRectangle(color.Transparent)
+	bottomMargin.SetMinSize(fyne.NewSize(1, 20))
+
+	bottomArea := container.NewVBox(gap, logBox, bottomButtons, bottomMargin)
 
 	return container.NewBorder(nil, bottomArea, nil, nil, apps)
 }

@@ -1,24 +1,25 @@
 package main
 
 import (
+	"strings"
+
 	"fyne.io/fyne/v2/widget"
 )
 
 func set_talk() {
 	actions.RemoveAll()
 
-	for _, val := range npc {
-		n := val
-
-		if n.Zone == player.Zone {
-			btn := widget.NewButton(n.Name, func() {
-				answer.cmd = "TALK " + n.Name
-				log_text.Text = n.Talk
-				set_actions()
-				set_log()
-			})
-			actions.Add(btn)
-		}
+	for _, name := range currentRoomNPCs {
+		name := name
+		actions.Add(widget.NewButton(name, func() {
+			lines, err := netClient.SendCommand("TALK " + name)
+			if err != nil || len(lines) == 0 {
+				log_text.SetText("Erreur réseau lors du TALK")
+				return
+			}
+			log_text.SetText(strings.TrimSpace(lines[0]))
+			set_actions()
+		}))
 	}
 	actions.Add(widget.NewButton("RETURN", func() {
 		set_actions()

@@ -15,12 +15,11 @@ type NPC struct {
 
 type Player struct {
 	Name      string
-	Character string // nom du template choisi (Isaac, Eve...) — sert à retrouver le portrait
+	Character string
 	HP        int64
 	ATK       float64
 	COIN      int64
 	BOMB      int64
-	Inventory []string
 	Zone      string
 }
 

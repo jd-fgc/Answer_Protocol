@@ -199,7 +199,7 @@ func startGame(w fyne.Window, username string, character string) {
 	minimapContainer = container.NewStack()
 	refreshMiniMap()
 
-	bg := canvas.NewImageFromFile("client_gui/assets/backgroundv2.png")
+	bg := canvas.NewImageFromFile("client_gui/assets/backgroundv4.png")
 	bg.FillMode = canvas.ImageFillStretch
 
 	// Ajustement des blocs
@@ -209,7 +209,7 @@ func startGame(w fyne.Window, username string, character string) {
 
 	// bloc gauche
 	left_xoffset := float32(-10)
-	left_yoffset := float32(26)
+	left_yoffset := float32(73)
 	leftBlock.Resize(fyne.NewSize(437, 870))
 	leftBlock.Move(fyne.NewPos(left_xoffset, left_yoffset))
 

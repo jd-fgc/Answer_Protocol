@@ -1,5 +1,7 @@
 package main
 
+import "encoding/json"
+
 func handleTake(From string, args []string) string {
 	session, ok := sessions[From]
 	if !ok || session.Player == nil {
@@ -58,19 +60,17 @@ func DROP(usr *Player, item_name string) string {
 	return "ERR 404 ITEM_NOT_IN_INVENTORY"
 }
 
-func handleInventory(From string) string {
-	session, ok := sessions[From]
+func handleInventory(from string) string {
+	session, ok := sessions[from]
 	if !ok || session.Player == nil {
 		return "ERR not connected\n"
 	}
 
-	res, inv := INVENTORY(*session.Player)
-
-	res += " ["
-	for _, val := range inv {
-		res += val
+	data, err := json.Marshal(session.Player.Inventory)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
 	}
-	return res + "]\n"
+	return string(data) + "\n"
 }
 
 func INVENTORY(usr Player) (string, []string) {
