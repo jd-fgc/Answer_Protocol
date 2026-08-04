@@ -17,8 +17,8 @@ Faite a implementer :
 - DEFENSE
 - STATUS
 
-Gerer si le client n'a pas la bonne version ?
 
-
-
-
+FIX :
+- Pas le bon character de la personne connecter
+- Les directions 
+- Fix fullscreen
