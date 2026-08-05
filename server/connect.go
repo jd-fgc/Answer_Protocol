@@ -1,6 +1,9 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 type Session struct {
 	Username string
@@ -23,7 +26,7 @@ func handleConnect(from string, args []string) string {
 
 	for _, s := range sessions {
 		if s.Username == username {
-			return "ERR name already taken\n"
+			return "ERR 201 NAME_IN_USE\n"
 		}
 	}
 
@@ -69,6 +72,7 @@ func handleQuit(from string) string {
 		for i, p := range online_players.Players {
 			if p.Name == session.Player.Name {
 				online_players.Players = append(online_players.Players[:i], online_players.Players[i+1:]...)
+				broadcastGlobal(fmt.Sprintf("EVT STATS PLAYERS players=%d\n", len(online_players.Players)))
 				break
 			}
 		}
@@ -101,19 +105,10 @@ func handleChoose(from string, args []string) string {
 
 	session.Player = &template
 	online_players.Players = append(online_players.Players, template)
+	broadcastGlobal(fmt.Sprintf("EVT STATS PLAYERS players=%d\n", len(online_players.Players)))
 
 	logInfo("character_chosen", map[string]interface{}{"from": from, "username": session.Username, "character": args[0]})
 	return "OK character=" + args[0] + "\n"
-}
-
-type WhoPlayerInfo struct {
-	Name      string `json:"name"`
-	Character string `json:"character"`
-}
-
-type Who_Struct struct {
-	Room   []WhoPlayerInfo `json:"room"`
-	Server int             `json:"server"`
 }
 
 func handleWho(from string) string {
@@ -121,18 +116,5 @@ func handleWho(from string) string {
 	if !ok || session.Player == nil {
 		return "ERR not connected\n"
 	}
-
-	roomPlayers := []WhoPlayerInfo{}
-	for _, p := range online_players.Players {
-		if p.Zone == session.Player.Zone {
-			roomPlayers = append(roomPlayers, WhoPlayerInfo{Name: p.Name, Character: p.Character})
-		}
-	}
-
-	who := Who_Struct{Room: roomPlayers, Server: len(online_players.Players)}
-	data, err := json.Marshal(who)
-	if err != nil {
-		return "ERR " + err.Error() + "\n"
-	}
-	return string(data) + "\n"
+	return fmt.Sprintf("OK players=%d\n", len(online_players.Players))
 }

@@ -19,6 +19,12 @@ func Connect(ip, port string) (*NetClient, error) {
 		return nil, err
 	}
 
+	reader := bufio.NewReader(conn)
+
+	if _, err := reader.ReadString('\n'); err != nil {
+		return nil, fmt.Errorf("greeting non reçu: %w", err)
+	}
+
 	c := &NetClient{
 		conn:      conn,
 		responses: make(chan string, 20),
@@ -26,7 +32,6 @@ func Connect(ip, port string) (*NetClient, error) {
 	}
 
 	go func() {
-		reader := bufio.NewReader(conn)
 		for {
 			line, err := reader.ReadString('\n')
 			if err != nil {

@@ -12,8 +12,12 @@ func doInventory() ([]itemInstance, error) {
 	if err != nil || len(lines) == 0 {
 		return nil, err
 	}
+
+	line := strings.TrimSpace(lines[0])
+	line = strings.TrimPrefix(line, "OK ")
+
 	var inv []itemInstance
-	if err := json.Unmarshal([]byte(lines[0]), &inv); err != nil {
+	if err := json.Unmarshal([]byte(line), &inv); err != nil {
 		return nil, err
 	}
 	return inv, nil

@@ -39,7 +39,7 @@ func fetchRoomPlayers() ([]whoPlayerInfo, error) {
 	return who.Room, nil
 }
 
-func buildPlayerCard(info whoPlayerInfo) fyne.CanvasObject {
+func buildPlayerCard(info playerInfo) fyne.CanvasObject {
 	if info.Name == player.Name {
 		pv := NewPlayerView(&player)
 		return pv.Container
@@ -54,17 +54,13 @@ func buildPlayerCard(info whoPlayerInfo) fyne.CanvasObject {
 	return container.NewCenter(container.NewHBox(img, nameLabel))
 }
 
-func refreshRoomPlayers(leftContainer *fyne.Container) {
-	infos, err := fetchRoomPlayers()
-	if err != nil {
-		return
-	}
+func refreshRoomPlayers(leftContainer *fyne.Container, infos []playerInfo) {
 	if len(infos) > 4 {
 		infos = infos[:4]
 	}
 
 	leftContainer.RemoveAll()
-	gap := float32(11)
+	gap := float32(15)
 	for i, info := range infos {
 		leftContainer.Add(buildPlayerCard(info))
 		if i < len(infos)-1 {

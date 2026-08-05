@@ -6,6 +6,18 @@ import (
 	"strings"
 )
 
+type playerInfo struct {
+	Name      string `json:"name"`
+	Character string `json:"character"`
+}
+
+type lookResponse struct {
+	Room    lookRoomDesc   `json:"room"`
+	Players []playerInfo   `json:"players"`
+	Items   []itemInstance `json:"items"`
+	NPCs    []string       `json:"npcs"`
+}
+
 type lookExits struct {
 	North string `json:"north,omitempty"`
 	South string `json:"south,omitempty"`
@@ -23,20 +35,17 @@ type itemInstance struct {
 	Name string `json:"name"`
 }
 
-type lookResponse struct {
-	Room    lookRoomDesc   `json:"room"`
-	Players []string       `json:"players"`
-	Items   []itemInstance `json:"items"`
-	NPCs    []string       `json:"npcs"`
-}
-
 func doLook() (*lookResponse, error) {
 	lines, err := netClient.SendCommand("LOOK")
 	if err != nil || len(lines) == 0 {
 		return nil, err
 	}
+
+	line := strings.TrimSpace(lines[0])
+	line = strings.TrimPrefix(line, "OK ")
+
 	var resp lookResponse
-	if err := json.Unmarshal([]byte(lines[0]), &resp); err != nil {
+	if err := json.Unmarshal([]byte(line), &resp); err != nil {
 		return nil, err
 	}
 	return &resp, nil
@@ -72,7 +81,7 @@ func refreshRoomState(is_look bool) {
 	currentRoomNPCs = resp.NPCs
 
 	refreshMiniMap()
-	refreshRoomPlayers(leftColumnGlobal)
+	refreshRoomPlayers(leftColumnGlobal, resp.Players)
 
 	if is_look {
 		var itemNames []string

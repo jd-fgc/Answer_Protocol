@@ -97,6 +97,8 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 	reader := bufio.NewReader(conn)
 	from := conn.RemoteAddr().String()
 
+	conn.Write([]byte("OK hello proto=1\n"))
+
 	for {
 		bytes, err := reader.ReadBytes(byte('\n'))
 		if err != nil {

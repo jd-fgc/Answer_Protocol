@@ -203,8 +203,6 @@ func startGame(w fyne.Window, username string, character string) {
 	leftColumnGlobal = leftColumn
 	rightColumn := set_right_container(views, chatTab, groupTab)
 
-	refreshRoomPlayers(leftColumn)
-
 	// Tailles fixes des blocs
 	leftW, leftH := float32(437), float32(870)
 	centerW, centerH := float32(557), float32(900)

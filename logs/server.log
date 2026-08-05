@@ -136,3 +136,53 @@
 {"time":"2026-08-05T14:21:53.159963386Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:55750","player":"J"}}
 {"time":"2026-08-05T14:21:53.160117513Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:55750"}}
 {"time":"2026-08-05T14:21:53.160139029Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK bye"}}
+{"time":"2026-08-05T15:04:49.859367348Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:55394"}}
+{"time":"2026-08-05T15:04:49.859948336Z","level":"INFO","event":"command_received","details":{"args":["JD"],"command":"CONNECT","from":"[::1]:55394","player":"unknown"}}
+{"time":"2026-08-05T15:04:49.86004633Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:55394","username":"JD"}}
+{"time":"2026-08-05T15:04:49.860080733Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55394","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T15:05:55.450419315Z","level":"INFO","event":"client_disconnected","details":{"from":"[::1]:55394"}}
+{"time":"2026-08-05T15:05:55.450608488Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:55394","player":"JD"}}
+{"time":"2026-08-05T15:05:55.450723416Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:55394"}}
+{"time":"2026-08-05T15:05:55.45075564Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55394","player":"JD","response":"OK bye"}}
+{"time":"2026-08-05T15:07:17.26484876Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:33298"}}
+{"time":"2026-08-05T15:07:17.265795555Z","level":"INFO","event":"command_received","details":{"args":["J"],"command":"CONNECT","from":"[::1]:33298","player":"unknown"}}
+{"time":"2026-08-05T15:07:17.265948169Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:33298","username":"J"}}
+{"time":"2026-08-05T15:07:17.265971749Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:33298","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T15:07:18.276454271Z","level":"INFO","event":"command_received","details":{"args":["Lost"],"command":"CHOOSE","from":"[::1]:33298","player":"J"}}
+{"time":"2026-08-05T15:07:18.276642108Z","level":"INFO","event":"character_chosen","details":{"character":"Lost","from":"[::1]:33298","username":"J"}}
+{"time":"2026-08-05T15:07:18.276680973Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:33298","player":"J","response":"OK character=Lost"}}
+{"time":"2026-08-05T15:07:18.279372616Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:33298","player":"J"}}
+{"time":"2026-08-05T15:07:18.279678851Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:33298","player":"J","response":"OK {\"room\":{\"id\":\"room.spawn\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[{\"name\":\"J\",\"character\":\"Lost\"}],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T15:07:23.559440067Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:33298","player":"J"}}
+{"time":"2026-08-05T15:07:23.559680365Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:33298","player":"J","response":"OK {\"room\":{\"id\":\"room.spawn\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[{\"name\":\"J\",\"character\":\"Lost\"}],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T15:08:33.864387394Z","level":"INFO","event":"client_disconnected","details":{"from":"[::1]:33298"}}
+{"time":"2026-08-05T15:08:33.864587096Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:33298","player":"J"}}
+{"time":"2026-08-05T15:08:33.864724414Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:33298"}}
+{"time":"2026-08-05T15:08:33.864761363Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:33298","player":"J","response":"OK bye"}}
+{"time":"2026-08-05T15:10:03.086881158Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:52750"}}
+{"time":"2026-08-05T15:10:03.087682544Z","level":"INFO","event":"command_received","details":{"args":["JD"],"command":"CONNECT","from":"[::1]:52750","player":"unknown"}}
+{"time":"2026-08-05T15:10:03.087791468Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:52750","username":"JD"}}
+{"time":"2026-08-05T15:10:03.087809458Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T15:10:03.898101127Z","level":"INFO","event":"command_received","details":{"args":["Guppy"],"command":"CHOOSE","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:03.89819991Z","level":"INFO","event":"character_chosen","details":{"character":"Guppy","from":"[::1]:52750","username":"JD"}}
+{"time":"2026-08-05T15:10:03.89821792Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK character=Guppy"}}
+{"time":"2026-08-05T15:10:03.899687935Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:03.899899228Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK {\"room\":{\"id\":\"room.spawn\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[{\"name\":\"JD\",\"character\":\"Guppy\"}],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T15:10:07.381896222Z","level":"INFO","event":"command_received","details":{"args":["Up_1"],"command":"MOVE","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:07.382002829Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK room=Up_1"}}
+{"time":"2026-08-05T15:10:07.383072714Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:07.383150209Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK {\"room\":{\"id\":\"room.up_1\",\"name\":\"Up_1\",\"description\":\"\",\"exits\":{\"north\":\"Up_2\",\"south\":\"Spawn\",\"east\":\"Right_1\"}},\"players\":[{\"name\":\"JD\",\"character\":\"Guppy\"}],\"items\":null,\"npcs\":null}"}}
+{"time":"2026-08-05T15:10:08.649554011Z","level":"INFO","event":"command_received","details":{"args":["Spawn"],"command":"MOVE","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:08.649812666Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK room=Spawn"}}
+{"time":"2026-08-05T15:10:08.651672162Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:08.651830572Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK {\"room\":{\"id\":\"room.spawn\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[{\"name\":\"JD\",\"character\":\"Guppy\"}],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T15:10:09.73156119Z","level":"INFO","event":"command_received","details":{"args":["Left_1"],"command":"MOVE","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:09.731681164Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK room=Left_1"}}
+{"time":"2026-08-05T15:10:09.733006052Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:09.733095321Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK {\"room\":{\"id\":\"room.left_1\",\"name\":\"Left_1\",\"description\":\"\",\"exits\":{\"east\":\"Spawn\",\"west\":\"Left_2\"}},\"players\":[{\"name\":\"JD\",\"character\":\"Guppy\"}],\"items\":null,\"npcs\":null}"}}
+{"time":"2026-08-05T15:10:12.216496029Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:12.216685246Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK {\"room\":{\"id\":\"room.left_1\",\"name\":\"Left_1\",\"description\":\"\",\"exits\":{\"east\":\"Spawn\",\"west\":\"Left_2\"}},\"players\":[{\"name\":\"JD\",\"character\":\"Guppy\"}],\"items\":null,\"npcs\":null}"}}
+{"time":"2026-08-05T15:10:27.333941177Z","level":"INFO","event":"client_disconnected","details":{"from":"[::1]:52750"}}
+{"time":"2026-08-05T15:10:27.334106952Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:52750","player":"JD"}}
+{"time":"2026-08-05T15:10:27.334219894Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:52750"}}
+{"time":"2026-08-05T15:10:27.334248101Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52750","player":"JD","response":"OK bye"}}
