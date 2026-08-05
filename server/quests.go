@@ -5,11 +5,12 @@ import (
 	"errors"
 	"io"
 	"os"
+	"strings"
 )
 
 
 func load_quests(file_path string) (Quests, error) {
-	var quests []Quest
+	var q Quests
 	file, err := os.Open(file_path)
 	if err != nil {
 		return Quests{Quest: nil}, errors.New(err.Error())
@@ -20,11 +21,11 @@ func load_quests(file_path string) (Quests, error) {
 	if err != nil {
 		return Quests{Quest: nil}, errors.New(err.Error())
 	}
-	err = json.Unmarshal(byteValue, &quests)
+	err = json.Unmarshal(byteValue, &q)
 	if err != nil {
 		return Quests{Quest: nil}, errors.New(err.Error())
 	}
-	return Quests{Quest: quests}, nil
+	return q, nil
 }
 
 func handleQuest(from string, args []string) string {
@@ -53,6 +54,20 @@ func handleQuests(from string) string {
 		return "ERR not connected\n"
 	}
 	result := QUESTS()
+	return result + "\n"
+}
+
+func handleCompleteQuest(from string, args []string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
+	}
+	if len(args) == 0 {
+		return "ERR No quest name provided\n"
+	}
+
+	quest_name := strings.Join(args, " ")
+	result := COMPLETE_QUEST(session.Player, quest_name)
 	return result + "\n"
 }
 

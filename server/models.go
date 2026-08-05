@@ -48,7 +48,7 @@ type NPC struct {
 }
 
 type Quests struct {
-	Quest []Quest
+	Quest []Quest `json:"quests"`
 }
 
 

@@ -62,6 +62,8 @@ func hub(incoming chan Message) {
 			reply = handleQuest(msg.From, args)
 		case "QUESTS":
 			reply = handleQuests(msg.From)
+		case "COMPLETE_QUEST":
+			reply = handleCompleteQuest(msg.From, args)
 		default:
 			reply = "ERR unknown command\n"
 		}
@@ -134,7 +136,11 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-
+	quests, err = load_quests("data/quests.json")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
 		fmt.Println("failed to create listener, err:", err)
