@@ -35,6 +35,7 @@ func inventory_description() string {
 }
 
 func set_take() {
+	refreshRoomState(false)
 	inventory.RemoveAll()
 
 	for _, item := range currentRoomItems {
@@ -47,7 +48,7 @@ func set_take() {
 			}
 			log_text.SetText(strings.TrimSpace(lines[0]))
 			refreshRoomState(false)
-			set_inventory()
+			set_take()
 		}))
 	}
 	inventory.Add(widget.NewButton("RETURN", func() {
@@ -57,6 +58,7 @@ func set_take() {
 }
 
 func set_drop() {
+	refreshRoomState(false)
 	inventory.RemoveAll()
 
 	inv, err := doInventory()
@@ -74,7 +76,7 @@ func set_drop() {
 			}
 			log_text.SetText(strings.TrimSpace(lines[0]))
 			refreshRoomState(false)
-			set_inventory()
+			set_drop()
 		}))
 	}
 	inventory.Add(widget.NewButton("RETURN", func() {
