@@ -24,6 +24,7 @@ func TALK(player_zone string, npc_name string) string {
 	var zone Room
 	for _, val := range rooms.Rooms {
 		if val.Name == player_zone {
+			logInfo("npc_talk", map[string]interface{}{"room": player_zone, "npc": npc_name})
 			zone = val
 		}
 	}

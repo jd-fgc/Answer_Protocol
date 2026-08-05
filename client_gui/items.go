@@ -7,12 +7,12 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func doInventory() ([]string, error) {
+func doInventory() ([]itemInstance, error) {
 	lines, err := netClient.SendCommand("INVENTORY")
 	if err != nil || len(lines) == 0 {
 		return nil, err
 	}
-	var inv []string
+	var inv []itemInstance
 	if err := json.Unmarshal([]byte(lines[0]), &inv); err != nil {
 		return nil, err
 	}
@@ -27,7 +27,11 @@ func inventory_description() string {
 	if len(inv) == 0 {
 		return "Inventory: (empty)"
 	}
-	return "Inventory: " + strings.Join(inv, ", ")
+	var names []string
+	for _, it := range inv {
+		names = append(names, it.Name)
+	}
+	return "Inventory: " + strings.Join(names, ", ")
 }
 
 func set_take() {
@@ -35,8 +39,8 @@ func set_take() {
 
 	for _, item := range currentRoomItems {
 		item := item
-		inventory.Add(widget.NewButton(item, func() {
-			lines, err := netClient.SendCommand("TAKE " + item)
+		inventory.Add(widget.NewButton(item.Name, func() {
+			lines, err := netClient.SendCommand("TAKE " + item.ID)
 			if err != nil || len(lines) == 0 {
 				log_text.SetText("Erreur réseau lors du TAKE")
 				return
@@ -62,8 +66,8 @@ func set_drop() {
 
 	for _, item := range inv {
 		item := item
-		inventory.Add(widget.NewButton(item, func() {
-			lines, err := netClient.SendCommand("DROP " + item)
+		inventory.Add(widget.NewButton(item.Name, func() {
+			lines, err := netClient.SendCommand("DROP " + item.ID)
 			if err != nil || len(lines) == 0 {
 				log_text.SetText("Erreur réseau lors du DROP")
 				return

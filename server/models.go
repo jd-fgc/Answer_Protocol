@@ -23,15 +23,22 @@ type Rooms struct {
 	Rooms []Room `json:"world"`
 }
 
-type Room struct {
-	Name  string   `json:"name"`
-	NPC   []NPC    `json:"NPC"`
-	Items []string `json:"item"`
-	North string   `json:"North"`
-	South string   `json:"South"`
-	East  string   `json:"East"`
-	West  string   `json:"West"`
+type ItemInstance struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
 }
+
+type Room struct {
+	Name  string         `json:"name"`
+	NPC   []NPC          `json:"NPC"`
+	Items []ItemInstance `json:"-"`
+	North string         `json:"North"`
+	South string         `json:"South"`
+	East  string         `json:"East"`
+	West  string         `json:"West"`
+}
+
+var itemDisplayName = make(map[string]string)
 
 type NPC struct {
 	Name   string `json:"name"`

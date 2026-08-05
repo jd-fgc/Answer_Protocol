@@ -10,7 +10,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-const mapCellSize float32 = 60
+const mapCellSize float32 = 54
 
 type roomCoord struct{ row, col int }
 

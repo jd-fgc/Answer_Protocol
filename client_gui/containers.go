@@ -37,11 +37,6 @@ func set_actions() {
 	actions.Add(widget.NewButton("QUEST", func() {
 		set_quests()
 	}))
-	actions.Add(widget.NewButton("QUIT", func() {
-		netClient.SendCommand("QUIT")
-		netClient.Close()
-		fyne.CurrentApp().Quit()
-	}))
 	actions.Refresh()
 }
 

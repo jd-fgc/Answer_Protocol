@@ -2,28 +2,21 @@ Server :
 - CHAT 
 - GROUP
 - USE
-- Move direction cardinale a finir
 - CHAT
-- QUEST / QUESTS
 - Group
     - CREATE
     - INVITE
     - JOIN
     - LEAVE
 - Gestion Espace
+- Gestion Plusieurs Command (COMMAND ... + COMMAND ...)
+- ATTACK cli ok
+- DEFENSE cli ok
+- STATUS cli ok
 
-Faite a implementer :
-- ATTACK
-- DEFENSE
-- STATUS
 
-INTERFACE :
-- enlever quit
-- ajouter QUESTS
+INTERFACE (GUI) :
 - ajouter Complete Quests
 - Ajouter GROUP
 - Ajouter USE
-- Bidouiller la map
-- Ajouter Status (onglet combat)
-
-FIX :
+- Ajouter Status (onglet combat) cli ok

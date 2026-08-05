@@ -8,7 +8,7 @@ import (
 type Look_Struct struct {
 	Room    Room_Description `json:"room"`
 	Players []string         `json:"players"`
-	Items   []string         `json:"items"`
+	Items   []ItemInstance   `json:"items"`
 	NPCs    []string         `json:"npcs"`
 }
 
@@ -36,9 +36,9 @@ func fill_desc(zone Room) Look_Struct {
 	exits.East = zone.East
 	exits.West = zone.West
 
-	room_desc.Id = "0" // zone.Id
+	room_desc.Id = "0"
 	room_desc.Name = zone.Name
-	room_desc.Description = "" // zone.Description
+	room_desc.Description = ""
 	room_desc.Exits = exits
 
 	look_struct.Room = room_desc

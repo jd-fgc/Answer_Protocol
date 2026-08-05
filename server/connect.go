@@ -39,6 +39,7 @@ func handleConnect(from string, args []string) string {
 		return "ERR " + err.Error() + "\n"
 	}
 
+	logInfo("player_connected", map[string]interface{}{"from": from, "username": username})
 	return "OK connected\n" + string(data) + "\n"
 }
 
@@ -74,6 +75,7 @@ func handleQuit(from string) string {
 	}
 
 	delete(sessions, from)
+	logInfo("player_quit", map[string]interface{}{"from": from})
 	return "OK bye\n"
 }
 
@@ -100,6 +102,7 @@ func handleChoose(from string, args []string) string {
 	session.Player = &template
 	online_players.Players = append(online_players.Players, template)
 
+	logInfo("character_chosen", map[string]interface{}{"from": from, "username": session.Username, "character": args[0]})
 	return "OK character=" + args[0] + "\n"
 }
 

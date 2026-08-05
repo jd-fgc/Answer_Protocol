@@ -1,0 +1,138 @@
+{"time":"2026-08-05T13:23:57.881360839Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:32898"}}
+{"time":"2026-08-05T13:23:57.881792052Z","level":"INFO","event":"command_received","details":{"args":["JD"],"command":"CONNECT","from":"[::1]:32898","player":"unknown"}}
+{"time":"2026-08-05T13:23:57.881840554Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:32898","username":"JD"}}
+{"time":"2026-08-05T13:23:57.881863172Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T13:23:58.744667758Z","level":"INFO","event":"command_received","details":{"args":["Isaac"],"command":"CHOOSE","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:23:58.744823726Z","level":"INFO","event":"character_chosen","details":{"character":"Isaac","from":"[::1]:32898","username":"JD"}}
+{"time":"2026-08-05T13:23:58.744861125Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"OK character=Isaac"}}
+{"time":"2026-08-05T13:23:58.747164673Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:23:58.747547256Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"{\"room\":[{\"name\":\"JD\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T13:23:58.751772693Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:23:58.751908277Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"JD\"],\"items\":[\"potion\",\"sword\"],\"npcs\":null}"}}
+{"time":"2026-08-05T13:23:58.752397284Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:23:58.752465876Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"{\"room\":[{\"name\":\"JD\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T13:24:06.927916933Z","level":"INFO","event":"command_received","details":{"args":["Up_1"],"command":"MOVE","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:24:06.928162817Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"OK room=Up_1"}}
+{"time":"2026-08-05T13:24:06.930377676Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:24:06.930521226Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"{\"room\":{\"id\":\"0\",\"name\":\"Up_1\",\"description\":\"\",\"exits\":{\"north\":\"Up_2\",\"south\":\"Spawn\",\"east\":\"Right_1\"}},\"players\":[\"JD\"],\"items\":[],\"npcs\":null}"}}
+{"time":"2026-08-05T13:24:06.931472937Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:24:06.931553047Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"{\"room\":[{\"name\":\"JD\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T13:25:46.13393918Z","level":"INFO","event":"client_disconnected","details":{"from":"[::1]:32898"}}
+{"time":"2026-08-05T13:25:46.134291665Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:32898","player":"JD"}}
+{"time":"2026-08-05T13:25:46.134365541Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:32898"}}
+{"time":"2026-08-05T13:25:46.134383082Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:32898","player":"JD","response":"OK bye"}}
+{"time":"2026-08-05T13:29:21.918201783Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:52374"}}
+{"time":"2026-08-05T13:29:21.918748158Z","level":"INFO","event":"command_received","details":{"args":["JD"],"command":"CONNECT","from":"[::1]:52374","player":"unknown"}}
+{"time":"2026-08-05T13:29:21.918799204Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:52374","username":"JD"}}
+{"time":"2026-08-05T13:29:21.918815277Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T13:29:24.414180086Z","level":"INFO","event":"command_received","details":{"args":["Lost"],"command":"CHOOSE","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:24.414393414Z","level":"INFO","event":"character_chosen","details":{"character":"Lost","from":"[::1]:52374","username":"JD"}}
+{"time":"2026-08-05T13:29:24.414419404Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"OK character=Lost"}}
+{"time":"2026-08-05T13:29:24.416752076Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:24.417286196Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"{\"room\":[{\"name\":\"JD\",\"character\":\"Lost\"}],\"server\":1}"}}
+{"time":"2026-08-05T13:29:24.421833082Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:24.421957804Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"JD\"],\"items\":[\"potion\",\"sword\"],\"npcs\":null}"}}
+{"time":"2026-08-05T13:29:24.422643387Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:24.422712537Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"{\"room\":[{\"name\":\"JD\",\"character\":\"Lost\"}],\"server\":1}"}}
+{"time":"2026-08-05T13:29:33.680459246Z","level":"INFO","event":"command_received","details":{"args":["GLOBAL","dsa"],"command":"CHAT","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:33.680653451Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"OK"}}
+{"time":"2026-08-05T13:29:35.446430463Z","level":"INFO","event":"command_received","details":{"args":["GLOBAL","dsad"],"command":"CHAT","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:35.446604015Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"OK"}}
+{"time":"2026-08-05T13:29:37.613221187Z","level":"INFO","event":"command_received","details":{"args":["GLOBAL","dsaddsa"],"command":"CHAT","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:37.613341973Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"OK"}}
+{"time":"2026-08-05T13:29:57.195557035Z","level":"INFO","event":"client_disconnected","details":{"from":"[::1]:52374"}}
+{"time":"2026-08-05T13:29:57.195787739Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:52374","player":"JD"}}
+{"time":"2026-08-05T13:29:57.19587884Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:52374"}}
+{"time":"2026-08-05T13:29:57.195895823Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:52374","player":"JD","response":"OK bye"}}
+{"time":"2026-08-05T14:17:45.841200613Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:39806"}}
+{"time":"2026-08-05T14:17:45.841543159Z","level":"INFO","event":"command_received","details":{"args":["J"],"command":"CONNECT","from":"[::1]:39806","player":"unknown"}}
+{"time":"2026-08-05T14:17:45.841575597Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:39806","username":"J"}}
+{"time":"2026-08-05T14:17:45.841616813Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T14:17:46.7050507Z","level":"INFO","event":"command_received","details":{"args":["Isaac"],"command":"CHOOSE","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:46.705345117Z","level":"INFO","event":"character_chosen","details":{"character":"Isaac","from":"[::1]:39806","username":"J"}}
+{"time":"2026-08-05T14:17:46.705425717Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"OK character=Isaac"}}
+{"time":"2026-08-05T14:17:46.708206933Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:46.708605214Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:17:46.713990608Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:46.71416367Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:17:46.714975767Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:46.715085081Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:17:51.405065627Z","level":"INFO","event":"command_received","details":{"args":["Up_1"],"command":"MOVE","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:51.405264756Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"OK room=Up_1"}}
+{"time":"2026-08-05T14:17:51.406832595Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:51.407005102Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Up_1\",\"description\":\"\",\"exits\":{\"north\":\"Up_2\",\"south\":\"Spawn\",\"east\":\"Right_1\"}},\"players\":[\"J\"],\"items\":null,\"npcs\":null}"}}
+{"time":"2026-08-05T14:17:51.407778001Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:51.407897903Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:17:54.022205052Z","level":"INFO","event":"command_received","details":{"args":["Spawn"],"command":"MOVE","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:54.022406228Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"OK room=Spawn"}}
+{"time":"2026-08-05T14:17:54.02415669Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:54.024276787Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:17:54.025235443Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:54.025338675Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:17:57.154647036Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:57.154741127Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:17:57.155298624Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:17:57.15538843Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Isaac\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:18:02.80570047Z","level":"INFO","event":"command_received","details":{"args":["item.potion"],"command":"TAKE","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:18:02.80588349Z","level":"INFO","event":"item_taken","details":{"item_id":"item.potion","player":"J","room":"Spawn"}}
+{"time":"2026-08-05T14:18:02.805942577Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"OK taken=item.potion"}}
+{"time":"2026-08-05T14:19:36.097078284Z","level":"INFO","event":"client_disconnected","details":{"from":"[::1]:39806"}}
+{"time":"2026-08-05T14:19:36.097261928Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:39806","player":"J"}}
+{"time":"2026-08-05T14:19:36.097340525Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:39806"}}
+{"time":"2026-08-05T14:19:36.097365524Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:39806","player":"J","response":"OK bye"}}
+{"time":"2026-08-05T14:21:24.847656688Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:55750"}}
+{"time":"2026-08-05T14:21:24.848150049Z","level":"INFO","event":"command_received","details":{"args":["J"],"command":"CONNECT","from":"[::1]:55750","player":"unknown"}}
+{"time":"2026-08-05T14:21:24.848234846Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:55750","username":"J"}}
+{"time":"2026-08-05T14:21:24.848260524Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-05T14:21:26.742591949Z","level":"INFO","event":"command_received","details":{"args":["Azazel"],"command":"CHOOSE","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:26.742708964Z","level":"INFO","event":"character_chosen","details":{"character":"Azazel","from":"[::1]:55750","username":"J"}}
+{"time":"2026-08-05T14:21:26.742727667Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK character=Azazel"}}
+{"time":"2026-08-05T14:21:26.744555605Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:26.744816083Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:26.750085979Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:26.750312803Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:26.751229773Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:26.75130511Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:30.026477396Z","level":"INFO","event":"command_received","details":{"args":["Up_1"],"command":"MOVE","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:30.02661791Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK room=Up_1"}}
+{"time":"2026-08-05T14:21:30.027877056Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:30.027977233Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Up_1\",\"description\":\"\",\"exits\":{\"north\":\"Up_2\",\"south\":\"Spawn\",\"east\":\"Right_1\"}},\"players\":[\"J\"],\"items\":null,\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:30.028992434Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:30.029113987Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:31.326576588Z","level":"INFO","event":"command_received","details":{"args":["Spawn"],"command":"MOVE","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:31.326738028Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK room=Spawn"}}
+{"time":"2026-08-05T14:21:31.328170452Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:31.328297897Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:31.329286746Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:31.329365877Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:33.576465109Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:33.57673571Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:33.578169246Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:33.578325802Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:41.643328609Z","level":"INFO","event":"command_received","details":{"args":["item.potion"],"command":"TAKE","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:41.643575731Z","level":"INFO","event":"item_taken","details":{"item_id":"item.potion","player":"J","room":"Spawn"}}
+{"time":"2026-08-05T14:21:41.643695596Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK taken=item.potion"}}
+{"time":"2026-08-05T14:21:41.645573286Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:41.645709868Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:41.646761198Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:41.646846448Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:45.043625972Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:45.043839909Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.sword\",\"name\":\"sword\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:45.045537646Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:45.045661239Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:48.025964407Z","level":"INFO","event":"command_received","details":{"args":[],"command":"INVENTORY","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:48.026170038Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"[{\"id\":\"item.potion\",\"name\":\"potion\"}]"}}
+{"time":"2026-08-05T14:21:49.34351575Z","level":"INFO","event":"command_received","details":{"args":["item.potion"],"command":"DROP","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:49.343686155Z","level":"INFO","event":"item_dropped","details":{"item_id":"item.potion","player":"J","room":"Spawn"}}
+{"time":"2026-08-05T14:21:49.343740974Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK dropped=item.potion"}}
+{"time":"2026-08-05T14:21:49.34542701Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:49.345531978Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.sword\",\"name\":\"sword\"},{\"id\":\"item.potion\",\"name\":\"potion\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:49.346613181Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:49.346714934Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:51.2766202Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:51.276832096Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":{\"id\":\"0\",\"name\":\"Spawn\",\"description\":\"\",\"exits\":{\"north\":\"Up_1\",\"west\":\"Left_1\"}},\"players\":[\"J\"],\"items\":[{\"id\":\"item.sword\",\"name\":\"sword\"},{\"id\":\"item.potion\",\"name\":\"potion\"}],\"npcs\":null}"}}
+{"time":"2026-08-05T14:21:51.278521283Z","level":"INFO","event":"command_received","details":{"args":[],"command":"WHO","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:51.278688081Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"{\"room\":[{\"name\":\"J\",\"character\":\"Azazel\"}],\"server\":1}"}}
+{"time":"2026-08-05T14:21:53.159963386Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:55750","player":"J"}}
+{"time":"2026-08-05T14:21:53.160117513Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:55750"}}
+{"time":"2026-08-05T14:21:53.160139029Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55750","player":"J","response":"OK bye"}}

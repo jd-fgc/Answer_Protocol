@@ -168,6 +168,8 @@ func main() {
 	a.Run()
 }
 
+var mapScrollGlobal *container.Scroll
+
 func startGame(w fyne.Window, username string, character string) {
 	actions = container.NewVBox()
 	inventory = container.NewVBox()

@@ -18,11 +18,16 @@ type lookRoomDesc struct {
 	Exits lookExits `json:"exits"`
 }
 
+type itemInstance struct {
+	ID   string `json:"id"`
+	Name string `json:"name"`
+}
+
 type lookResponse struct {
-	Room    lookRoomDesc `json:"room"`
-	Players []string     `json:"players"`
-	Items   []string     `json:"items"`
-	NPCs    []string     `json:"npcs"`
+	Room    lookRoomDesc   `json:"room"`
+	Players []string       `json:"players"`
+	Items   []itemInstance `json:"items"`
+	NPCs    []string       `json:"npcs"`
 }
 
 func doLook() (*lookResponse, error) {
@@ -50,7 +55,7 @@ func updateKnownRoom(name string, exits lookExits) {
 	rooms.Rooms = append(rooms.Rooms, Room{Name: name, North: exits.North, South: exits.South, East: exits.East, West: exits.West})
 }
 
-var currentRoomItems []string
+var currentRoomItems []itemInstance
 var currentRoomNPCs []string
 
 func refreshRoomState(is_look bool) {
@@ -70,7 +75,12 @@ func refreshRoomState(is_look bool) {
 	refreshRoomPlayers(leftColumnGlobal)
 
 	if is_look {
+		var itemNames []string
+		for _, it := range resp.Items {
+			itemNames = append(itemNames, it.Name)
+		}
+
 		log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
-			resp.Room.Name, strings.Join(resp.Items, ", "), strings.Join(resp.NPCs, ", ")))
+			resp.Room.Name, strings.Join(itemNames, ", "), strings.Join(resp.NPCs, ", ")))
 	}
 }
