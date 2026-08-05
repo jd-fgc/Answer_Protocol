@@ -77,6 +77,13 @@ func INVENTORY(usr Player) (string, []string) {
 	return "OK", usr.Inventory
 }
 
-// func USE(usr Player, zones Rooms, online_players Players, item_name string) error {
-
-// }
+func USE(usr *Player, item_name string) string {
+	switch item_name {
+	case "halo":
+		halo(usr)
+	default:
+		return "ERR 404 NO_ITEM_FOUND"
+	}
+	update_players(*usr)
+	return "OK used " + item_name + "\n"
+}

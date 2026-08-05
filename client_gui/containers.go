@@ -37,8 +37,9 @@ func set_actions() {
 		set_quests()
 	}))
 	actions.Add(widget.NewButton("QUIT", func() {
-		answer.cmd = "QUIT"
-		log_text.SetText("OK bye")
+		netClient.SendCommand("QUIT")
+		netClient.Close()
+		fyne.CurrentApp().Quit()
 	}))
 	actions.Refresh()
 }
@@ -53,7 +54,6 @@ func set_inventory() {
 		set_drop()
 	}))
 	inventory.Add(widget.NewButton("INVENTORY", func() {
-		answer.cmd = "INVENTORY"
 		log_text.SetText(inventory_description())
 	}))
 	inventory.Refresh()

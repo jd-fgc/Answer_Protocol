@@ -1,10 +1,7 @@
 Server :
-- CHAT
+- CHAT 
 - GROUP
 - USE
-- Move direction cardinale a finir
-- CHAT
-- QUEST / QUESTS
 - Group
     - CREATE
     - INVITE
@@ -12,13 +9,9 @@ Server :
     - LEAVE
 - Gestion Espace
 
-Faite a implementer :
-- ATTACK
-- DEFENSE
-- STATUS
+INTERFACE :
+- ajouter Complete Quests
+- Ajouter GROUP
+- Ajouter USE
 
-Gerer si le client n'a pas la bonne version ?
-
-
-
-
+FIX :

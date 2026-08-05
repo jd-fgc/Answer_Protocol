@@ -236,7 +236,17 @@
         },
         {
             "name": "Right_4",
-            "NPC": [],
+            "NPC": [
+                {
+                    "name": "Ryan",
+                    "talk": "... *L'Homme vous tend une liste de course sur laquelle y est inscrit 4 cles*",
+                    "hp": 100,
+                    "ennemy": false,
+                    "room": "Right_4",
+                    "attack": 10,
+                    "quest": "La rydelequest"
+                }
+            ],
             "item": [],
             "North": "",
             "South": "",

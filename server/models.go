@@ -15,8 +15,12 @@ type Player struct {
 	DMG_Mult    float32
 	Luck        int
 	Deal_chance int
-	Respawn     int
 	Zone        string
+	Damage_Reduction float32
+	Quests []Quest
+	Coin int
+	Bomb int
+	Key int
 }
 
 type Rooms struct {
@@ -34,8 +38,27 @@ type Room struct {
 }
 
 type NPC struct {
-	Name   string `json:"name"`
-	Talk   string `json:"talk"`
-	HP     int    `json:"hp"`
-	Ennemy bool   `json:"ennemy"`
+	Name string `json:"name"`
+	Talk string `json:"talk"`
+	HP int `json:"hp"`
+	Ennemy bool `json:"ennemy"`
+	Zone string `json:"room"`
+	ATK int `json:"attack"`
+	Quest string `json:"quest"`
+}
+
+type Quests struct {
+	Quest []Quest
+}
+
+
+type Quest struct {
+	Name string `json:"name"`
+	Type string `json:"type"`
+	Description string `json:"description"`
+	Completed bool `json:"completed"`
+	Reward string `json:"reward"`
+	Amount_reward int `json:"amount_reward"`
+	taken bool
+	finished bool
 }

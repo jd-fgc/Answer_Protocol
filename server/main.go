@@ -13,6 +13,7 @@ import (
 var online_players Players
 var playable_characters Players
 var rooms Rooms
+var quests Quests
 
 type Message struct {
 	From      string
@@ -47,8 +48,20 @@ func hub(incoming chan Message) {
 			reply = handleQuit(msg.From)
 		case "WHO":
 			reply = handleWho(msg.From)
-		// case "CHAT":
-		// 	reply = CHAT(msg.From)
+		case "CHAT":
+			reply = handleChat(msg.From, args)
+		case "GROUP":
+			reply = handleGroup(msg.From, args)
+		case "ATTACK":
+			reply = handleAttack(msg.From, args)
+		case "DEFEND":
+			reply = handleDefend(msg.From)
+		case "STATUS":
+			reply = handleStatus(msg.From)
+		case "QUEST":
+			reply = handleQuest(msg.From, args)
+		case "QUESTS":
+			reply = handleQuests(msg.From)
 		default:
 			reply = "ERR unknown command\n"
 		}

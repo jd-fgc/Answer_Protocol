@@ -1,13 +1,12 @@
 {
     "quests": [
         {
-            "name": "test_quest",
-            "type": "boss",
-            "description": "This is a test quest",
-            "completed": false
-        },
-        {
-            "name": "test_quest_2"
+            "name": "La rydelequest",
+            "type": "item",
+            "description": "Ramener 4 keys a Ryan",
+            "completed": false,
+            "reward": "halo",
+            "amount_reward": 1
         }
     ]
 }

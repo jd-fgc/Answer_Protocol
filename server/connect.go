@@ -5,6 +5,8 @@ import "encoding/json"
 type Session struct {
 	Username string
 	Player   *Player
+	Group    string
+	Events   chan string
 }
 
 var sessions = make(map[string]*Session)
