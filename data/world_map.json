@@ -3,7 +3,7 @@
         {
             "name": "Spawn",
             "NPC": [],
-            "item": [],
+            "item": ["potion"],
             "North": "Up_1",
             "South": "",
             "East": "",

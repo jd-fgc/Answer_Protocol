@@ -37,7 +37,7 @@ func who_description() string {
 }
 
 func set_take() {
-	actions.RemoveAll()
+	inventory.RemoveAll()
 
 	roomIdx := -1
 	for i, r := range rooms.Rooms {
@@ -48,8 +48,7 @@ func set_take() {
 
 	if roomIdx != -1 {
 		for _, item := range rooms.Rooms[roomIdx].Items {
-			item := item
-			actions.Add(widget.NewButton(item, func() {
+			inventory.Add(widget.NewButton(item, func() {
 				player.Inventory = append(player.Inventory, item)
 				items := rooms.Rooms[roomIdx].Items
 				for j, it := range items {
@@ -59,22 +58,21 @@ func set_take() {
 					}
 				}
 				log_text.SetText("OK taken=" + item)
-				set_actions()
+				set_inventory()
 			}))
 		}
 	}
-	actions.Add(widget.NewButton("RETURN", func() {
-		set_actions()
+	inventory.Add(widget.NewButton("RETURN", func() {
+		set_inventory()
 	}))
-	actions.Refresh()
+	inventory.Refresh()
 }
 
 func set_drop() {
-	actions.RemoveAll()
+	inventory.RemoveAll()
 
 	for _, item := range player.Inventory {
-		item := item
-		actions.Add(widget.NewButton(item, func() {
+		inventory.Add(widget.NewButton(item, func() {
 			for j, it := range player.Inventory {
 				if it == item {
 					player.Inventory = append(player.Inventory[:j], player.Inventory[j+1:]...)
@@ -87,11 +85,11 @@ func set_drop() {
 				}
 			}
 			log_text.SetText("OK dropped=" + item)
-			set_actions()
+			set_inventory()
 		}))
 	}
-	actions.Add(widget.NewButton("RETURN", func() {
-		set_actions()
+	inventory.Add(widget.NewButton("RETURN", func() {
+		set_inventory()
 	}))
-	actions.Refresh()
+	inventory.Refresh()
 }
