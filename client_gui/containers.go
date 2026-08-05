@@ -99,7 +99,7 @@ func set_right_container(views []*PlayerView, chatTab *fyne.Container, groupTab 
 	bottomMargin := canvas.NewRectangle(color.Transparent)
 	bottomMargin.SetMinSize(fyne.NewSize(1, 20))
 
-	bottomArea := container.NewVBox(gap, logBox, bottomButtons, bottomMargin)
+	bottomArea := container.NewVBox(gap, logBox, bottomMargin, bottomButtons)
 
 	return container.NewBorder(nil, bottomArea, nil, nil, apps)
 }

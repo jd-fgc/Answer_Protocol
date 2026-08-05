@@ -39,7 +39,7 @@ func set_npc() {
 }
 
 var playerViews []*PlayerView
-var minimapContainer *fyne.Container
+var minimapContainer fyne.CanvasObject
 
 func fill_rooms(filepath string) (Rooms, error) {
 	var r Rooms
@@ -60,10 +60,17 @@ func fill_rooms(filepath string) (Rooms, error) {
 	return r, nil
 }
 
+var mapContentHolder *fyne.Container
+var mapDraggableWidget *draggable
+
 func refreshMiniMap() {
-	minimapContainer.RemoveAll()
-	minimapContainer.Add(buildMiniMap(rooms, player.Zone, visitedRooms))
-	minimapContainer.Refresh()
+	gridObj, size := buildMiniMap(rooms, player.Zone, visitedRooms)
+	mapContentHolder.RemoveAll()
+	mapContentHolder.Add(gridObj)
+	mapContentHolder.Refresh()
+
+	mapDraggableWidget.Resize(size)
+	mapDraggableWidget.Move(mapDraggableWidget.clamp(mapDraggableWidget.Position()))
 }
 
 func read_character_file(filepath string, start_zone string) (Players, error) {
@@ -169,15 +176,15 @@ func startGame(w fyne.Window, username string, character string) {
 	log_text = widget.NewLabel("")
 	set_npc()
 	load_quest()
-	rooms, err = fill_rooms("data/world_map.json")
-	if err != nil {
-		return
+
+	var errChar error
+	players, errChar = read_character_file("data/Characters.json", "")
+	if errChar != nil {
+		log_text.SetText("Erreur chargement personnages: " + errChar.Error())
 	}
 
-	players, err = read_character_file("data/Characters.json", rooms.Rooms[0].Name)
 	player = findPlayerTemplate(character)
 	player.Name = username
-	visitedRooms[player.Zone] = true
 
 	views := []*PlayerView{
 		NewPlayerView(&players.Player[0]),
@@ -196,32 +203,42 @@ func startGame(w fyne.Window, username string, character string) {
 
 	refreshRoomPlayers(leftColumn)
 
-	minimapContainer = container.NewStack()
-	refreshMiniMap()
+	// Tailles fixes des blocs
+	leftW, leftH := float32(437), float32(870)
+	centerW, centerH := float32(557), float32(900)
+	rightW, rightH := float32(554), float32(963)
+
+	mapContentHolder = container.NewStack()
+	mapDraggableWidget = newDraggable(mapContentHolder, fyne.NewSize(centerW, centerH))
+	minimapContainer = container.NewWithoutLayout(mapDraggableWidget)
+
+	refreshRoomState(false)
+
+	mapDraggableWidget.Move(fyne.NewPos(
+		(centerW-mapDraggableWidget.Size().Width)/2,
+		(centerH-mapDraggableWidget.Size().Height)/2,
+	))
 
 	bg := canvas.NewImageFromFile("client_gui/assets/backgroundv4.png")
 	bg.FillMode = canvas.ImageFillStretch
 
-	// Ajustement des blocs
-	leftBlock := fixedSize(fyne.NewSize(437, 870), leftColumn)
-	centerBlock := fixedSize(fyne.NewSize(557, 900), minimapContainer)
-	rightBlock := fixedSize(fyne.NewSize(555, 800), rightColumn)
+	leftBlock := fixedSize(fyne.NewSize(leftW, leftH), leftColumn)
+	centerBlock := fixedSize(fyne.NewSize(centerW, centerH), minimapContainer)
+	rightBlock := fixedSize(fyne.NewSize(rightW, rightH), rightColumn)
 
-	// bloc gauche
 	left_xoffset := float32(-10)
 	left_yoffset := float32(73)
-	leftBlock.Resize(fyne.NewSize(437, 870))
+	leftBlock.Resize(fyne.NewSize(leftW, leftH))
 	leftBlock.Move(fyne.NewPos(left_xoffset, left_yoffset))
 
-	// bloc milieu
-	centerBlock.Resize(fyne.NewSize(557, 900))
-	centerBlock.Move(fyne.NewPos(280, -300))
+	center_xoffset := left_xoffset + leftW
+	center_yoffset := float32(0)
+	centerBlock.Resize(fyne.NewSize(centerW, centerH))
+	centerBlock.Move(fyne.NewPos(center_xoffset, center_yoffset))
 
-	// bloc de droite
 	right_xOffset := float32(998)
 	right_yOffset := float32(23)
-
-	rightBlock.Resize(fyne.NewSize(550, 965))
+	rightBlock.Resize(fyne.NewSize(rightW, rightH))
 	rightBlock.Move(fyne.NewPos(right_xOffset, right_yOffset))
 
 	gameLayout := container.NewWithoutLayout(leftBlock, centerBlock, rightBlock)

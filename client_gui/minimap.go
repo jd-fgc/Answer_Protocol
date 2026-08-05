@@ -10,12 +10,10 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-type roomCoord struct {
-	row, col int
-}
+const mapCellSize float32 = 60
 
-// Positionne chaque salle connue sur une grille, en partant de la salle courante,
-// en suivant les liens North/South/East/West (BFS)
+type roomCoord struct{ row, col int }
+
 func computeRoomGrid(zones Rooms, start string) map[string]roomCoord {
 	coords := map[string]roomCoord{start: {0, 0}}
 	queue := []string{start}
@@ -53,7 +51,31 @@ func computeRoomGrid(zones Rooms, start string) map[string]roomCoord {
 	return coords
 }
 
-func buildMiniMap(zones Rooms, currentZone string, visited map[string]bool) fyne.CanvasObject {
+func makeCell(isCurrent, isVisited bool) fyne.CanvasObject {
+	size := fyne.NewSize(mapCellSize-4, mapCellSize-4)
+	switch {
+	case isCurrent:
+		rect := canvas.NewRectangle(theme.Color(theme.ColorNamePrimary))
+		rect.StrokeColor = theme.Color(theme.ColorNameForeground)
+		rect.StrokeWidth = 2
+		rect.SetMinSize(size)
+		return rect
+	case isVisited:
+		rect := canvas.NewRectangle(color.NRGBA{R: 0x33, G: 0x33, B: 0x33, A: 0xff})
+		rect.StrokeColor = theme.Color(theme.ColorNameForeground)
+		rect.StrokeWidth = 1
+		rect.SetMinSize(size)
+		return rect
+	default:
+		rect := canvas.NewRectangle(color.NRGBA{R: 0x11, G: 0x11, B: 0x11, A: 0xff})
+		rect.StrokeColor = theme.Color(theme.ColorNameForeground)
+		rect.StrokeWidth = 1
+		mark := widget.NewLabelWithStyle("?", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
+		return container.NewStack(rect, container.NewCenter(mark))
+	}
+}
+
+func buildMiniMap(zones Rooms, currentZone string, visited map[string]bool) (fyne.CanvasObject, fyne.Size) {
 	coords := computeRoomGrid(zones, currentZone)
 
 	minRow, maxRow, minCol, maxCol := 0, 0, 0, 0
@@ -73,40 +95,20 @@ func buildMiniMap(zones Rooms, currentZone string, visited map[string]bool) fyne
 	}
 	rows := maxRow - minRow + 1
 	cols := maxCol - minCol + 1
-
-	const cellSize float32 = 60
+	size := fyne.NewSize(float32(cols)*mapCellSize, float32(rows)*mapCellSize)
 
 	grid := container.NewWithoutLayout()
-	grid.Resize(fyne.NewSize(float32(cols)*cellSize, float32(rows)*cellSize))
+	grid.Resize(size)
 
 	for name, c := range coords {
-		x := float32(c.col-minCol) * cellSize
-		y := float32(c.row-minRow) * cellSize
+		x := float32(c.col-minCol) * mapCellSize
+		y := float32(c.row-minRow) * mapCellSize
 
-		var cell fyne.CanvasObject
-		switch {
-		case name == currentZone:
-			rect := canvas.NewRectangle(theme.Color(theme.ColorNamePrimary))
-			rect.StrokeColor = theme.Color(theme.ColorNameForeground)
-			rect.StrokeWidth = 2
-			cell = rect
-		case visited[name]:
-			rect := canvas.NewRectangle(color.NRGBA{R: 0x33, G: 0x33, B: 0x33, A: 0xff})
-			rect.StrokeColor = theme.Color(theme.ColorNameForeground)
-			rect.StrokeWidth = 1
-			cell = rect
-		default:
-			rect := canvas.NewRectangle(color.NRGBA{R: 0x11, G: 0x11, B: 0x11, A: 0xff})
-			rect.StrokeColor = theme.Color(theme.ColorNameForeground)
-			rect.StrokeWidth = 1
-			mark := widget.NewLabelWithStyle("?", fyne.TextAlignCenter, fyne.TextStyle{Bold: true})
-			cell = container.NewStack(rect, container.NewCenter(mark))
-		}
-
-		cell.Resize(fyne.NewSize(cellSize-4, cellSize-4))
+		cell := makeCell(name == currentZone, visited[name])
+		cell.Resize(fyne.NewSize(mapCellSize-4, mapCellSize-4))
 		cell.Move(fyne.NewPos(x+2, y+2))
 		grid.Add(cell)
 	}
 
-	return container.NewCenter(grid)
+	return grid, size
 }
