@@ -1510,3 +1510,7 @@
 {"time":"2026-08-06T14:43:55.362365327Z","level":"INFO","event":"command_received","details":{"args":["Justice"],"command":"USE","from":"127.0.0.1:52588","player":"wdwdwwd"}}
 {"time":"2026-08-06T14:43:55.362406353Z","level":"INFO","event":"item_used","details":{"item":"Justice","player":"wdwdwwd"}}
 {"time":"2026-08-06T14:43:55.362428537Z","level":"INFO","event":"response_sent","details":{"from":"127.0.0.1:52588","player":"wdwdwwd","response":"OK used=Justice"}}
+{"time":"2026-08-06T14:51:24.811180062Z","level":"INFO","event":"client_disconnected","details":{"from":"127.0.0.1:52588"}}
+{"time":"2026-08-06T14:51:24.811261098Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"127.0.0.1:52588","player":"wdwdwwd"}}
+{"time":"2026-08-06T14:51:24.811308241Z","level":"INFO","event":"player_quit","details":{"from":"127.0.0.1:52588"}}
+{"time":"2026-08-06T14:51:24.811316604Z","level":"INFO","event":"response_sent","details":{"from":"127.0.0.1:52588","player":"wdwdwwd","response":"OK bye"}}

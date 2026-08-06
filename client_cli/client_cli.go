@@ -13,12 +13,12 @@ var port string
 
 func main() {
 	if len(os.Args) < 3 {
-		fmt.Println("Usage: go run client.go <address> <port>")
+		fmt.Println("Usage: go run client_cli.go <address> <port>")
 		os.Exit(1)
 	}
 
-	ip = fmt.Sprintf("%s", os.Args[1])
-	port = fmt.Sprintf(":%s", os.Args[2])
+	ip = os.Args[1]
+	port = ":" + os.Args[2]
 	addr := ip + port
 
 	conn, err := net.Dial("tcp", addr)
@@ -28,15 +28,32 @@ func main() {
 	}
 	defer conn.Close()
 
-	stdinReader := bufio.NewReader(os.Stdin)
-	connReader := bufio.NewReader(conn)
+	reader := bufio.NewReader(conn)
 
-	greeting, err := connReader.ReadString('\n')
+	greeting, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("ERROR failed to read greeting, err: ", err)
 		os.Exit(1)
 	}
 	fmt.Print(greeting)
+
+	responses := make(chan string, 20)
+	go func() {
+		for {
+			line, err := reader.ReadString('\n')
+			if err != nil {
+				close(responses)
+				return
+			}
+			if strings.HasPrefix(line, "EVT ") {
+				fmt.Print("\n" + line)
+			} else {
+				responses <- line
+			}
+		}
+	}()
+
+	stdinReader := bufio.NewReader(os.Stdin)
 
 	for {
 		fmt.Print(">>>")
@@ -46,23 +63,43 @@ func main() {
 			break
 		}
 		conn.Write([]byte(input))
-		input = strings.TrimSpace(input)
-		if input == "EXIT" || input == "QUIT" {
-			os.Exit(1)
+
+		trimmed := strings.TrimSpace(input)
+		if trimmed == "exit" || trimmed == "QUIT" {
+			break
 		}
 
-		response, err := connReader.ReadString('\n')
-		if err != nil {
-			fmt.Println("ERROR failed to read response, err: ", err)
+		response, ok := <-responses
+		if !ok {
+			fmt.Println("Connexion fermée par le serveur")
+			break
 		}
 		fmt.Print(response)
 
-		for connReader.Buffered() > 0 {
-			extra, err := connReader.ReadString('\n')
-			if err != nil {
-				break
+	drain:
+		for {
+			select {
+			case extra, ok := <-responses:
+				if !ok {
+					break drain
+				}
+				fmt.Print(extra)
+			default:
+				break drain
 			}
-			fmt.Print(extra)
+		}
+	}
+}
+
+func listenEvents(connReader *bufio.Reader) {
+	for {
+		line, err := connReader.ReadString('\n')
+		if err != nil {
+			return
+		}
+		if strings.HasPrefix(line, "EVT ") {
+			fmt.Print("\n" + line)
+			fmt.Print(">>>")
 		}
 	}
 }

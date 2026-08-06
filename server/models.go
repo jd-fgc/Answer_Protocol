@@ -25,7 +25,6 @@ type Player struct {
 	TempATK  float32
 	TempHP   int
 	TempLuck int
-	TempDmgMult float32
 }
 
 type Rooms struct {

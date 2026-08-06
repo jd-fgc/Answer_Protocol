@@ -52,16 +52,16 @@ func doLook() (*lookResponse, error) {
 }
 
 func updateKnownRoom(name string, exits lookExits) {
-	for i, r := range rooms.Rooms {
+	for i, r := range rooms_map.Rooms {
 		if r.Name == name {
-			rooms.Rooms[i].North = exits.North
-			rooms.Rooms[i].South = exits.South
-			rooms.Rooms[i].East = exits.East
-			rooms.Rooms[i].West = exits.West
+			rooms_map.Rooms[i].North = exits.North
+			rooms_map.Rooms[i].South = exits.South
+			rooms_map.Rooms[i].East = exits.East
+			rooms_map.Rooms[i].West = exits.West
 			return
 		}
 	}
-	rooms.Rooms = append(rooms.Rooms, Room{Name: name, North: exits.North, South: exits.South, East: exits.East, West: exits.West})
+	rooms_map.Rooms = append(rooms_map.Rooms, Room{Name: name, North: exits.North, South: exits.South, East: exits.East, West: exits.West})
 }
 
 var currentRoomItems []itemInstance
