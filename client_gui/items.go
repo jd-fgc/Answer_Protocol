@@ -88,3 +88,56 @@ func set_drop() {
 	}))
 	inventory.Refresh()
 }
+
+type roomSummary struct {
+	ID    string    `json:"id"`
+	Name  string    `json:"name"`
+	Exits lookExits `json:"exits"`
+}
+
+func set_use() {
+	refreshRoomState(false)
+	inventory.RemoveAll()
+
+	inv, err := doInventory()
+	if err != nil {
+		log_text.SetText("Erreur INVENTORY: " + err.Error())
+	}
+
+	for _, item := range inv {
+		item := item
+		inventory.Add(widget.NewButton(item.Name, func() {
+			lines, err := netClient.SendCommand("USE " + item.ID)
+			if err != nil || len(lines) == 0 {
+				log_text.SetText("Erreur réseau lors du USE")
+				return
+			}
+			applyUseResponse(strings.TrimSpace(lines[0]))
+		}))
+	}
+	inventory.Add(widget.NewButton("RETURN", func() {
+		set_inventory()
+	}))
+	inventory.Refresh()
+}
+
+func applyUseResponse(line string) {
+	if !strings.HasPrefix(line, "OK ") {
+		log_text.SetText(line)
+		return
+	}
+	jsonPart := strings.TrimPrefix(line, "OK ")
+
+	var summary []roomSummary
+	if err := json.Unmarshal([]byte(jsonPart), &summary); err != nil {
+		log_text.SetText("OK")
+		return
+	}
+
+	for _, rs := range summary {
+		updateKnownRoom(rs.Name, rs.Exits)
+	}
+	refreshMiniMap()
+	log_text.SetText("Carte révélée !")
+	set_inventory()
+}

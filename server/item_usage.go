@@ -92,3 +92,50 @@ func handleInventory(from string) string {
 	}
 	return string(data) + "\n"
 }
+
+type RoomSummary struct {
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Exits Exits  `json:"exits"`
+}
+
+func handleUse(from string, args []string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
+	}
+	if len(args) == 0 {
+		return "ERR missing item\n"
+	}
+	query := strings.Join(args, " ")
+
+	var matchedID string
+	for _, id := range session.Player.Inventory {
+		if id == query || itemDisplayName[id] == query {
+			matchedID = id
+			break
+		}
+	}
+	if matchedID == "" {
+		return "ERR 404 ITEM_NOT_IN_INVENTORY\n"
+	}
+	if itemDisplayName[matchedID] != "Map" {
+		return "ERR ITEM_NOT_USABLE\n"
+	}
+
+	var summary []RoomSummary
+	for _, r := range rooms.Rooms {
+		summary = append(summary, RoomSummary{
+			ID:    "room." + slugify(r.Name),
+			Name:  r.Name,
+			Exits: Exits{North: r.North, South: r.South, East: r.East, West: r.West},
+		})
+	}
+
+	data, err := json.Marshal(summary)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
+	}
+	logInfo("map_revealed", map[string]interface{}{"player": session.Username})
+	return "OK " + string(data) + "\n"
+}

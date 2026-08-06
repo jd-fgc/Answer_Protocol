@@ -49,6 +49,9 @@ func set_inventory() {
 	inventory.Add(widget.NewButton("DROP", func() {
 		set_drop()
 	}))
+	inventory.Add(widget.NewButton("USE", func() {
+		set_use()
+	}))
 	inventory.Add(widget.NewButton("INVENTORY", func() {
 		log_text.SetText(inventory_description())
 	}))

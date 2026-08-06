@@ -57,6 +57,8 @@ func hub(incoming chan Message) {
 			reply = handleDrop(msg.From, args)
 		case "INVENTORY":
 			reply = handleInventory(msg.From)
+		case "USE":
+			reply = handleUse(msg.From, args)
 		case "WHO":
 			reply = handleWho(msg.From)
 		case "CHAT":
