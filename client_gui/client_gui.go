@@ -25,6 +25,7 @@ var log *fyne.Container
 var log_text *widget.Label
 var quests Quests
 var rooms Rooms
+var rooms_map Rooms
 var visitedRooms = make(map[string]bool)
 var err error
 
@@ -73,7 +74,7 @@ var mapContentHolder *fyne.Container
 var mapDraggableWidget *draggable
 
 func refreshMiniMap() {
-	gridObj, size := buildMiniMap(rooms, player.Zone, visitedRooms)
+	gridObj, size := buildMiniMap(rooms_map, player.Zone, visitedRooms)
 	mapContentHolder.RemoveAll()
 	mapContentHolder.Add(gridObj)
 	mapContentHolder.Refresh()
@@ -190,7 +191,10 @@ func startGame(w fyne.Window, username string, character string) {
 	if err != nil {
 		return
 	}
-
+	rooms, err = fill_rooms("data/world_map.json")
+	if err != nil {
+		return
+	}
 	var errChar error
 	players, errChar = read_character_file("data/Characters.json", "")
 	if errChar != nil {

@@ -61,8 +61,17 @@ func set_inventory() {
 // INITIALISE L'ONGLET COMBAT
 func set_combat() {
 	combat.RemoveAll()
-	combat.Add(widget.NewButton("ATTACK", func() {}))
-	combat.Add(widget.NewButton("DEFEND", func() {}))
+	combat.Add(widget.NewButton("ATTACK", func() {
+		set_attack()
+	}))
+	combat.Add(widget.NewButton("DEFEND", func() {
+		lines, err := netClient.SendCommand("DEFEND")
+		if err != nil {
+			return
+		}
+		log_text.SetText(lines[0])
+		set_log()
+	}))
 	combat.Refresh()
 }
 
