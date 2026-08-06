@@ -16,12 +16,25 @@ func buildGroupTab() *fyne.Container {
 	nameEntry := widget.NewEntry()
 	nameEntry.SetPlaceHolder("Nom du groupe")
 
+	createBtn := widget.NewButton("CRÉER", func() {
+		name := strings.TrimSpace(nameEntry.Text)
+		if name == "" {
+			return
+		}
+		lines, err := netClient.SendCommand("GROUP CREATE " + name)
+		if err != nil || len(lines) == 0 {
+			groupStatus.SetText("Erreur lors de la création du groupe")
+			return
+		}
+		groupStatus.SetText(strings.TrimSpace(lines[0]))
+	})
+
 	joinBtn := widget.NewButton("REJOINDRE", func() {
 		name := strings.TrimSpace(nameEntry.Text)
 		if name == "" {
 			return
 		}
-		lines, err := netClient.SendCommand("GROUP " + name)
+		lines, err := netClient.SendCommand("GROUP JOIN " + name)
 		if err != nil || len(lines) == 0 {
 			groupStatus.SetText("Erreur lors de la connexion au groupe")
 			return
@@ -30,19 +43,28 @@ func buildGroupTab() *fyne.Container {
 	})
 
 	leaveBtn := widget.NewButton("QUITTER", func() {
-		lines, err := netClient.SendCommand("GROUP LEAVE")
-		if err != nil || len(lines) == 0 {
+		_, err := netClient.SendCommand("GROUP LEAVE")
+		if err != nil {
 			return
 		}
 		groupStatus.SetText("Groupe : aucun")
 	})
 
-	buttons := container.NewHBox(joinBtn, leaveBtn)
+	inviteEntry := widget.NewEntry()
+	inviteEntry.SetPlaceHolder("Pseudo à inviter")
+	inviteBtn := widget.NewButton("INVITER", func() {
+		target := strings.TrimSpace(inviteEntry.Text)
+		if target == "" {
+			return
+		}
+		netClient.SendCommand("GROUP INVITE " + target)
+	})
 
 	return container.NewVBox(
 		groupStatus,
 		nameEntry,
-		buttons,
+		container.NewHBox(createBtn, joinBtn, leaveBtn),
+		container.NewHBox(inviteEntry, inviteBtn),
 	)
 }
 

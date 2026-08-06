@@ -17,7 +17,6 @@ import (
 var player Player
 var players Players
 var answer ANSWER
-var npc []NPC
 var actions *fyne.Container
 var inventory *fyne.Container
 var combat *fyne.Container
@@ -25,9 +24,9 @@ var log *fyne.Container
 var log_text *widget.Label
 var quests Quests
 var rooms Rooms
+var rooms_map Rooms
 var visitedRooms = make(map[string]bool)
 var err error
-
 
 func load_quests(file_path string) (Quests, error) {
 	var q Quests
@@ -49,7 +48,7 @@ func load_quests(file_path string) (Quests, error) {
 }
 
 var playerViews []*PlayerView
-var minimapContainer *fyne.Container
+var minimapContainer fyne.CanvasObject
 
 func fill_rooms(filepath string) (Rooms, error) {
 	var r Rooms
@@ -70,10 +69,17 @@ func fill_rooms(filepath string) (Rooms, error) {
 	return r, nil
 }
 
+var mapContentHolder *fyne.Container
+var mapDraggableWidget *draggable
+
 func refreshMiniMap() {
-	minimapContainer.RemoveAll()
-	minimapContainer.Add(buildMiniMap(rooms, player.Zone, visitedRooms))
-	minimapContainer.Refresh()
+	gridObj, size := buildMiniMap(rooms_map, player.Zone, visitedRooms)
+	mapContentHolder.RemoveAll()
+	mapContentHolder.Add(gridObj)
+	mapContentHolder.Refresh()
+
+	mapDraggableWidget.Resize(size)
+	mapDraggableWidget.Move(mapDraggableWidget.clamp(mapDraggableWidget.Position()))
 }
 
 func read_character_file(filepath string, start_zone string) (Players, error) {
@@ -171,12 +177,15 @@ func main() {
 	a.Run()
 }
 
+var mapScrollGlobal *container.Scroll
+
 func startGame(w fyne.Window, username string, character string) {
 	actions = container.NewVBox()
 	inventory = container.NewVBox()
 	combat = container.NewVBox()
 	log = container.NewVBox()
 	log_text = widget.NewLabel("")
+	log_text.Wrapping = fyne.TextWrapWord
 	quests, err = load_quests("data/quests.json")
 	if err != nil {
 		return
@@ -185,51 +194,66 @@ func startGame(w fyne.Window, username string, character string) {
 	if err != nil {
 		return
 	}
-	players, err = read_character_file("data/Characters.json", rooms.Rooms[0].Name)
-	if err != nil {
-		return
+	var errChar error
+	players, errChar = read_character_file("data/Characters.json", "")
+	if errChar != nil {
+		log_text.SetText("Erreur chargement personnages: " + errChar.Error())
 	}
+
 	player = findPlayerTemplate(character)
 	player.Name = username
-	visitedRooms[player.Zone] = true
 
 	views := []*PlayerView{
-		NewPlayerView(&player),
+		NewPlayerView(&players.Player[0]),
+		NewPlayerView(&players.Player[1]),
+		NewPlayerView(&players.Player[2]),
+		NewPlayerView(&players.Player[3]),
 	}
 	playerViews = views
+	chatTab := buildChatTab()
+	groupTab := buildGroupTab()
+	go listenChatEvents()
 
 	leftColumn := set_left_container()
 	leftColumnGlobal = leftColumn
-	rightColumn := set_right_container(views)
+	rightColumn := set_right_container(views, chatTab, groupTab)
 
-	refreshRoomPlayers(leftColumn)
+	// Tailles fixes des blocs
+	leftW, leftH := float32(437), float32(870)
+	centerW, centerH := float32(557), float32(900)
+	rightW, rightH := float32(554), float32(963)
 
-	minimapContainer = container.NewStack()
-	refreshMiniMap()
+	mapContentHolder = container.NewStack()
+	mapDraggableWidget = newDraggable(mapContentHolder, fyne.NewSize(centerW, centerH))
+	minimapContainer = container.NewWithoutLayout(mapDraggableWidget)
 
-	bg := canvas.NewImageFromFile("client_gui/assets/backgroundv2.png")
+	refreshRoomState(false)
+
+	mapDraggableWidget.Move(fyne.NewPos(
+		(centerW-mapDraggableWidget.Size().Width)/2,
+		(centerH-mapDraggableWidget.Size().Height)/2,
+	))
+
+	bg := canvas.NewImageFromFile("client_gui/assets/backgroundv4.png")
 	bg.FillMode = canvas.ImageFillStretch
 
-	// Ajustement des blocs
-	leftBlock := fixedSize(fyne.NewSize(437, 870), leftColumn)
-	centerBlock := fixedSize(fyne.NewSize(557, 900), minimapContainer)
-	rightBlock := fixedSize(fyne.NewSize(555, 800), rightColumn)
+	leftBlock := fixedSize(fyne.NewSize(leftW, leftH), leftColumn)
+	centerBlock := fixedSize(fyne.NewSize(centerW, centerH), minimapContainer)
+	rightBlock := fixedSize(fyne.NewSize(rightW, rightH), rightColumn)
 
-	// bloc gauche
 	left_xoffset := float32(-10)
-	left_yoffset := float32(26)
-	leftBlock.Resize(fyne.NewSize(437, 870))
+	left_yoffset := float32(73)
+	leftBlock.Resize(fyne.NewSize(leftW, leftH))
 	leftBlock.Move(fyne.NewPos(left_xoffset, left_yoffset))
 
-	// bloc milieu
-	centerBlock.Resize(fyne.NewSize(557, 900))
-	centerBlock.Move(fyne.NewPos(280, -300))
+	center_xoffset := left_xoffset + leftW
+	center_yoffset := float32(0)
+	centerBlock.Resize(fyne.NewSize(centerW, centerH))
+	centerBlock.Move(fyne.NewPos(center_xoffset, center_yoffset))
 
-	// bloc de droite
-	right_xOffset := float32(1005)
-	right_yOffset := float32(20)
-
-	rightBlock.Resize(fyne.NewSize(550, 870))
+	right_xOffset := float32(998)
+	right_yOffset := float32(23)
+	rightBlock.Resize(fyne.NewSize(rightW, rightH))
 	rightBlock.Move(fyne.NewPos(right_xOffset, right_yOffset))
 
 	gameLayout := container.NewWithoutLayout(leftBlock, centerBlock, rightBlock)

@@ -1,95 +1,143 @@
 package main
 
 import (
+	"encoding/json"
 	"strings"
 
 	"fyne.io/fyne/v2/widget"
 )
 
-func look_room_description() string {
-	r := current_room()
-	var npcNames []string
-	for _, n := range npc {
-		if n.Zone == r.Name {
-			npcNames = append(npcNames, n.Name)
-		}
+func doInventory() ([]itemInstance, error) {
+	lines, err := netClient.SendCommand("INVENTORY")
+	if err != nil || len(lines) == 0 {
+		return nil, err
 	}
-	return "Room: " + r.Name +
-		"\nItems: " + strings.Join(r.Items, ", ") +
-		"\nNPCs: " + strings.Join(npcNames, ", ")
+
+	line := strings.TrimSpace(lines[0])
+	line = strings.TrimPrefix(line, "OK ")
+
+	var inv []itemInstance
+	if err := json.Unmarshal([]byte(line), &inv); err != nil {
+		return nil, err
+	}
+	return inv, nil
 }
 
 func inventory_description() string {
-	lines, err := netClient.SendCommand("INVENTORY")
+	inv, err := doInventory()
 	if err != nil {
-		return "Erreur INVENTORY " + err.Error()
+		return "Erreur INVENTORY: " + err.Error()
 	}
-	return lines[0]
-}
-
-func who_description() string {
+	if len(inv) == 0 {
+		return "Inventory: (empty)"
+	}
 	var names []string
-	for _, p := range players.Player {
-		if p.Zone == player.Zone {
-			names = append(names, p.Name)
-		}
+	for _, it := range inv {
+		names = append(names, it.Name)
 	}
-	return "Room players: " + strings.Join(names, ", ")
+	return "Inventory: " + strings.Join(names, ", ")
 }
 
 func set_take() {
+	refreshRoomState(false)
 	inventory.RemoveAll()
 
-	roomIdx := -1
-	for i, r := range rooms.Rooms {
-		if r.Name == player.Zone {
-			roomIdx = i
-		}
-	}
-	if roomIdx != -1 {
-		look, err := doLook()
-		if err != nil {
-			log_text.SetText("Erreur TAKE: " + err.Error())
-		}
-		rooms.Rooms[roomIdx].Items = look.Items
-		for _, item := range rooms.Rooms[roomIdx].Items {
-			inventory.Add(widget.NewButton(item, func() {
-				lines, err := netClient.SendCommand("TAKE " + item)
-				if err != nil || len(lines) == 0 {
-					log_text.SetText("Erreur réseau lors du TAKE")
-					return
-				}
-				log_text.SetText(strings.TrimSpace(lines[0]))
-				player.Inventory = append(player.Inventory, item)
-				refreshRoomState(false)
-				set_inventory()
-			}))
-		}
-	}
-	inventory.Add(widget.NewButton("RETURN", func() {
-		set_inventory()
-	}))
-	inventory.Refresh()
-	}
-
-func set_drop() {
-	inventory.RemoveAll()
-
-	for i, item := range player.Inventory {
-		inventory.Add(widget.NewButton(item, func() {
-			lines, err := netClient.SendCommand("DROP " + item)
+	for _, item := range currentRoomItems {
+		item := item
+		inventory.Add(widget.NewButton(item.Name, func() {
+			lines, err := netClient.SendCommand("TAKE " + item.ID)
 			if err != nil || len(lines) == 0 {
-				log_text.SetText("Erreur réseau lors du DROP")
+				log_text.SetText("Erreur réseau lors du TAKE")
 				return
 			}
 			log_text.SetText(strings.TrimSpace(lines[0]))
-			player.Inventory = append(player.Inventory[:i], player.Inventory[i+1:]...)
 			refreshRoomState(false)
-			set_inventory()
+			set_take()
 		}))
 	}
 	inventory.Add(widget.NewButton("RETURN", func() {
 		set_inventory()
 	}))
 	inventory.Refresh()
+}
+
+func set_drop() {
+	refreshRoomState(false)
+	inventory.RemoveAll()
+
+	inv, err := doInventory()
+	if err != nil {
+		log_text.SetText("Erreur INVENTORY: " + err.Error())
+	}
+
+	for _, item := range inv {
+		item := item
+		inventory.Add(widget.NewButton(item.Name, func() {
+			lines, err := netClient.SendCommand("DROP " + item.ID)
+			if err != nil || len(lines) == 0 {
+				log_text.SetText("Erreur réseau lors du DROP")
+				return
+			}
+			log_text.SetText(strings.TrimSpace(lines[0]))
+			refreshRoomState(false)
+			set_drop()
+		}))
+	}
+	inventory.Add(widget.NewButton("RETURN", func() {
+		set_inventory()
+	}))
+	inventory.Refresh()
+}
+
+type roomSummary struct {
+	ID    string    `json:"id"`
+	Name  string    `json:"name"`
+	Exits lookExits `json:"exits"`
+}
+
+func set_use() {
+	refreshRoomState(false)
+	inventory.RemoveAll()
+
+	inv, err := doInventory()
+	if err != nil {
+		log_text.SetText("Erreur INVENTORY: " + err.Error())
+	}
+
+	for _, item := range inv {
+		item := item
+		inventory.Add(widget.NewButton(item.Name, func() {
+			lines, err := netClient.SendCommand("USE " + item.ID)
+			if err != nil || len(lines) == 0 {
+				log_text.SetText("Erreur réseau lors du USE")
+				return
+			}
+			applyUseResponse(strings.TrimSpace(lines[0]))
+		}))
+	}
+	inventory.Add(widget.NewButton("RETURN", func() {
+		set_inventory()
+	}))
+	inventory.Refresh()
+}
+
+func applyUseResponse(line string) {
+	if !strings.HasPrefix(line, "OK ") {
+		log_text.SetText(line)
+		return
+	}
+	jsonPart := strings.TrimPrefix(line, "OK ")
+
+	var summary []roomSummary
+	if err := json.Unmarshal([]byte(jsonPart), &summary); err != nil {
+		log_text.SetText("OK")
+		return
+	}
+
+	for _, rs := range summary {
+		updateKnownRoom(rs.Name, rs.Exits)
+	}
+	refreshMiniMap()
+	log_text.SetText("Carte révélée !")
+	set_inventory()
 }

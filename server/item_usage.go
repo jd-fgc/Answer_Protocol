@@ -1,5 +1,19 @@
 package main
 
+import (
+	"encoding/json"
+	"strings"
+)
+
+func findItemInRoom(roomIdx int, query string) (int, ItemInstance, bool) {
+	for i, it := range rooms.Rooms[roomIdx].Items {
+		if it.ID == query || it.Name == query {
+			return i, it, true
+		}
+	}
+	return -1, ItemInstance{}, false
+}
+
 func handleTake(From string, args []string) string {
 	session, ok := sessions[From]
 	if !ok || session.Player == nil {
@@ -8,22 +22,23 @@ func handleTake(From string, args []string) string {
 	if len(args) == 0 {
 		return "ERR missing item\n"
 	}
-
-	res := TAKE(session.Player, args[0])
+	query := strings.Join(args, " ")
+	res := TAKE(session.Player, query)
 	return res + "\n"
 }
 
-func TAKE(usr *Player, item_name string) string {
+func TAKE(usr *Player, query string) string {
 	for i, val := range rooms.Rooms {
 		if val.Name == usr.Zone {
-			for j, item := range val.Items {
-				if item == item_name {
-					usr.Inventory = append(usr.Inventory, item)
-					rooms.Rooms[i].Items = append(rooms.Rooms[i].Items[:j], rooms.Rooms[i].Items[j+1:]...)
-					update_players(*usr)
-					return "OK taken=" + item_name
-				}
+			idx, it, found := findItemInRoom(i, query)
+			if !found {
+				return "ERR 404 ITEM_NOT_FOUND"
 			}
+			usr.Inventory = append(usr.Inventory, it.ID)
+			rooms.Rooms[i].Items = append(rooms.Rooms[i].Items[:idx], rooms.Rooms[i].Items[idx+1:]...)
+			update_players(*usr)
+			logInfo("item_taken", map[string]interface{}{"player": usr.Name, "item_id": it.ID, "room": usr.Zone})
+			return "OK taken=" + it.ID
 		}
 	}
 	return "ERR 404 ITEM_NOT_FOUND"
@@ -37,53 +52,90 @@ func handleDrop(From string, args []string) string {
 	if len(args) == 0 {
 		return "ERR missing item\n"
 	}
-
-	res := DROP(session.Player, args[0])
+	query := strings.Join(args, " ")
+	res := DROP(session.Player, query)
 	return res + "\n"
 }
 
-func DROP(usr *Player, item_name string) string {
-	for i, val := range rooms.Rooms {
-		if val.Name == usr.Zone {
-			for j, item := range usr.Inventory {
-				if item == item_name {
-					usr.Inventory = append(usr.Inventory[:j], usr.Inventory[j+1:]...)
-					rooms.Rooms[i].Items = append(rooms.Rooms[i].Items, item_name)
-					update_players(*usr)
-					return "OK dropped=" + item_name
+func DROP(usr *Player, query string) string {
+	for i, id := range usr.Inventory {
+		if id == query || itemDisplayName[id] == query {
+			name := itemDisplayName[id]
+			usr.Inventory = append(usr.Inventory[:i], usr.Inventory[i+1:]...)
+			for ri, r := range rooms.Rooms {
+				if r.Name == usr.Zone {
+					rooms.Rooms[ri].Items = append(rooms.Rooms[ri].Items, ItemInstance{ID: id, Name: name})
 				}
 			}
+			update_players(*usr)
+			logInfo("item_dropped", map[string]interface{}{"player": usr.Name, "item_id": id, "room": usr.Zone})
+			return "OK dropped=" + id
 		}
 	}
 	return "ERR 404 ITEM_NOT_IN_INVENTORY"
 }
 
-func handleInventory(From string) string {
-	session, ok := sessions[From]
+func handleInventory(from string) string {
+	session, ok := sessions[from]
 	if !ok || session.Player == nil {
 		return "ERR not connected\n"
 	}
 
-	res, inv := INVENTORY(*session.Player)
-
-	res += " ["
-	for _, val := range inv {
-		res += val
+	var items []ItemInstance
+	for _, id := range session.Player.Inventory {
+		items = append(items, ItemInstance{ID: id, Name: itemDisplayName[id]})
 	}
-	return res + "]\n"
+
+	data, err := json.Marshal(items)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
+	}
+	return string(data) + "\n"
 }
 
-func INVENTORY(usr Player) (string, []string) {
-	return "OK", usr.Inventory
+type RoomSummary struct {
+	ID    string `json:"id"`
+	Name  string `json:"name"`
+	Exits Exits  `json:"exits"`
 }
 
-func USE(usr *Player, item_name string) string {
-	switch item_name {
-	case "halo":
-		halo(usr)
-	default:
-		return "ERR 404 NO_ITEM_FOUND"
+func handleUse(from string, args []string) string {
+	session, ok := sessions[from]
+	if !ok || session.Player == nil {
+		return "ERR not connected\n"
 	}
-	update_players(*usr)
-	return "OK used " + item_name + "\n"
+	if len(args) == 0 {
+		return "ERR missing item\n"
+	}
+	query := strings.Join(args, " ")
+
+	var matchedID string
+	for _, id := range session.Player.Inventory {
+		if id == query || itemDisplayName[id] == query {
+			matchedID = id
+			break
+		}
+	}
+	if matchedID == "" {
+		return "ERR 404 ITEM_NOT_IN_INVENTORY\n"
+	}
+	if itemDisplayName[matchedID] != "Map" {
+		return "ERR ITEM_NOT_USABLE\n"
+	}
+
+	var summary []RoomSummary
+	for _, r := range rooms.Rooms {
+		summary = append(summary, RoomSummary{
+			ID:    "room." + slugify(r.Name),
+			Name:  r.Name,
+			Exits: Exits{North: r.North, South: r.South, East: r.East, West: r.West},
+		})
+	}
+
+	data, err := json.Marshal(summary)
+	if err != nil {
+		return "ERR " + err.Error() + "\n"
+	}
+	logInfo("map_revealed", map[string]interface{}{"player": session.Username})
+	return "OK " + string(data) + "\n"
 }

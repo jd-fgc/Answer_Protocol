@@ -26,6 +26,19 @@ func hub(incoming chan Message) {
 		msg := <-incoming
 		cmd, args := parseCommand(msg.Text)
 
+		playerName := "unknown"
+		if s, ok := sessions[msg.From]; ok && s.Username != "" {
+			playerName = s.Username
+		}
+
+		logInfo("command_received", map[string]interface{}{
+			"from": msg.From, "player": playerName, "command": cmd, "args": args,
+		})
+
+		if checkAbuse(msg.From) {
+			logWarn("command_flooding", map[string]interface{}{"from": msg.From, "player": playerName})
+		}
+
 		var reply string
 		switch cmd {
 		case "CONNECT":
@@ -44,14 +57,16 @@ func hub(incoming chan Message) {
 			reply = handleDrop(msg.From, args)
 		case "INVENTORY":
 			reply = handleInventory(msg.From)
-		case "QUIT":
-			reply = handleQuit(msg.From)
+		case "USE":
+			reply = handleUse(msg.From, args)
 		case "WHO":
 			reply = handleWho(msg.From)
 		case "CHAT":
 			reply = handleChat(msg.From, args)
 		case "GROUP":
 			reply = handleGroup(msg.From, args)
+		case "QUIT":
+			reply = handleQuit(msg.From)
 		case "ATTACK":
 			reply = handleAttack(msg.From, args)
 		case "DEFEND":
@@ -67,6 +82,10 @@ func hub(incoming chan Message) {
 		default:
 			reply = "ERR unknown command\n"
 		}
+
+		logInfo("response_sent", map[string]interface{}{
+			"from": msg.From, "player": playerName, "response": strings.TrimSpace(reply),
+		})
 
 		msg.ReplyChan <- reply
 	}
@@ -93,12 +112,16 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 	reader := bufio.NewReader(conn)
 	from := conn.RemoteAddr().String()
 
+	conn.Write([]byte("OK hello proto=1\n"))
+
 	for {
 		bytes, err := reader.ReadBytes(byte('\n'))
 		if err != nil {
 			if err != io.EOF {
-				fmt.Println("failed to read data, err:", err)
+				logError("read_failed", map[string]interface{}{"from": from, "error": err.Error()})
 			}
+			logInfo("client_disconnected", map[string]interface{}{"from": from})
+
 			replyChan := make(chan string, 1)
 			incoming <- Message{From: from, Text: "QUIT\n", ReplyChan: replyChan}
 			return
@@ -107,7 +130,6 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 		replyChan := make(chan string)
 		incoming <- Message{From: from, Text: string(bytes), ReplyChan: replyChan}
 		response := <-replyChan
-
 		conn.Write([]byte(response))
 
 		cmd, _ := parseCommand(string(bytes))
@@ -121,6 +143,10 @@ func main() {
 	if len(os.Args) < 2 {
 		fmt.Println("Usage: go run main.go <port>")
 		os.Exit(1)
+	}
+
+	if err := initLogger(); err != nil {
+		fmt.Println("warning: logger init failed, falling back to stdout:", err)
 	}
 
 	var err error
@@ -141,9 +167,10 @@ func main() {
 		fmt.Println(err)
 		return
 	}
+
 	listener, err := net.Listen("tcp", port)
 	if err != nil {
-		fmt.Println("failed to create listener, err:", err)
+		logError("listener_failed", map[string]interface{}{"error": err.Error()})
 		os.Exit(1)
 	}
 	defer listener.Close()
@@ -154,11 +181,16 @@ func main() {
 
 	for {
 		conn, err := listener.Accept()
-
 		if err != nil {
-			fmt.Println("Failed to accep connection, err:", err)
+			logError("accept_failed", map[string]interface{}{"error": err.Error()})
 			continue
 		}
+
+		ip, _, _ := net.SplitHostPort(conn.RemoteAddr().String())
+		if checkConnectionAbuse(ip) {
+			logWarn("rapid_connection_pattern", map[string]interface{}{"ip": ip})
+		}
+		logInfo("client_connected", map[string]interface{}{"remote_addr": conn.RemoteAddr().String()})
 
 		go handleConnection(conn, incoming)
 	}

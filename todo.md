@@ -1,17 +1,15 @@
 Server :
-- CHAT 
-- GROUP
+- CHAT a finir
+- GROUP juste virer invit
 - USE
-- Group
-    - CREATE
-    - INVITE
-    - JOIN
-    - LEAVE
-- Gestion Espace
 
-INTERFACE :
+- Gestion Plusieurs Command (COMMAND ... + COMMAND ...)
+- ATTACK cli ok / finir GUI
+- DEFENSE cli ok / finir GUI
+- STATUS cli ok / finir GUI
+
+
+INTERFACE (GUI) :
 - ajouter Complete Quests
-- Ajouter GROUP
 - Ajouter USE
-
-FIX :
+- Ajouter Status (onglet combat) cli ok

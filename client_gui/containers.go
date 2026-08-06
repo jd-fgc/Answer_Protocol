@@ -6,6 +6,7 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
 	"fyne.io/fyne/v2/container"
+	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 )
 
@@ -36,11 +37,6 @@ func set_actions() {
 	actions.Add(widget.NewButton("QUEST", func() {
 		set_quests()
 	}))
-	actions.Add(widget.NewButton("QUIT", func() {
-		netClient.SendCommand("QUIT")
-		netClient.Close()
-		fyne.CurrentApp().Quit()
-	}))
 	actions.Refresh()
 }
 
@@ -53,6 +49,9 @@ func set_inventory() {
 	inventory.Add(widget.NewButton("DROP", func() {
 		set_drop()
 	}))
+	inventory.Add(widget.NewButton("USE", func() {
+		set_use()
+	}))
 	inventory.Add(widget.NewButton("INVENTORY", func() {
 		log_text.SetText(inventory_description())
 	}))
@@ -62,13 +61,22 @@ func set_inventory() {
 // INITIALISE L'ONGLET COMBAT
 func set_combat() {
 	combat.RemoveAll()
-	combat.Add(widget.NewButton("ATTACK", func() {}))
-	combat.Add(widget.NewButton("DEFEND", func() {}))
+	combat.Add(widget.NewButton("ATTACK", func() {
+		set_attack()
+	}))
+	combat.Add(widget.NewButton("DEFEND", func() {
+		lines, err := netClient.SendCommand("DEFEND")
+		if err != nil {
+			return
+		}
+		log_text.SetText(lines[0])
+		set_log()
+	}))
 	combat.Refresh()
 }
 
 // INITIALISE LE CONTAINER DE DROITE
-func set_right_container(views []*PlayerView) *fyne.Container {
+func set_right_container(views []*PlayerView, chatTab *fyne.Container, groupTab *fyne.Container) *fyne.Container {
 	set_actions()
 	set_inventory()
 	set_combat()
@@ -78,21 +86,27 @@ func set_right_container(views []*PlayerView) *fyne.Container {
 		container.NewTabItem("Actions", actions),
 		container.NewTabItem("Inventory", inventory),
 		container.NewTabItem("Combat", combat),
+		container.NewTabItem("Chat", chatTab),
+		container.NewTabItem("Group", groupTab),
 	)
 
-	chatBtn := widget.NewButton("CHAT", func() {
-		log_text.SetText("Chat : pas encore branché")
-	})
-
-	thirdBtn := widget.NewButton("?", func() {})
-	thirdBtn.Disable()
-
 	quitBtn := widget.NewButton("QUIT", func() {
+		netClient.SendCommand("QUIT")
+		netClient.Close()
 		fyne.CurrentApp().Quit()
 	})
 
-	bottomButtons := container.NewGridWithColumns(3, chatBtn, thirdBtn, quitBtn)
-	bottomArea := container.NewVBox(log, bottomButtons)
+	logInner := container.NewVBox(layout.NewSpacer(), log)
+	logBox := fixedSize(fyne.NewSize(1, 90), container.NewVScroll(logInner))
+
+	gap := canvas.NewRectangle(color.Transparent)
+	gap.SetMinSize(fyne.NewSize(1, 15))
+
+	bottomButtons := container.NewGridWithColumns(1, quitBtn)
+	bottomMargin := canvas.NewRectangle(color.Transparent)
+	bottomMargin.SetMinSize(fyne.NewSize(1, 20))
+
+	bottomArea := container.NewVBox(gap, logBox, bottomMargin, bottomButtons)
 
 	return container.NewBorder(nil, bottomArea, nil, nil, apps)
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 )
 
 func print_available_zone(zone Room) {
@@ -52,7 +53,15 @@ func handleMove(from string, args []string) string {
 		return "ERR missing direction\n"
 	}
 
+	oldZone := session.Player.Zone
 	res := MOVE(session.Player, args[0])
+
+	if strings.HasPrefix(res, "OK") {
+		newZone := session.Player.Zone
+		broadcastRoom(oldZone, "EVT ROOM PRESENCE LEAVE "+session.Username+"\n")
+		broadcastRoom(newZone, "EVT ROOM PRESENCE ENTER "+session.Username+"\n")
+	}
+
 	return res + "\n"
 }
 

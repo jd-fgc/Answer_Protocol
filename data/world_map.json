@@ -2,8 +2,15 @@
     "world": [
         {
             "name": "Spawn",
-            "NPC": [],
-            "item": ["potion"],
+            "NPC": [
+                {
+                    "name": "Dummy",
+                    "hp": 10,
+                    "ennemy": true,
+                    "talk": ". . . *Un mannequin tout dechire*"
+                }
+            ],
+            "item": ["potion", "Map"],
             "North": "Up_1",
             "South": "",
             "East": "",
