@@ -1,0 +1,12 @@
+{
+    "quests": [
+        {
+            "name": "La rydelequest",
+            "type": "item",
+            "description": "Ramener 4 keys a Ryan",
+            "completed": false,
+            "reward": "halo",
+            "amount_reward": 1
+        }
+    ]
+}
