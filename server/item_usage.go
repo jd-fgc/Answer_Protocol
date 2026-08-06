@@ -83,7 +83,11 @@ func handleInventory(from string) string {
 
 	var items []ItemInstance
 	for _, id := range session.Player.Inventory {
-		items = append(items, ItemInstance{ID: id, Name: itemDisplayName[id]})
+		name := itemDisplayName[id]
+		if name == "" {
+			name = id
+		}
+		items = append(items, ItemInstance{ID: id, Name: name})
 	}
 
 	data, err := json.Marshal(items)
@@ -142,13 +146,16 @@ func handleUse(from string, args []string) string {
 		return "OK " + string(data) + "\n"
 	}
 
-	err := useActiveItem(session.Player, displayName)
+	result, err := useActiveItem(session.Player, displayName)
 	if err != nil {
 		return "ERR ITEM_NOT_USABLE\n"
 	}
 	removeInventoryItem(session.Player, matchedID)
 	update_players(*session.Player)
 	logInfo("item_used", map[string]interface{}{"player": session.Username, "item": displayName})
+	if result != "" {
+		return "OK drawn=" + result + "\n"
+	}
 	return "OK used=" + matchedID + "\n"
 }
 
@@ -163,8 +170,8 @@ func removeInventoryItem(usr *Player, itemID string) {
 
 func removeNpc(room *Room, npc int) {
 	if room.NPC[npc].HP <= 0 {
-				room.NPC = append(room.NPC[:npc], room.NPC[npc+1:]...)
-			}
+		room.NPC = append(room.NPC[:npc], room.NPC[npc+1:]...)
+	}
 }
 
 func checkAndRespawnPlayer(usr *Player) bool {

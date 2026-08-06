@@ -51,7 +51,6 @@ func ReadPillsItems(filepath string) ([]string, error) {
 	return data.Items.Pills, nil
 }
 
-
 func search_room(usr *Player) *Room {
 	for i := range rooms.Rooms {
 		if rooms.Rooms[i].Name == usr.Zone {
@@ -62,51 +61,50 @@ func search_room(usr *Player) *Room {
 }
 
 func getTargetZone(usr *Player) string {
-    playerRoom := search_room(usr)
+	playerRoom := search_room(usr)
 
-    if playerRoom != nil {
-        hasEnemy := false
-        for _, npc := range playerRoom.NPC {
-            if npc.Ennemy && npc.HP > 0 {
-                hasEnemy = true
-                break
-            }
-        }
-        if !hasEnemy {
-            return playerRoom.Name
-        }
-    }
+	if playerRoom != nil {
+		hasEnemy := false
+		for _, npc := range playerRoom.NPC {
+			if npc.Ennemy && npc.HP > 0 {
+				hasEnemy = true
+				break
+			}
+		}
+		if !hasEnemy {
+			return playerRoom.Name
+		}
+	}
 
+	var safeZones []string
+	for _, r := range rooms.Rooms {
+		hasEnemy := false
+		for _, npc := range r.NPC {
+			if npc.Ennemy && npc.HP > 0 {
+				hasEnemy = true
+				break
+			}
+		}
+		if !hasEnemy {
+			safeZones = append(safeZones, r.Name)
+		}
+	}
 
-    var safeZones []string
-    for _, r := range rooms.Rooms {
-        hasEnemy := false
-        for _, npc := range r.NPC {
-            if npc.Ennemy && npc.HP > 0 {
-                hasEnemy = true
-                break
-            }
-        }
-        if !hasEnemy {
-            safeZones = append(safeZones, r.Name)
-        }
-    }
+	if len(safeZones) > 0 {
+		return safeZones[rand.IntN(len(safeZones))]
+	}
 
-    if len(safeZones) > 0 {
-        return safeZones[rand.IntN(len(safeZones))]
-    }
-
-    return "Spawn"
+	return "Spawn"
 }
 
-func useActiveItem(usr *Player, item_name string) error {
+func useActiveItem(usr *Player, item_name string) (string, error) {
 	switch item_name {
 	case "The Book Of Belial":
 		applyBookOfBelial(usr)
 	case "Book Of Revelations":
 		applyBookOfRevelations(usr)
 	case "Deck of Cards":
-		applyDecksOfCards(usr)
+		return applyDecksOfCards(usr), nil
 	case "D6":
 		applyD6(usr)
 	case "Kamikaze!":
@@ -174,9 +172,9 @@ func useActiveItem(usr *Player, item_name string) error {
 	case "?Pill?":
 		applyPill(usr)
 	default:
-		return fmt.Errorf("ERR unknown item: %s", item_name)
+		return "", fmt.Errorf("ERR unknown item: %s", item_name)
 	}
-	return nil
+	return "", nil
 }
 
 // BASE ITEMS
@@ -196,14 +194,16 @@ func applyBookOfRevelations(usr *Player) {
 	}
 }
 
-func applyDecksOfCards(usr *Player) {
+func applyDecksOfCards(usr *Player) string {
 	available_tarot, err := ReadTarotItems("data/items.json")
 	if err != nil {
 		log.Fatal(err)
 	}
 	randomIndex := rand.IntN(len(available_tarot))
 	randomTarot := available_tarot[randomIndex]
+	itemDisplayName[randomTarot] = randomTarot
 	usr.Inventory = append(usr.Inventory, randomTarot)
+	return randomTarot
 }
 
 func applyD6(usr *Player) {
@@ -218,6 +218,7 @@ func applyD6(usr *Player) {
 	for i := range room.Items {
 		randomIndex := rand.IntN(len(available_item))
 		randomItem := available_item[randomIndex]
+		itemDisplayName["item."+randomItem] = randomItem
 		room.Items[i] = ItemInstance{
 			ID:   "item." + randomItem,
 			Name: randomItem,
@@ -247,6 +248,7 @@ func applyMomsBottleOfPills(usr *Player) {
 	}
 	randomIndex := rand.IntN(len(available_pills))
 	randomPills := available_pills[randomIndex]
+	itemDisplayName[randomPills] = randomPills
 	usr.Inventory = append(usr.Inventory, randomPills)
 }
 
@@ -407,30 +409,30 @@ func applyPill(usr *Player) {
 		"bonus_hp", "bonus_atk", "bonus_maxhp",
 	}
 	switch effects[rand.IntN(len(effects))] {
-		case "hard_penalty_hp":
-			usr.CURRENT_HP = max(0, usr.CURRENT_HP-50)
-			checkAndRespawnPlayer(usr)
-		case "hard_penalty_atk":
-			usr.ATK = max(0, usr.ATK-10)
-		case "hard_penalty_maxhp":
-			usr.MAX_HP = max(0, usr.MAX_HP-30)
-			usr.CURRENT_HP = min(usr.CURRENT_HP, usr.MAX_HP)
-			checkAndRespawnPlayer(usr)
-		case "medium_penalty_hp":
-			usr.CURRENT_HP = max(0, usr.CURRENT_HP-20)
-			checkAndRespawnPlayer(usr)
-		case "medium_penalty_atk":
-			usr.ATK = max(0, usr.ATK-5)
-		case "medium_penalty_maxhp":
-			usr.MAX_HP = max(0, usr.MAX_HP-15)
-			usr.CURRENT_HP = min(usr.CURRENT_HP, usr.MAX_HP)
-			checkAndRespawnPlayer(usr)
-		case "bonus_hp":
-			usr.CURRENT_HP = min(usr.MAX_HP, usr.CURRENT_HP+25)
-		case "bonus_atk":
-			usr.ATK += 5
-		case "bonus_maxhp":
-			usr.MAX_HP += 20
-			usr.CURRENT_HP += 20
+	case "hard_penalty_hp":
+		usr.CURRENT_HP = max(0, usr.CURRENT_HP-50)
+		checkAndRespawnPlayer(usr)
+	case "hard_penalty_atk":
+		usr.ATK = max(0, usr.ATK-10)
+	case "hard_penalty_maxhp":
+		usr.MAX_HP = max(0, usr.MAX_HP-30)
+		usr.CURRENT_HP = min(usr.CURRENT_HP, usr.MAX_HP)
+		checkAndRespawnPlayer(usr)
+	case "medium_penalty_hp":
+		usr.CURRENT_HP = max(0, usr.CURRENT_HP-20)
+		checkAndRespawnPlayer(usr)
+	case "medium_penalty_atk":
+		usr.ATK = max(0, usr.ATK-5)
+	case "medium_penalty_maxhp":
+		usr.MAX_HP = max(0, usr.MAX_HP-15)
+		usr.CURRENT_HP = min(usr.CURRENT_HP, usr.MAX_HP)
+		checkAndRespawnPlayer(usr)
+	case "bonus_hp":
+		usr.CURRENT_HP = min(usr.MAX_HP, usr.CURRENT_HP+25)
+	case "bonus_atk":
+		usr.ATK += 5
+	case "bonus_maxhp":
+		usr.MAX_HP += 20
+		usr.CURRENT_HP += 20
 	}
 }
