@@ -40,7 +40,7 @@ type PlayerView struct {
 }
 
 type Quests struct {
-	Quest []Quest
+	Quest []Quest `json:"quests"`
 }
 
 type Quest struct {

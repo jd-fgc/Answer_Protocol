@@ -13,6 +13,7 @@ import (
 var online_players Players
 var playable_characters Players
 var rooms Rooms
+var quests Quests
 
 type Message struct {
 	From      string
@@ -64,6 +65,18 @@ func hub(incoming chan Message) {
 			reply = handleGroup(msg.From, args)
 		case "QUIT":
 			reply = handleQuit(msg.From)
+		case "ATTACK":
+			reply = handleAttack(msg.From, args)
+		case "DEFEND":
+			reply = handleDefend(msg.From)
+		case "STATUS":
+			reply = handleStatus(msg.From)
+		case "QUEST":
+			reply = handleQuest(msg.From, args)
+		case "QUESTS":
+			reply = handleQuests(msg.From)
+		case "COMPLETE_QUEST":
+			reply = handleCompleteQuest(msg.From, args)
 		default:
 			reply = "ERR unknown command\n"
 		}
@@ -143,6 +156,11 @@ func main() {
 		return
 	}
 	playable_characters, err = read_character_file("data/Characters.json", rooms.Rooms[0].Name)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	quests, err = load_quests("data/quests.json")
 	if err != nil {
 		fmt.Println(err)
 		return

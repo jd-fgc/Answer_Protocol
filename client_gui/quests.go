@@ -4,29 +4,29 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func get_quest_info(quest_name string) string {
-	for _, val := range quests.Quest {
-		if val.Name == quest_name {
-			return val.Description
-		}
-	}
-	return ""
-}
-
 func set_quests() {
 	actions.RemoveAll()
 
-	for _, val := range npc {
-		q := val.Quest
-
-		if q != "" && player.Zone == val.Zone {
-			btn := widget.NewButton(q, func() {
-				answer.cmd = "QUEST " + val.Name
-				log_text.Text = get_quest_info(q)
-				set_log()
-				set_actions()
-			})
-			actions.Add(btn)
+	for _, room := range rooms.Rooms {
+		if room.Name == player.Zone {
+			for _, val := range room.NPC {
+				q := val.Quest
+				for i, quest := range quests.Quest {
+					if quest.Name == q && player.Zone == val.Zone && quest.taken == false {
+						btn := widget.NewButton(quest.Name, func() {
+							line, err := netClient.SendCommand("QUEST " + val.Name)
+							if err != nil {
+								return
+							}
+							log_text.SetText(line[0])
+							quests.Quest[i].taken = true
+							set_log()
+							set_actions()
+						})
+						actions.Add(btn)
+					}
+				}
+			}
 		}
 	}
 	actions.Add(widget.NewButton("RETURN", func() {

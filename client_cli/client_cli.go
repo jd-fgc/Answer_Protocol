@@ -31,6 +31,13 @@ func main() {
 	stdinReader := bufio.NewReader(os.Stdin)
 	connReader := bufio.NewReader(conn)
 
+	greeting, err := connReader.ReadString('\n')
+	if err != nil {
+		fmt.Println("ERROR failed to read greeting, err: ", err)
+		os.Exit(1)
+	}
+	fmt.Print(greeting)
+
 	for {
 		fmt.Print(">>>")
 		input, err := stdinReader.ReadString('\n')

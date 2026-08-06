@@ -28,14 +28,23 @@ var rooms Rooms
 var visitedRooms = make(map[string]bool)
 var err error
 
-// FONCTION INUTILE
-func load_quest() {
-	quests.Quest = append(quests.Quest, Quest{Name: "Boss", Description: "Defeat the boss"})
-}
+func load_quests(file_path string) (Quests, error) {
+	var q Quests
+	file, err := os.Open(file_path)
+	if err != nil {
+		return Quests{Quest: nil}, errors.New(err.Error())
+	}
+	defer file.Close()
 
-func set_npc() {
-	npc = append(npc, NPC{Name: "JD", Talk: "Salam les rhoyas", Zone: "test"})
-	npc = append(npc, NPC{Name: "Toujours JD", Talk: "Salam les rhoyas", Zone: "test", Quest: "Boss"})
+	byteValue, err := io.ReadAll(file)
+	if err != nil {
+		return Quests{Quest: nil}, errors.New(err.Error())
+	}
+	err = json.Unmarshal(byteValue, &q)
+	if err != nil {
+		return Quests{Quest: nil}, errors.New(err.Error())
+	}
+	return q, nil
 }
 
 var playerViews []*PlayerView
@@ -176,8 +185,10 @@ func startGame(w fyne.Window, username string, character string) {
 	combat = container.NewVBox()
 	log = container.NewVBox()
 	log_text = widget.NewLabel("")
-	set_npc()
-	load_quest()
+	quests, err = load_quests("data/quests.json")
+	if err != nil {
+		return
+	}
 
 	var errChar error
 	players, errChar = read_character_file("data/Characters.json", "")
