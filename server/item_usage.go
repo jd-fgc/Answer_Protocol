@@ -92,7 +92,3 @@ func handleInventory(from string) string {
 	}
 	return string(data) + "\n"
 }
-
-// func USE(usr Player, zones Rooms, online_players Players, item_name string) error {
-
-// }

@@ -185,6 +185,7 @@ func startGame(w fyne.Window, username string, character string) {
 	combat = container.NewVBox()
 	log = container.NewVBox()
 	log_text = widget.NewLabel("")
+	log_text.Wrapping = fyne.TextWrapWord
 	quests, err = load_quests("data/quests.json")
 	if err != nil {
 		return
