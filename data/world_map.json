@@ -7,7 +7,9 @@
                     "name": "Dummy",
                     "hp": 10,
                     "ennemy": true,
-                    "talk": ". . . *Un mannequin tout dechire*"
+                    "room": "Spawn",
+                    "talk": ". . . *Un mannequin tout dechire*",
+                    "quest": "test"
                 }
             ],
             "item": ["potion", "Map"],

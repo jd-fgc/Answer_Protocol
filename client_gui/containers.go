@@ -37,6 +37,17 @@ func set_actions() {
 	actions.Add(widget.NewButton("QUEST", func() {
 		set_quests()
 	}))
+	actions.Add(widget.NewButton("QUESTS", func() {
+		lines, err := netClient.SendCommand("QUESTS")
+		if err != nil {
+			return
+		}
+		log_text.SetText(lines[0])
+		set_log()
+	}))
+	actions.Add(widget.NewButton("COMPLETE_QUEST", func() {
+		set_complete_quests()
+	}))
 	actions.Refresh()
 }
 
@@ -66,6 +77,14 @@ func set_combat() {
 	}))
 	combat.Add(widget.NewButton("DEFEND", func() {
 		lines, err := netClient.SendCommand("DEFEND")
+		if err != nil {
+			return
+		}
+		log_text.SetText(lines[0])
+		set_log()
+	}))
+	combat.Add(widget.NewButton("STATUS", func() {
+		lines, err := netClient.SendCommand("STATUS")
 		if err != nil {
 			return
 		}

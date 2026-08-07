@@ -127,13 +127,63 @@ func get_quest_reward(usr *Player, quest Quest) {
 }
 
 func COMPLETE_QUEST(usr *Player, quest_name string) string {
-	for i, val := range quests.Quest {
+	check_quests(usr)
+	for i, val := range usr.Quests {
 		if val.Name == quest_name && val.Completed == true && val.finished == false {
 			get_quest_reward(usr, val)
+			usr.Quests[i].finished = true
 			update_players(*usr)
-			quests.Quest[i].finished = true
+			for j, quest := range quests.Quest {
+				if quest.Name == val.Name {
+					quests.Quest[j].finished = true
+				}
+			}
 			return "OK Completed " + quest_name
 		}
 	}
 	return "ERR 405 QUEST_NOT_FOUND_OR_NOT_COMPLETED"
+}
+
+func check_quests(usr *Player) {
+	tmp_usr := *usr
+
+	for i, quest := range tmp_usr.Quests {
+		switch quest.Type {
+		case "item":
+			switch quest.Item_needed {
+			case "coin":
+				if tmp_usr.Coin - quest.Needed_amount >= 0 {
+					usr.Quests[i].Completed = true
+				} else {
+					usr.Quests[i].Completed = false
+				}
+			case "bomb":
+				if tmp_usr.Bomb - quest.Needed_amount >= 0 {
+					usr.Quests[i].Completed = true
+				} else {
+					usr.Quests[i].Completed = false
+				}
+			case "key":
+				if tmp_usr.Key - quest.Needed_amount >= 0 {
+					usr.Quests[i].Completed = true
+				} else {
+					usr.Quests[i].Completed = false
+				}
+			default:
+				
+			}
+		case "ennemy":
+			ennemy_alive := false
+			for _, room := range rooms.Rooms {
+				for _, npc := range room.NPC {
+					if npc.Name == quest.Ennemy {
+						ennemy_alive = true
+					}
+				}
+			}
+			if ennemy_alive == false {
+				usr.Quests[i].Completed = true
+			}
+		}
+	}
 }

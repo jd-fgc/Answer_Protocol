@@ -66,6 +66,9 @@ type Quest struct {
 	Completed     bool   `json:"completed"`
 	Reward        string `json:"reward"`
 	Amount_reward int    `json:"amount_reward"`
+	Item_needed   string `json:"item_needed"`
+	Needed_amount int    `json:"needed_amount"`
+	Ennemy        string `json:"ennemy"`
 	taken         bool
 	finished      bool
 }

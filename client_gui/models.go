@@ -7,32 +7,32 @@ import (
 )
 
 type NPC struct {
-	Name string `json:"name"`
-	Talk string `json:"talk"`
-	HP int `json:"hp"`
-	Ennemy bool `json:"ennemy"`
-	Zone string `json:"room"`
-	ATK int `json:"attack"`
-	Quest string `json:"quest"`
+	Name   string `json:"name"`
+	Talk   string `json:"talk"`
+	HP     int    `json:"hp"`
+	Ennemy bool   `json:"ennemy"`
+	Zone   string `json:"room"`
+	ATK    int    `json:"attack"`
+	Quest  string `json:"quest"`
 }
 
 type Player struct {
-	Name        string
-	Character   string
-	Item        string
-	Inventory   []string
-	MAX_HP      int
-	HP  int
-	ATK         float32
-	DMG_Mult    float32
-	Luck        int
-	Deal_chance int
-	Zone        string
+	Name             string
+	Character        string
+	Item             string
+	Inventory        []string
+	MAX_HP           int
+	HP               int
+	ATK              float32
+	DMG_Mult         float32
+	Luck             int
+	Deal_chance      int
+	Zone             string
 	Damage_Reduction float32
-	Quests []Quest
-	COIN int
-	BOMB int
-	KEY int
+	Quests           []Quest
+	COIN             int
+	BOMB             int
+	KEY              int
 }
 
 type Players struct {
@@ -56,17 +56,17 @@ type Quests struct {
 }
 
 type Quest struct {
-	Name        string `json:"name"`
-	Type        string `json:"type"`
-	Description string `json:"description"`
-	Completed   bool   `json:"completed"`
-	taken       bool
-}
-
-type ANSWER struct {
-	cmd string
-	res string
-	err error
+	Name          string `json:"name"`
+	Type          string `json:"type"`
+	Description   string `json:"description"`
+	Completed     bool   `json:"completed"`
+	Reward        string `json:"reward"`
+	Amount_reward int    `json:"amount_reward"`
+	Item_needed   string `json:"item_needed"`
+	Needed_amount int    `json:"needed_amount"`
+	Ennemy        string `json:"ennemy"`
+	taken         bool
+	finished      bool
 }
 
 type Room struct {

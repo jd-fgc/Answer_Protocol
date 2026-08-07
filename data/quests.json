@@ -6,7 +6,19 @@
             "description": "Ramener 4 keys a Ryan",
             "completed": false,
             "reward": "halo",
-            "amount_reward": 1
+            "amount_reward": 1,
+            "item_needed": "key",
+            "needed_amount": 4
+        },
+        {
+            "name": "test",
+            "type": "item",
+            "description": "",
+            "completed": false,
+            "reward": "halo",
+            "amount_reward": 1,
+            "item_needed": "key",
+            "needed_amount": 0
         }
     ]
 }

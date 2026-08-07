@@ -16,7 +16,6 @@ import (
 
 var player Player
 var players Players
-var answer ANSWER
 var actions *fyne.Container
 var inventory *fyne.Container
 var combat *fyne.Container
