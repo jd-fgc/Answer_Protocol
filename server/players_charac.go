@@ -49,6 +49,7 @@ type rawRoom struct {
 	South string   `json:"South"`
 	East  string   `json:"East"`
 	West  string   `json:"West"`
+	Type  string   `json:"Type"`
 }
 
 type rawRooms struct {
@@ -87,7 +88,7 @@ func load_map(filepath string) (Rooms, error) {
 	counter := map[string]int{}
 
 	for _, rr := range raw.Rooms {
-		room := Room{Name: rr.Name, NPC: rr.NPC, North: rr.North, South: rr.South, East: rr.East, West: rr.West}
+		room := Room{Name: rr.Name, NPC: rr.NPC, North: rr.North, South: rr.South, East: rr.East, West: rr.West, Type: rr.Type}
 		for _, name := range rr.Items {
 			slug := slugify(name)
 			counter[slug]++

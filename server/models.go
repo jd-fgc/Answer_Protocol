@@ -24,7 +24,6 @@ type Player struct {
 	Key              int
 	TempATK  float32
 	TempHP   int
-	TempLuck int
 }
 
 type Rooms struct {
@@ -44,6 +43,7 @@ type Room struct {
 	South string         `json:"South"`
 	East  string         `json:"East"`
 	West  string         `json:"West"`
+	Type string          `json:"Type"`
 }
 
 var itemDisplayName = make(map[string]string)

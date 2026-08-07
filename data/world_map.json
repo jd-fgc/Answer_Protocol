@@ -1,246 +1,397 @@
 {
     "world": [
         {
-            "name": "Spawn",
-            "NPC": [],
-            "item": ["potion", "Map", "Kamikaze!", "Kamikaze!", "Kamikaze!", "Deck of Cards"],
-            "North": "Up_1",
-            "South": "",
-            "East": "",
-            "West": "Left_1"
-        },
-        {
-            "name": "Up_1",
-            "NPC": [{
+            "name": "Basement Entrance",
+            "NPC": [
+                {
                     "name": "Dummy",
-                    "hp": 1000,
+                    "hp": 10,
                     "ennemy": true,
                     "talk": ". . . *Un mannequin tout dechire*"
-                }],
-            "item": [],
-            "North": "Up_2",
-            "South": "Spawn",
-            "East": "Right_1",
-            "West": ""
-        },
-        {
-            "name": "Up_2",
-            "NPC": [],
-            "item": [],
-            "North": "Up_3",
-            "South": "Up_1",
+                }
+            ],
+            "item": [
+                "potion",
+                "Map",
+                "The Fool"
+            ],
+            "North": "Dusty Corridor",
+            "South": "",
             "East": "",
-            "West": "Left_6"
+            "West": "Crumbling Hallway",
+            "Type": "Spawn_room"
         },
         {
-            "name": "Up_3",
+            "name": "Dusty Corridor",
             "NPC": [],
-            "item": [],
-            "North": "Up_4",
-            "South": "Up_2",
-            "East": "",
-            "West": ""
+            "item": [
+                "The Book Of Belial",
+                "Book Of Revelations",
+                "Deck of Cards",
+                "D6",
+                "Kamikaze!",
+                "Mom's Bottle Of Pills",
+                "Mom's Bra",
+                "The nail",
+                "<3",
+                "Blood of martyr",
+                "Bobby bomb",
+                "Brimstone",
+                "Charm Of The Vampire",
+                "Dessert",
+                "A Dollar",
+                "Growth Hormones",
+                "Halo",
+                "Inner",
+                "Lucky Foot",
+                "Magic mush",
+                "Max's Head",
+                "Money = Power",
+                "PHD",
+                "A Quarter",
+                "The Small Rock"
+            ],
+            "North": "Cracked Cellar",
+            "South": "Basement Entrance",
+            "East": "Splintered Doorway",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Up_4",
+            "name": "Cracked Cellar",
+            "NPC": [
+                {
+                    "name": "Fly Swarm",
+                    "talk": "*Un essaim de mouches bourdonne agressivement*",
+                    "hp": 8,
+                    "ennemy": true
+                }
+            ],
+            "item": ["Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!"],
+            "North": "Maggot Den",
+            "South": "Dusty Corridor",
+            "East": "",
+            "West": "Hollow Nook",
+            "Type": "Shop_room"
+        },
+        {
+            "name": "Maggot Den",
+            "NPC": [
+                {
+                    "name": "Gaper",
+                    "talk": "*Une creature difforme titube en saignant*",
+                    "hp": 12,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "Bone Pile Room",
+            "South": "Cracked Cellar",
+            "East": "",
+            "West": "",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Bone Pile Room",
+            "NPC": [
+                {
+                    "name": "Pooter",
+                    "talk": "*Une mouche geante crache un projectile*",
+                    "hp": 10,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "",
+            "South": "Maggot Den",
+            "East": "",
+            "West": "",
+            "Type": "Treasure_room"
+        },
+        {
+            "name": "Fly Infested Nook",
+            "NPC": [
+                {
+                    "name": "Horf",
+                    "talk": "*Un zombie regurgite un liquide nauseabond*",
+                    "hp": 15,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "",
+            "South": "Blood Stained Landing",
+            "East": "",
+            "West": "",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Chalk Circle Room",
             "NPC": [],
             "item": [],
             "North": "",
-            "South": "Up_3",
-            "East": "",
-            "West": ""
+            "South": "Fungal Grotto",
+            "East": "Trapdoor Hollow",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Up_5",
+            "name": "Trapdoor Hollow",
             "NPC": [],
             "item": [],
             "North": "",
-            "South": "Right_2",
+            "South": "Silent Confessional",
             "East": "",
-            "West": ""
+            "West": "Chalk Circle Room",
+            "Type": "Standard_room"
         },
         {
-            "name": "Up_6",
+            "name": "Rotten Larder",
+            "NPC": [],
+            "item": [
+                "Compass"
+            ],
+            "North": "Withered Chapel",
+            "South": "Sealed Cistern",
+            "East": "",
+            "West": "",
+            "Type": "Item_room"
+        },
+        {
+            "name": "Withered Chapel",
+            "NPC": [
+                {
+                    "name": "Larry Jr.",
+                    "talk": "*Un ver segmente rampe vers vous en sifflant*",
+                    "hp": 60,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "Sacrificial Altar",
+            "South": "Rotten Larder",
+            "East": "Faded Nursery",
+            "West": "",
+            "Type": "Boss_room"
+        },
+        {
+            "name": "Sacrificial Altar",
             "NPC": [],
             "item": [],
             "North": "",
-            "South": "Right_6",
-            "East": "Up_7",
-            "West": ""
+            "South": "Withered Chapel",
+            "East": "",
+            "West": "",
+            "Type": "Special_room"
         },
         {
-            "name": "Up_7",
+            "name": "Ash Covered Vestibule",
+            "NPC": [],
+            "item": [],
+            "North": "Mom's Bedroom",
+            "South": "Thorned Passage",
+            "East": "",
+            "West": "",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Crumbling Hallway",
+            "NPC": [
+                {
+                    "name": "Boil",
+                    "talk": "*Une masse gonflee palpite dangereusement*",
+                    "hp": 14,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "",
+            "South": "",
+            "East": "Basement Entrance",
+            "West": "Moldy Storeroom",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Moldy Storeroom",
+            "NPC": [
+                {
+                    "name": "Spider",
+                    "talk": "*Une araignee noire se precipite vers vous*",
+                    "hp": 6,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "",
+            "South": "",
+            "East": "Crumbling Hallway",
+            "West": "Web Choked Passage",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Web Choked Passage",
             "NPC": [],
             "item": [],
             "North": "",
-            "South": "Right_7",
-            "East": "",
-            "West": "Up_6"
+            "South": "Flooded Tunnel",
+            "East": "Moldy Storeroom",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Up_8",
-            "NPC": [],
-            "item": [],
-            "North": "Up_9",
-            "South": "Right_10",
-            "East": "",
-            "West": ""
-        },
-        {
-            "name": "Up_9",
-            "NPC": [],
-            "item": [],
-            "North": "Up_10",
-            "South": "Up_8",
-            "East": "Right_13",
-            "West": ""
-        },
-        {
-            "name": "Up_10",
-            "NPC": [],
+            "name": "Sunken Pit",
+            "NPC": [
+                {
+                    "name": "Clotty",
+                    "talk": "*Un caillot de sang rebondit dans votre direction*",
+                    "hp": 9,
+                    "ennemy": true
+                }
+            ],
             "item": [],
             "North": "",
-            "South": "Up_9",
-            "East": "",
-            "West": ""
+            "South": "Rusted Cage Room",
+            "East": "Flooded Tunnel",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Up_11",
+            "name": "Rusted Cage Room",
             "NPC": [],
             "item": [],
-            "North": "Right_14",
-            "South": "Right_12",
-            "East": "",
-            "West": ""
+            "North": "Sunken Pit",
+            "South": "Whispering Crawlspace",
+            "East": "Drowned Chamber",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Left_1",
+            "name": "Hollow Nook",
             "NPC": [],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Spawn",
-            "West": "Left_2"
+            "East": "Cracked Cellar",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Left_2",
-            "NPC": [],
+            "name": "Flooded Tunnel",
+            "NPC": [
+                {
+                    "name": "Attack Fly",
+                    "talk": "*Une mouche rouge charge en piaille*",
+                    "hp": 5,
+                    "ennemy": true
+                }
+            ],
             "item": [],
-            "North": "",
-            "South": "",
-            "East": "Left_1",
-            "West": "Left_3"
-        },
-        {
-            "name": "Left_3",
-            "NPC": [],
-            "item": [],
-            "North": "",
-            "South": "Down_1",
-            "East": "Left_2",
-            "West": ""
-        },
-        {
-            "name": "Left_4",
-            "NPC": [],
-            "item": [],
-            "North": "",
-            "South": "Left_5",
-            "East": "Down_1",
-            "West": ""
-        },
-        {
-            "name": "Left_5",
-            "NPC": [],
-            "item": [],
-            "North": "Left_4",
-            "South": "Down_3",
-            "East": "Down_2",
-            "West": ""
-        },
-        {
-            "name": "Left_6",
-            "NPC": [],
-            "item": [],
-            "North": "",
-            "South": "",
-            "East": "Up_2",
-            "West": ""
-        },
-        {
-            "name": "Down_1",
-            "NPC": [],
-            "item": [],
-            "North": "Left_3",
-            "South": "Down_2",
+            "North": "Web Choked Passage",
+            "South": "Drowned Chamber",
             "East": "",
-            "West": "Left_4"
+            "West": "Sunken Pit",
+            "Type": "Standard_room"
         },
         {
-            "name": "Down_2",
-            "NPC": [],
+            "name": "Drowned Chamber",
+            "NPC": [
+                {
+                    "name": "Gemini",
+                    "talk": "*Deux jumeaux difformes grondent en choeur*",
+                    "hp": 75,
+                    "ennemy": true
+                }
+            ],
             "item": [],
-            "North": "Down_1",
+            "North": "Flooded Tunnel",
             "South": "",
             "East": "",
-            "West": "Left_5"
+            "West": "Rusted Cage Room",
+            "Type": "Boss_room"
         },
         {
-            "name": "Down_3",
+            "name": "Whispering Crawlspace",
             "NPC": [],
             "item": [],
-            "North": "Left_5",
-            "South": "Down_4",
+            "North": "Rusted Cage Room",
+            "South": "Charred Alcove",
             "East": "",
-            "West": ""
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Down_4",
+            "name": "Charred Alcove",
             "NPC": [],
             "item": [],
-            "North": "Down_3",
-            "South": "Down_5",
+            "North": "Whispering Crawlspace",
+            "South": "Ember Lit Cellar",
             "East": "",
-            "West": ""
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Down_5",
+            "name": "Ember Lit Cellar",
             "NPC": [],
             "item": [],
-            "North": "Down_4",
+            "North": "Charred Alcove",
             "South": "",
-            "East": "Right_5",
-            "West": ""
+            "East": "Gnawed Bone Room",
+            "West": "",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_1",
-            "NPC": [],
+            "name": "Splintered Doorway",
+            "NPC": [
+                {
+                    "name": "Fly Swarm",
+                    "talk": "*Un essaim de mouches bourdonne agressivement*",
+                    "hp": 8,
+                    "ennemy": true
+                }
+            ],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Right_2",
-            "West": "Up_1"
+            "East": "Blood Stained Landing",
+            "West": "Dusty Corridor",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_2",
-            "NPC": [],
+            "name": "Blood Stained Landing",
+            "NPC": [
+                {
+                    "name": "Gaper",
+                    "talk": "*Une creature difforme titube en saignant*",
+                    "hp": 12,
+                    "ennemy": true
+                }
+            ],
             "item": [],
-            "North": "Up_5",
+            "North": "Fly Infested Nook",
             "South": "",
-            "East": "Right_3",
-            "West": "Right_1"
+            "East": "Forsaken Study",
+            "West": "Splintered Doorway",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_3",
-            "NPC": [],
+            "name": "Forsaken Study",
+            "NPC": [
+                {
+                    "name": "Wandering Soul",
+                    "talk": "... *Une silhouette translucide flotte, murmurant des souvenirs oublies*",
+                    "hp": 1,
+                    "ennemy": false
+                }
+            ],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Right_4",
-            "West": "Right_2"
+            "East": "Ryan's Pantry",
+            "West": "Blood Stained Landing",
+            "Type": "NPC_room"
         },
         {
-            "name": "Right_4",
+            "name": "Ryan's Pantry",
             "NPC": [
                 {
                     "name": "Ryan",
@@ -256,97 +407,153 @@
             "North": "",
             "South": "",
             "East": "",
-            "West": "Right_3"
+            "West": "Forsaken Study",
+            "Type": "Shop_room"
         },
         {
-            "name": "Right_5",
+            "name": "Gnawed Bone Room",
+            "NPC": [
+                {
+                    "name": "Pooter",
+                    "talk": "*Une mouche geante crache un projectile*",
+                    "hp": 10,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "",
+            "South": "",
+            "East": "Fungal Grotto",
+            "West": "Ember Lit Cellar",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Fungal Grotto",
+            "NPC": [
+                {
+                    "name": "Horf",
+                    "talk": "*Un zombie regurgite un liquide nauseabond*",
+                    "hp": 15,
+                    "ennemy": true
+                }
+            ],
+            "item": [],
+            "North": "Chalk Circle Room",
+            "South": "",
+            "East": "Silent Confessional",
+            "West": "Gnawed Bone Room",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Silent Confessional",
+            "NPC": [],
+            "item": [],
+            "North": "Trapdoor Hollow",
+            "South": "",
+            "East": "Locked Reliquary",
+            "West": "Fungal Grotto",
+            "Type": "Standard_room"
+        },
+        {
+            "name": "Locked Reliquary",
             "NPC": [],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Right_6",
-            "West": "Down_5"
+            "East": "Tattered Curtain Room",
+            "West": "Silent Confessional",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_6",
-            "NPC": [],
-            "item": [],
-            "North": "Up_6",
-            "South": "",
-            "East": "Right_7",
-            "West": "Right_5"
-        },
-        {
-            "name": "Right_7",
-            "NPC": [],
-            "item": [],
-            "North": "Up_7",
-            "South": "",
-            "East": "Right_8",
-            "West": "Right_6"
-        },
-        {
-            "name": "Right_8",
-            "NPC": [],
+            "name": "Tattered Curtain Room",
+            "NPC": [
+                {
+                    "name": "Boil",
+                    "talk": "*Une masse gonflee palpite dangereusement*",
+                    "hp": 14,
+                    "ennemy": true
+                }
+            ],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Right_9",
-            "West": "Right_7"
+            "East": "Sealed Cistern",
+            "West": "Locked Reliquary",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_9",
+            "name": "Sealed Cistern",
             "NPC": [],
+            "item": [
+                "Battery",
+                "Boss Key"
+            ],
+            "North": "Rotten Larder",
+            "South": "",
+            "East": "Cobweb Antechamber",
+            "West": "Tattered Curtain Room",
+            "Type": "Item_room"
+        },
+        {
+            "name": "Cobweb Antechamber",
+            "NPC": [
+                {
+                    "name": "The Duke of Flies",
+                    "talk": "*Un nuage de mouches tourbillonne autour d'un cadavre couronne*",
+                    "hp": 90,
+                    "ennemy": true
+                }
+            ],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Right_10",
-            "West": "Right_8"
+            "East": "Thorned Passage",
+            "West": "Sealed Cistern",
+            "Type": "Boss_room"
         },
         {
-            "name": "Right_10",
-            "NPC": [],
+            "name": "Thorned Passage",
+            "NPC": [
+                {
+                    "name": "Spider",
+                    "talk": "*Une araignee noire se precipite vers vous*",
+                    "hp": 6,
+                    "ennemy": true
+                }
+            ],
             "item": [],
-            "North": "Up_8",
-            "South": "",
-            "East": "Right_11",
-            "West": "Right_9"
-        },
-        {
-            "name": "Right_11",
-            "NPC": [],
-            "item": [],
-            "North": "",
-            "South": "",
-            "East": "Right_12",
-            "West": "Right_10"
-        },
-        {
-            "name": "Right_12",
-            "NPC": [],
-            "item": [],
-            "North": "Up_11",
+            "North": "Ash Covered Vestibule",
             "South": "",
             "East": "",
-            "West": "Right_11"
+            "West": "Cobweb Antechamber",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_13",
+            "name": "Faded Nursery",
             "NPC": [],
             "item": [],
             "North": "",
             "South": "",
-            "East": "Right_14",
-            "West": "Up_9"
+            "East": "Mom's Bedroom",
+            "West": "Withered Chapel",
+            "Type": "Standard_room"
         },
         {
-            "name": "Right_14",
-            "NPC": [],
+            "name": "Mom's Bedroom",
+            "NPC": [
+                {
+                    "name": "Mom",
+                    "talk": "*Des pas titanesques ebranlent la piece entiere*",
+                    "hp": 300,
+                    "ennemy": true
+                }
+            ],
             "item": [],
             "North": "",
-            "South": "Up_11",
+            "South": "Ash Covered Vestibule",
             "East": "",
-            "West": "Right_13"
+            "West": "Faded Nursery",
+            "Type": "Boss_room"
         }
     ]
 }

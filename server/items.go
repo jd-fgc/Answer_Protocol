@@ -60,6 +60,29 @@ func search_room(usr *Player) *Room {
 	return nil
 }
 
+func getToTeleportRoom(room_type string) string {
+	for _, room := range rooms.Rooms {
+		if room.Type == room_type {
+			return room.Name
+		}
+	}
+	return ""
+}
+
+func getRandomBossRoom() string {
+	var possible_rooms []string
+
+	for _, room := range rooms.Rooms {
+		if room.Type == "Boss_room" {
+			possible_rooms = append(possible_rooms, room.Name)
+		}
+	}
+	if len(possible_rooms) == 0 {
+		return ""
+	}
+	return possible_rooms[rand.IntN(len(possible_rooms))]
+}
+
 func getTargetZone(usr *Player) string {
 	playerRoom := search_room(usr)
 
@@ -342,10 +365,15 @@ func applyTheSmallRock(usr *Player) {
 
 // TAROT ITEMS
 func applyTheFool(usr *Player) {
-	usr.Zone = "Spawn"
+	if target := getToTeleportRoom("Spawn_room"); target != "" {
+		usr.Zone = target
+	}
 }
-
-func applyTheEmperor(usr *Player) {}
+func applyTheEmperor(usr *Player) {
+	if target := getRandomBossRoom(); target != "" {
+		usr.Zone = target
+	}
+}
 
 func applyTheLovers(usr *Player) {
 	usr.CURRENT_HP += 40
@@ -361,7 +389,11 @@ func applyJustice(usr *Player) {
 	usr.MAX_HP += 20
 }
 
-func applyTheHermit(usr *Player) {}
+func applyTheHermit(usr *Player) {
+	if target := getToTeleportRoom("Shop_room"); target != "" {
+		usr.Zone = target
+	}
+}
 
 func applyStrength(usr *Player) {
 	usr.MAX_HP += 20
@@ -385,7 +417,11 @@ func applyTheDevil(usr *Player) {
 	usr.ATK += 2
 }
 
-func applyTheStars(usr *Player) {}
+func applyTheStars(usr *Player) {
+	if target := getToTeleportRoom("Item_room"); target != "" {
+		usr.Zone = target
+	}
+}
 
 func applyTheSun(usr *Player) {
 	usr.CURRENT_HP = usr.MAX_HP

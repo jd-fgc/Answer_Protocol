@@ -133,6 +133,13 @@ func applyUseResponse(line string) {
 		return
 	}
 
+	if strings.HasPrefix(jsonPart, "used=") {
+		log_text.SetText("Objet utilisé : " + strings.TrimPrefix(jsonPart, "used="))
+		refreshRoomState(false)
+		set_inventory()
+		return
+	}
+
 	var summary []roomSummary
 	if err := json.Unmarshal([]byte(jsonPart), &summary); err != nil {
 		log_text.SetText(jsonPart)

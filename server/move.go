@@ -53,8 +53,10 @@ func handleMove(from string, args []string) string {
 		return "ERR missing direction\n"
 	}
 
+	dest := strings.Join(args, " ")
+
 	oldZone := session.Player.Zone
-	res := MOVE(session.Player, args[0])
+	res := MOVE(session.Player, dest)
 
 	if strings.HasPrefix(res, "OK") {
 		newZone := session.Player.Zone

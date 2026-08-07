@@ -83,8 +83,18 @@ func refreshMiniMap() {
 	mapDraggableWidget.Move(mapDraggableWidget.clamp(mapDraggableWidget.Position()))
 }
 
+type rawCharacter struct {
+	Name      string   `json:"Name"`
+	Item      string   `json:"Item"`
+	Inventory []string `json:"Inventory"`
+	MaxHP     int64    `json:"MAX_HP"`
+	CURRENT_HP int64    `json:"CURRENT_HP"`
+	ATK       float64  `json:"ATK"`
+	DmgMult   float64  `json:"DMG_Mult"`
+}
+
 func read_character_file(filepath string, start_zone string) (Players, error) {
-	var charac []Player
+	var raw []rawCharacter
 	file, err := os.Open(filepath)
 	if err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
@@ -95,13 +105,22 @@ func read_character_file(filepath string, start_zone string) (Players, error) {
 	if err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
 	}
-	err = json.Unmarshal(byteValue, &charac)
-	if err != nil {
+	if err := json.Unmarshal(byteValue, &raw); err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
 	}
-	for i, _ := range charac {
-		charac[i].Zone = start_zone
-		charac[i].Character = charac[i].Name
+
+	var charac []Player
+	for _, rc := range raw {
+		charac = append(charac, Player{
+			Name:      	rc.Name,
+			Character: 	rc.Name,
+			CURRENT_HP:	int(rc.CURRENT_HP),
+			ATK:       	float32(rc.ATK),
+			DMG_Mult:  	float32(rc.DmgMult),
+			COIN:      	0,
+			BOMB:      	0,
+			Zone:      	start_zone,
+		})
 	}
 	return Players{Player: charac}, nil
 }
@@ -138,7 +157,7 @@ func (pv *PlayerView) Refresh() {
 	pv.Portrait.Refresh()
 
 	pv.Name.SetText(p.Name)
-	pv.HP.SetText(fmt.Sprintf("HP : %d", p.HP))
+	pv.HP.SetText(fmt.Sprintf("HP : %d", p.CURRENT_HP))
 	pv.ATK.SetText(fmt.Sprintf("ATK : %.1f", p.ATK))
 	pv.Coin.SetText(fmt.Sprintf("Coins : %d", p.COIN))
 	pv.Bomb.SetText(fmt.Sprintf("Bombs : %d", p.BOMB))
