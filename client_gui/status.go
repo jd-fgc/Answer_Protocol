@@ -6,9 +6,12 @@ import (
 )
 
 type playerStatus struct {
-	CURRENT_HP     int64  `json:"hp"`
-	MaxHP  int64  `json:"max_hp"`
-	Status string `json:"status"`
+	CURRENT_HP int64   `json:"hp"`
+	MaxHP      int64   `json:"max_hp"`
+	ATK        float64 `json:"atk"`
+	Coin       int64   `json:"coin"`
+	Bomb       int64   `json:"bomb"`
+	Status     string  `json:"status"`
 }
 
 func doStatus() (*playerStatus, error) {
@@ -33,6 +36,10 @@ func refreshPlayerStatus() {
 		return
 	}
 	player.CURRENT_HP = int(s.CURRENT_HP)
+	player.MAX_HP = int(s.MaxHP)
+	player.ATK = float32(s.ATK)
+	player.COIN = int(s.Coin)
+	player.BOMB = int(s.Bomb)
 
 	if selfPlayerView != nil {
 		selfPlayerView.Refresh()

@@ -10,9 +10,12 @@ type ATTACK_TURN struct {
 }
 
 type PLAYER_STATUS struct {
-	HP     int    `json:"hp"`
-	MAX_HP int    `json:"max_hp"`
-	STATUS string `json:"status"`
+	HP     int     `json:"hp"`
+	MAX_HP int     `json:"max_hp"`
+	ATK    float32 `json:"atk"`
+	COIN   int     `json:"coin"`
+	BOMB   int     `json:"bomb"`
+	STATUS string  `json:"status"`
 }
 
 func fill_attack_info(usr Player, npc NPC, damage int) string {
@@ -97,6 +100,9 @@ func STATUS(usr Player) string {
 	var status PLAYER_STATUS
 	status.HP = usr.CURRENT_HP
 	status.MAX_HP = usr.MAX_HP
+	status.ATK = usr.ATK
+	status.COIN = usr.Coin
+	status.BOMB = usr.Bomb
 	if usr.CURRENT_HP >= int(usr.MAX_HP*80/100) {
 		status.STATUS = "healthy !"
 	} else if usr.CURRENT_HP >= int(usr.MAX_HP*50/100) {

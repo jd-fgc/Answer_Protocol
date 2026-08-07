@@ -135,6 +135,7 @@ func applyUseResponse(line string) {
 
 	if strings.HasPrefix(jsonPart, "used=") {
 		log_text.SetText("Objet utilisé : " + strings.TrimPrefix(jsonPart, "used="))
+		refreshPlayerStatus()
 		refreshRoomState(false)
 		set_inventory()
 		return
