@@ -83,8 +83,18 @@ func refreshMiniMap() {
 	mapDraggableWidget.Move(mapDraggableWidget.clamp(mapDraggableWidget.Position()))
 }
 
+type rawCharacter struct {
+	Name      string   `json:"Name"`
+	Item      string   `json:"Item"`
+	Inventory []string `json:"Inventory"`
+	MaxHP     int64    `json:"MAX_HP"`
+	CurrentHP int64    `json:"CURRENT_HP"`
+	ATK       float64  `json:"ATK"`
+	DmgMult   float64  `json:"DMG_Mult"`
+}
+
 func read_character_file(filepath string, start_zone string) (Players, error) {
-	var charac []Player
+	var raw []rawCharacter
 	file, err := os.Open(filepath)
 	if err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
@@ -95,13 +105,22 @@ func read_character_file(filepath string, start_zone string) (Players, error) {
 	if err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
 	}
-	err = json.Unmarshal(byteValue, &charac)
-	if err != nil {
+	if err := json.Unmarshal(byteValue, &raw); err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
 	}
-	for i, _ := range charac {
-		charac[i].Zone = start_zone
-		charac[i].Character = charac[i].Name
+
+	var charac []Player
+	for _, rc := range raw {
+		charac = append(charac, Player{
+			Name:      rc.Name,
+			Character: rc.Name,
+			HP:        rc.HP,
+			ATK:       rc.ATK,
+			DMG_Mult:  rc.DmgMult,
+			COIN:      0,
+			BOMB:      0,
+			Zone:      start_zone,
+		})
 	}
 	return Players{Player: charac}, nil
 }

@@ -39,9 +39,12 @@ func fetchRoomPlayers() ([]whoPlayerInfo, error) {
 	return who.Room, nil
 }
 
+var selfPlayerView *PlayerView
+
 func buildPlayerCard(info playerInfo) fyne.CanvasObject {
 	if info.Name == player.Name {
 		pv := NewPlayerView(&player)
+		selfPlayerView = pv
 		return pv.Container
 	}
 

@@ -22,6 +22,7 @@ func set_attack() {
 							rooms.Rooms[i].NPC = append(rooms.Rooms[i].NPC[:j], rooms.Rooms[i].NPC[j+1:]...)
 						}
 						log_text.SetText(lines[0])
+						refreshPlayerStatus()
 						set_log()
 						set_combat()
 					}))
