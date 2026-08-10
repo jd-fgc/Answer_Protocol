@@ -122,6 +122,8 @@ func getTargetZone(usr *Player) string {
 
 func useActiveItem(usr *Player, item_name string) (string, error) {
 	switch item_name {
+	case "hearth":
+		usr.CURRENT_HP = min(usr.CURRENT_HP+20, usr.MAX_HP)
 	case "The Book Of Belial":
 		applyBookOfBelial(usr)
 	case "Book Of Revelations":
@@ -200,7 +202,7 @@ func useActiveItem(usr *Player, item_name string) (string, error) {
 
 // BASE ITEMS
 func applyBookOfBelial(usr *Player) {
-	usr.TempATK += 2
+	usr.ATK += 2
 	usr.DMG_Mult += 0.5
 }
 
@@ -274,7 +276,7 @@ func applyMomsBottleOfPills(usr *Player) {
 }
 
 func applyTheNail(usr *Player) {
-	usr.TempATK += 0.7
+	usr.ATK += 0.7
 }
 
 func applyHeart(usr *Player) {
@@ -394,7 +396,7 @@ func applyTheHermit(usr *Player) {
 
 func applyStrength(usr *Player) {
 	usr.MAX_HP += 20
-	usr.TempATK += 3
+	usr.ATK += 3
 }
 
 func applyDeath(usr *Player) {

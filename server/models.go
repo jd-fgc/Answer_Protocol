@@ -22,8 +22,6 @@ type Player struct {
 	Coin             int
 	Bomb             int
 	Key              int
-	TempATK  float32
-	TempHP   int
 }
 
 type Rooms struct {
