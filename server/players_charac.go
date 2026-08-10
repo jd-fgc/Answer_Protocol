@@ -100,6 +100,22 @@ func load_map(filepath string) (Rooms, error) {
 		}
 		rooms.Rooms = append(rooms.Rooms, room)
 	}
+	for i, rq := range quests.Quest {
+		switch rq.Reward {
+		case "coin":
+		case "bomb":
+		case "key":
+		default:
+			slug := slugify(rq.Reward)
+			counter[slug]++
+			id := "item." + slug
+			if counter[slug] > 1 {
+				id = fmt.Sprintf("item.%s-%d", slug, counter[slug])
+			}
+			itemDisplayName[id] = rq.Reward
+			quests.Quest[i].Reward = id
+		}
+	}
 
 	return rooms, nil
 }

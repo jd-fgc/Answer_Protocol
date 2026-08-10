@@ -44,6 +44,9 @@ func set_take() {
 
 	for _, item := range currentRoomItems {
 		item := item
+		if item.Name == "" {
+			item.Name = item.ID
+		}
 		inventory.Add(widget.NewButton(item.Name, func() {
 			lines, err := netClient.SendCommand("TAKE " + item.ID)
 			if err != nil || len(lines) == 0 {

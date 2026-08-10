@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 )
 
 var online_players Players
@@ -114,6 +115,27 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 
 	conn.Write([]byte("OK hello proto=1\n"))
 
+	stop := make(chan struct{})
+	go func() {
+		for {
+			session, ok := sessions[from]
+			if !ok || session.Events == nil {
+				select {
+				case <-stop:
+					return
+				case <-time.After(50 * time.Millisecond):
+					continue
+				}
+			}
+			select {
+			case evt := <-session.Events:
+				conn.Write([]byte(evt))
+			case <-stop:
+				return
+			}
+		}
+	}()
+
 	for {
 		bytes, err := reader.ReadBytes(byte('\n'))
 		if err != nil {
@@ -124,6 +146,7 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 
 			replyChan := make(chan string, 1)
 			incoming <- Message{From: from, Text: "QUIT\n", ReplyChan: replyChan}
+			close(stop)
 			return
 		}
 
@@ -134,6 +157,7 @@ func handleConnection(conn net.Conn, incoming chan Message) {
 
 		cmd, _ := parseCommand(string(bytes))
 		if cmd == "QUIT" {
+			close(stop)
 			return
 		}
 	}

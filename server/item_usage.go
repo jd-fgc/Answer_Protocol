@@ -83,7 +83,12 @@ func handleInventory(from string) string {
 
 	var items []ItemInstance
 	for _, id := range session.Player.Inventory {
-		items = append(items, ItemInstance{ID: id, Name: itemDisplayName[id]})
+		if itemDisplayName[id] != "" {
+			items = append(items, ItemInstance{ID: id, Name: itemDisplayName[id]})
+		} else {
+			items = append(items, ItemInstance{ID: id, Name: id})
+		}
+		
 	}
 
 	data, err := json.Marshal(items)
