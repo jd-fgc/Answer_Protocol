@@ -1,11 +1,12 @@
-Server :
-- GROUP juste virer invit
-- USE
-
-- Gestion Plusieurs Command (COMMAND ... + COMMAND ...)
+Check les groups
 
 
-INTERFACE (GUI) :
-- Ajouter USE
+CLI mult cmd split par "|"
 
-Fix les items obtenus par les quetes (Les itemsinstances ne sont pas faites).
+
+Respawn post mortem
+
+
+remplir world map (
+    type, items, quete, shop..
+)
