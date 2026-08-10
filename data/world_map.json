@@ -12,10 +12,8 @@
                 }
             ],
             "item": [
-                "potion",
-                "Map",
-                "The Fool",
-                "D6"
+                "<3",
+                "Map"
             ],
             "North": "Dusty Corridor",
             "South": "",
@@ -45,7 +43,7 @@
                     "ennemy": true
                 }
             ],
-            "item": ["Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!","Kamikaze!"],
+            "item": ["Kamikaze!"],
             "North": "Maggot Den",
             "South": "Dusty Corridor",
             "East": "",
@@ -62,7 +60,10 @@
                     "ennemy": true
                 }
             ],
-            "item": [],
+            "item": [
+                "Brimstone",
+                "Charm Of The Vampire"
+            ],
             "North": "Bone Pile Room",
             "South": "Cracked Cellar",
             "East": "",
@@ -79,7 +80,7 @@
                     "ennemy": true
                 }
             ],
-            "item": [],
+            "item": ["Dessert"],
             "North": "",
             "South": "Maggot Den",
             "East": "",
@@ -344,7 +345,11 @@
                     "ennemy": true
                 }
             ],
-            "item": [],
+            "item": [
+                "Halo",
+                "Inner",
+                "Lucky Foot"
+            ],
             "North": "Fly Infested Nook",
             "South": "",
             "East": "Forsaken Study",
@@ -398,7 +403,7 @@
                     "ennemy": true
                 }
             ],
-            "item": [],
+            "item": ["PHD"],
             "North": "",
             "South": "",
             "East": "Fungal Grotto",
@@ -463,8 +468,9 @@
             "name": "Sealed Cistern",
             "NPC": [],
             "item": [
-                "Battery",
-                "Boss Key"
+                "The Book Of Belial",
+                "Book Of Revelations",
+                "D6"
             ],
             "North": "Rotten Larder",
             "South": "",
@@ -526,7 +532,7 @@
                     "ennemy": true
                 }
             ],
-            "item": [],
+            "item": ["hearth", "hearth", "hearth"],
             "North": "",
             "South": "Ash Covered Vestibule",
             "East": "",
