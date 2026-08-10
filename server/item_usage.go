@@ -174,7 +174,8 @@ func checkAndRespawnPlayer(usr *Player) bool {
 	if usr.CURRENT_HP > 0 {
 		return false
 	}
-	usr.CURRENT_HP = usr.MAX_HP
+	ratio := 0.3
+	usr.CURRENT_HP = max(int(float64(usr.MAX_HP) * ratio), 1)
 	usr.Zone = getTargetZone(usr)
 	update_players(*usr)
 	logInfo("player_respawned", map[string]interface{}{
