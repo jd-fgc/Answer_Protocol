@@ -32,7 +32,7 @@ func refreshPlayerStatus() {
 	if err != nil {
 		return
 	}
-	player.HP = s.HP
+	player.HP = int(s.HP)
 
 	if selfPlayerView != nil {
 		selfPlayerView.Refresh()

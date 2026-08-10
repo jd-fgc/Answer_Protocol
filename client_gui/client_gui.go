@@ -114,9 +114,9 @@ func read_character_file(filepath string, start_zone string) (Players, error) {
 		charac = append(charac, Player{
 			Name:      rc.Name,
 			Character: rc.Name,
-			HP:        rc.HP,
-			ATK:       rc.ATK,
-			DMG_Mult:  rc.DmgMult,
+			HP:        int(rc.CurrentHP),
+			ATK:       float32(rc.ATK),
+			DMG_Mult:  float32(rc.DmgMult),
 			COIN:      0,
 			BOMB:      0,
 			Zone:      start_zone,

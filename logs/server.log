@@ -1578,3 +1578,19 @@
 {"time":"2026-08-07T08:49:32.956790379Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:55092","player":"JS"}}
 {"time":"2026-08-07T08:49:32.956941914Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:55092"}}
 {"time":"2026-08-07T08:49:32.956967096Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:55092","player":"JS","response":"OK bye"}}
+{"time":"2026-08-10T10:55:31.322083429Z","level":"INFO","event":"client_connected","details":{"remote_addr":"[::1]:49262"}}
+{"time":"2026-08-10T10:55:31.332011781Z","level":"INFO","event":"command_received","details":{"args":["JS"],"command":"CONNECT","from":"[::1]:49262","player":"unknown"}}
+{"time":"2026-08-10T10:55:31.332197278Z","level":"INFO","event":"player_connected","details":{"from":"[::1]:49262","username":"JS"}}
+{"time":"2026-08-10T10:55:31.332260095Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:49262","player":"unknown","response":"OK connected\n[\"Isaac\",\"Eve\",\"Azazel\",\"Judas\",\"Guppy\",\"Lost\"]"}}
+{"time":"2026-08-10T10:55:32.384514626Z","level":"INFO","event":"command_received","details":{"args":["Isaac"],"command":"CHOOSE","from":"[::1]:49262","player":"JS"}}
+{"time":"2026-08-10T10:55:32.384773172Z","level":"INFO","event":"character_chosen","details":{"character":"Isaac","from":"[::1]:49262","username":"JS"}}
+{"time":"2026-08-10T10:55:32.384821436Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:49262","player":"JS","response":"OK character=Isaac"}}
+{"time":"2026-08-10T10:55:32.389486313Z","level":"INFO","event":"command_received","details":{"args":[],"command":"LOOK","from":"[::1]:49262","player":"JS"}}
+{"time":"2026-08-10T10:55:32.38982433Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:49262","player":"JS","response":"OK {\"room\":{\"id\":\"room.basement_entrance\",\"name\":\"Basement Entrance\",\"description\":\"\",\"exits\":{\"north\":\"Dusty Corridor\",\"west\":\"Crumbling Hallway\"}},\"players\":[{\"name\":\"JS\",\"character\":\"Isaac\"}],\"items\":[{\"id\":\"item.potion\",\"name\":\"potion\"},{\"id\":\"item.map\",\"name\":\"Map\"}],\"npcs\":[\"Dummy\"]}"}}
+{"time":"2026-08-10T10:55:37.919340323Z","level":"INFO","event":"command_received","details":{"args":["GLOBAL","dkjah","da"],"command":"CHAT","from":"[::1]:49262","player":"JS"}}
+{"time":"2026-08-10T10:55:37.919605249Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:49262","player":"JS","response":"OK"}}
+{"time":"2026-08-10T10:55:39.952598169Z","level":"INFO","event":"command_received","details":{"args":["GLOBAL","d","wad"],"command":"CHAT","from":"[::1]:49262","player":"JS"}}
+{"time":"2026-08-10T10:55:39.952777347Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:49262","player":"JS","response":"OK"}}
+{"time":"2026-08-10T10:55:44.000597682Z","level":"INFO","event":"command_received","details":{"args":[],"command":"QUIT","from":"[::1]:49262","player":"JS"}}
+{"time":"2026-08-10T10:55:44.000686402Z","level":"INFO","event":"player_quit","details":{"from":"[::1]:49262"}}
+{"time":"2026-08-10T10:55:44.000699129Z","level":"INFO","event":"response_sent","details":{"from":"[::1]:49262","player":"JS","response":"OK bye"}}
