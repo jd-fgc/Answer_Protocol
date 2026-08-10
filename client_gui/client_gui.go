@@ -136,7 +136,7 @@ func (pv *PlayerView) Refresh() {
 	pv.Portrait.Refresh()
 
 	pv.Name.SetText(p.Name)
-	pv.HP.SetText(fmt.Sprintf("HP : %d", p.HP))
+	pv.HP.SetText(fmt.Sprintf("HP : %d", p.CURRENT_HP))
 	pv.ATK.SetText(fmt.Sprintf("ATK : %.1f", p.ATK))
 	pv.Coin.SetText(fmt.Sprintf("Coins : %d", p.COIN))
 	pv.Bomb.SetText(fmt.Sprintf("Bombs : %d", p.BOMB))

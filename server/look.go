@@ -20,15 +20,20 @@ type Exits struct {
 }
 
 type PlayerInfo struct {
-	Name      string `json:"name"`
-	Character string `json:"character"`
+	Name      string  `json:"name"`
+	Character string  `json:"character"`
+	HP        int     `json:"HP"`
+	ATK       float32 `json:"ATK"`
+	COIN      int     `json:"COIN"`
+	BOMB      int     `json:"BOMB"`
+	KEY       int     `json:"KEY"`
 }
 
 type Look_Struct struct {
 	Room    Room_Description `json:"room"`
 	Players []PlayerInfo     `json:"players"`
 	Items   []ItemInstance   `json:"items"`
-	NPCs    []string         `json:"npcs"`
+	NPCs    []NPC            `json:"npcs"`
 }
 
 func fill_desc(players Players, zone Room) Look_Struct {
@@ -49,12 +54,12 @@ func fill_desc(players Players, zone Room) Look_Struct {
 	look_struct.Room = room_desc
 	for _, val := range players.Players {
 		if val.Zone == zone.Name {
-			look_struct.Players = append(look_struct.Players, PlayerInfo{Name: val.Name, Character: val.Character})
+			look_struct.Players = append(look_struct.Players, PlayerInfo{Name: val.Name, Character: val.Character, HP: val.CURRENT_HP, ATK: val.ATK, COIN: val.Coin, BOMB: val.Bomb, KEY: val.Key})
 		}
 	}
 	look_struct.Items = zone.Items
 	for _, val := range zone.NPC {
-		look_struct.NPCs = append(look_struct.NPCs, val.Name)
+		look_struct.NPCs = append(look_struct.NPCs, val)
 	}
 
 	return look_struct

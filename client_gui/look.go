@@ -7,15 +7,20 @@ import (
 )
 
 type playerInfo struct {
-	Name      string `json:"name"`
-	Character string `json:"character"`
+	Name      string  `json:"name"`
+	Character string  `json:"character"`
+	HP        int     `json:"HP"`
+	ATK       float32 `json:"ATK"`
+	COIN      int     `json:"COIN"`
+	BOMB      int     `json:"BOMB"`
+	KEY       int     `json:"KEY"`
 }
 
 type lookResponse struct {
 	Room    lookRoomDesc   `json:"room"`
 	Players []playerInfo   `json:"players"`
 	Items   []itemInstance `json:"items"`
-	NPCs    []string       `json:"npcs"`
+	NPCs    []NPC          `json:"npcs"`
 }
 
 type lookExits struct {
@@ -65,7 +70,8 @@ func updateKnownRoom(name string, exits lookExits) {
 }
 
 var currentRoomItems []itemInstance
-var currentRoomNPCs []string
+var currentRoomNPCsName []string
+var currentRoomNPCs []NPC
 
 func refreshRoomState(is_look bool) {
 	resp, err := doLook()
@@ -78,7 +84,11 @@ func refreshRoomState(is_look bool) {
 	visitedRooms[resp.Room.Name] = true
 	updateKnownRoom(resp.Room.Name, resp.Room.Exits)
 	currentRoomItems = resp.Items
+	currentRoomNPCsName = []string{}
 	currentRoomNPCs = resp.NPCs
+	for i := range resp.NPCs {
+		currentRoomNPCsName = append(currentRoomNPCsName, resp.NPCs[i].Name)
+	}
 
 	refreshMiniMap()
 	refreshRoomPlayers(leftColumnGlobal, resp.Players)
@@ -90,6 +100,6 @@ func refreshRoomState(is_look bool) {
 		}
 
 		log_text.SetText(fmt.Sprintf("Room: %s\nItems: %s\nNPCs: %s",
-			resp.Room.Name, strings.Join(itemNames, ", "), strings.Join(resp.NPCs, ", ")))
+			resp.Room.Name, strings.Join(itemNames, ", "), strings.Join(currentRoomNPCsName, ", ")))
 	}
 }

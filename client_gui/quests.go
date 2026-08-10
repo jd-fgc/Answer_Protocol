@@ -1,12 +1,11 @@
 package main
 
 import (
-	"fmt"
-
 	"fyne.io/fyne/v2/widget"
 )
 
 func set_quests() {
+	refreshRoomState(false)
 	actions.RemoveAll()
 
 	for _, room := range rooms.Rooms {
@@ -23,6 +22,7 @@ func set_quests() {
 							player.Quests = append(player.Quests, quest)
 							log_text.SetText(line[0])
 							quests.Quest[i].taken = true
+							refreshRoomState(false)
 							set_log()
 							set_actions()
 						})
@@ -51,6 +51,7 @@ func set_complete_quests() {
 				player.Quests[i].finished = true
 				log_text.SetText(lines[0])
 				get_quest_reward(quest)
+				set_actions()
 			}))
 		}
 	}
@@ -64,7 +65,6 @@ func check_quests() {
 	tmp_usr := player
 
 	for i, quest := range tmp_usr.Quests {
-		fmt.Println("DEBUG ", quest)
 		switch quest.Type {
 		case "item":
 			switch quest.Item_needed {

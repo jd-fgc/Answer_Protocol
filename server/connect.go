@@ -31,7 +31,6 @@ func handleConnect(from string, args []string) string {
 	}
 
 	sessions[from] = &Session{Username: username, Events: make(chan string, 20)}
-
 	var names []string
 	for _, c := range playable_characters.Players {
 		names = append(names, c.Name)

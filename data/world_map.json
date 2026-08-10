@@ -9,7 +9,8 @@
                     "ennemy": true,
                     "room": "Spawn",
                     "talk": ". . . *Un mannequin tout dechire*",
-                    "quest": "test"
+                    "quest": "test",
+                    "attack": 20
                 }
             ],
             "item": ["potion", "Map"],

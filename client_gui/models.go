@@ -22,7 +22,7 @@ type Player struct {
 	Item             string
 	Inventory        []string
 	MAX_HP           int
-	HP               int
+	CURRENT_HP       int
 	ATK              float32
 	DMG_Mult         float32
 	Luck             int

@@ -2,12 +2,13 @@ package main
 
 import (
 	"encoding/json"
+	// "fmt"
 	"image/color"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
-	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/widget"
+	// "fyne.io/fyne/v2/container"
+	// "fyne.io/fyne/v2/widget"
 )
 
 var characterImages = map[string]string{
@@ -40,18 +41,16 @@ func fetchRoomPlayers() ([]whoPlayerInfo, error) {
 }
 
 func buildPlayerCard(info playerInfo) fyne.CanvasObject {
-	if info.Name == player.Name {
-		pv := NewPlayerView(&player)
-		return pv.Container
-	}
-
-	img := canvas.NewImageFromFile(characterImages[info.Character])
-	img.FillMode = canvas.ImageFillContain
-	img.ScaleMode = canvas.ImageScalePixels
-	img.SetMinSize(fyne.NewSize(247, 208))
-
-	nameLabel := widget.NewLabel(info.Name)
-	return container.NewCenter(container.NewHBox(img, nameLabel))
+	var n_player Player
+	n_player.Name = info.Name
+	n_player.CURRENT_HP = info.HP
+	n_player.Character = info.Character
+	n_player.ATK = info.ATK
+	n_player.COIN = info.COIN
+	n_player.BOMB = info.BOMB
+	n_player.KEY = info.KEY
+	pv := NewPlayerView(&n_player)
+	return pv.Container
 }
 
 func refreshRoomPlayers(leftContainer *fyne.Container, infos []playerInfo) {

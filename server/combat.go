@@ -1,6 +1,10 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"math/rand/v2"
+	"strings"
+)
 
 type ATTACK_TURN struct {
 	Attacker_hp int    `json:"attacker_hp"`
@@ -13,6 +17,17 @@ type PLAYER_STATUS struct {
 	HP     int    `json:"hp"`
 	MAX_HP int    `json:"max_hp"`
 	STATUS string `json:"status"`
+}
+
+func ennemy_turn(ennemy NPC) {
+	rand_player := rand.IntN(len(sessions))
+	for _, player := range sessions {
+		if rand_player == 0 {
+			player.Player.CURRENT_HP -= ennemy.ATK
+			update_players(*player.Player)
+		}
+		rand_player -= 1
+	} 
 }
 
 func fill_attack_info(usr Player, npc NPC, damage int) string {
@@ -38,14 +53,8 @@ func handleAttack(from string, args []string) string {
 		return "ERR missing Ennemy\n"
 	}
 
-	enemy_name := ""
-	for i, val := range args {
-		enemy_name += val
-		if i < len(args)-1 {
-			enemy_name += " "
-		}
-	}
-	result := ATTACK(*session.Player, enemy_name)
+	enemy_name := strings.Join(args, " ")
+	result := ATTACK(session.Player, enemy_name)
 	return result + "\n"
 }
 
@@ -67,7 +76,7 @@ func handleStatus(from string) string {
 	return result + "\n"
 }
 
-func ATTACK(usr Player, npc_name string) string {
+func ATTACK(usr *Player, npc_name string) string {
 	for i, val := range rooms.Rooms {
 		for j, npc := range val.NPC {
 			if npc.Name == npc_name && npc.Ennemy == true {
@@ -76,8 +85,10 @@ func ATTACK(usr Player, npc_name string) string {
 				if npc.HP <= 0 {
 					npc.HP = 0
 					rooms.Rooms[i].NPC = append(rooms.Rooms[i].NPC[:j], rooms.Rooms[i].NPC[j+1:]...)
+				} else {
+					ennemy_turn(npc)
 				}
-				return fill_attack_info(usr, npc, int(usr.ATK*usr.DMG_Mult))
+				return fill_attack_info(*usr, npc, int(usr.ATK*usr.DMG_Mult))
 			}
 			if npc.Name == npc_name && npc.Ennemy == false {
 				return "ERR 405 NPC_NOT_HOSTILE"

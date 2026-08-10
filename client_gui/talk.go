@@ -9,7 +9,7 @@ import (
 func set_talk() {
 	actions.RemoveAll()
 
-	for _, name := range currentRoomNPCs {
+	for _, name := range currentRoomNPCsName {
 		name := name
 		actions.Add(widget.NewButton(name, func() {
 			lines, err := netClient.SendCommand("TALK " + name)
