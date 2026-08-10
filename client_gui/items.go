@@ -127,10 +127,23 @@ func applyUseResponse(line string) {
 		return
 	}
 	jsonPart := strings.TrimPrefix(line, "OK ")
+	if strings.HasPrefix(jsonPart, "drawn=") {
+		log_text.SetText("Card found : " + strings.TrimPrefix(jsonPart, "drawn="))
+		set_inventory()
+		return
+	}
+
+	if strings.HasPrefix(jsonPart, "used=") {
+		log_text.SetText("Objet utilisé : " + strings.TrimPrefix(jsonPart, "used="))
+		refreshRoomState(false)
+		refreshPlayerStatus()
+		set_inventory()
+		return
+	}
 
 	var summary []roomSummary
 	if err := json.Unmarshal([]byte(jsonPart), &summary); err != nil {
-		log_text.SetText("OK")
+		log_text.SetText(jsonPart)
 		return
 	}
 

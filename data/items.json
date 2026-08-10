@@ -1,0 +1,46 @@
+{
+    "items": {
+        "Base": [
+            "The Book Of Belial",
+            "Book Of Revelations",
+            "Deck of Cards",
+            "D6",
+            "Kamikaze!",
+            "Mom's Bottle Of Pills",
+            "The nail",
+            "<3",
+            "Blood of martyr",
+            "Bobby bomb",
+            "Brimstone",
+            "Charm Of The Vampire",
+            "Dessert",
+            "A Dollar",
+            "Growth Hormones",
+            "Halo",
+            "Inner",
+            "Lucky Foot",
+            "Magic mush",
+            "Max's Head",
+            "Money = Power",
+            "PHD",
+            "A Quarter",
+            "The Small Rock"
+        ],
+        "Tarot": [
+            "The Fool",
+            "The Emperor",
+            "The Lovers",
+            "Justice",
+            "The Hermit",
+            "XI Strength",
+            "Death",
+            "The Devil",
+            "The Stars",
+            "The Sun"
+        ],
+        "Pills": [
+            "?Pill?"
+        ]
+    }
+
+}

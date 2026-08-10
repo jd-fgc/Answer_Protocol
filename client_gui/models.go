@@ -77,6 +77,7 @@ type Room struct {
 	South string   `json:"South"`
 	East  string   `json:"East"`
 	West  string   `json:"West"`
+	Type  string   `json:"Type"`
 }
 
 type Rooms struct {

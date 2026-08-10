@@ -22,6 +22,8 @@ type Player struct {
 	Coin             int
 	Bomb             int
 	Key              int
+	TempATK  float32
+	TempHP   int
 }
 
 type Rooms struct {
@@ -41,6 +43,7 @@ type Room struct {
 	South string         `json:"South"`
 	East  string         `json:"East"`
 	West  string         `json:"West"`
+	Type  string         `json:"Type"`
 }
 
 var itemDisplayName = make(map[string]string)
@@ -71,4 +74,14 @@ type Quest struct {
 	Ennemy        string `json:"ennemy"`
 	taken         bool
 	finished      bool
+}
+
+type ItemsFile struct {
+	Items Categories `json:"items"`
+}
+
+type Categories struct {
+	Base  []string `json:"Base"`
+	Tarot []string `json:"Tarot"`
+	Pills []string `json:"Pills"`
 }

@@ -119,23 +119,67 @@ func handleUse(from string, args []string) string {
 	if matchedID == "" {
 		return "ERR 404 ITEM_NOT_IN_INVENTORY\n"
 	}
-	if itemDisplayName[matchedID] != "Map" {
+
+	displayName := itemDisplayName[matchedID]
+	if displayName == "" {
+		displayName = matchedID
+	}
+
+	if displayName == "Map" {
+		var summary []RoomSummary
+		for _, r := range rooms.Rooms {
+			summary = append(summary, RoomSummary{
+				ID:    "room." + slugify(r.Name),
+				Name:  r.Name,
+				Exits: Exits{North: r.North, South: r.South, East: r.East, West: r.West},
+			})
+		}
+		data, err := json.Marshal(summary)
+		if err != nil {
+			return "ERR " + err.Error() + "\n"
+		}
+		logInfo("map_revealed", map[string]interface{}{"player": session.Username})
+		return "OK " + string(data) + "\n"
+	}
+
+	result, err := useActiveItem(session.Player, displayName)
+	if err != nil {
 		return "ERR ITEM_NOT_USABLE\n"
 	}
-
-	var summary []RoomSummary
-	for _, r := range rooms.Rooms {
-		summary = append(summary, RoomSummary{
-			ID:    "room." + slugify(r.Name),
-			Name:  r.Name,
-			Exits: Exits{North: r.North, South: r.South, East: r.East, West: r.West},
-		})
+	removeInventoryItem(session.Player, matchedID)
+	update_players(*session.Player)
+	logInfo("item_used", map[string]interface{}{"player": session.Username, "item": displayName})
+	if result != "" {
+		return "OK drawn=" + result + "\n"
 	}
+	return "OK used=" + matchedID + "\n"
+}
 
-	data, err := json.Marshal(summary)
-	if err != nil {
-		return "ERR " + err.Error() + "\n"
+func removeInventoryItem(usr *Player, itemID string) {
+	for i, id := range usr.Inventory {
+		if id == itemID {
+			usr.Inventory = append(usr.Inventory[:i], usr.Inventory[i+1:]...)
+			break
+		}
 	}
-	logInfo("map_revealed", map[string]interface{}{"player": session.Username})
-	return "OK " + string(data) + "\n"
+}
+
+func removeNpc(room *Room, npc int) {
+	if room.NPC[npc].HP <= 0 {
+		room.NPC = append(room.NPC[:npc], room.NPC[npc+1:]...)
+	}
+}
+
+func checkAndRespawnPlayer(usr *Player) bool {
+	if usr.CURRENT_HP > 0 {
+		return false
+	}
+	usr.CURRENT_HP = usr.MAX_HP
+	usr.Zone = getTargetZone(usr)
+	update_players(*usr)
+	logInfo("player_respawned", map[string]interface{}{
+		"player": usr.Name,
+		"zone":   usr.Zone,
+	})
+	return true
 }

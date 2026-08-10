@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"image/color"
 
 	"fyne.io/fyne/v2"
@@ -84,12 +85,13 @@ func set_combat() {
 		set_log()
 	}))
 	combat.Add(widget.NewButton("STATUS", func() {
-		lines, err := netClient.SendCommand("STATUS")
+		s, err := doStatus()
 		if err != nil {
+			log_text.SetText("Erreur STATUS")
 			return
 		}
-		log_text.SetText(lines[0])
-		set_log()
+		log_text.SetText(fmt.Sprintf("HP: %d/%d — %s", s.CURRENT_HP, s.MaxHP, s.Status))
+		refreshPlayerStatus()
 	}))
 	combat.Refresh()
 }

@@ -16,6 +16,7 @@ import (
 
 var player Player
 var players Players
+var selfPlayerView *PlayerView
 var actions *fyne.Container
 var inventory *fyne.Container
 var combat *fyne.Container
@@ -201,6 +202,7 @@ func startGame(w fyne.Window, username string, character string) {
 
 	player = findPlayerTemplate(character)
 	player.Name = username
+	selfPlayerView = NewPlayerView(&player)
 
 	views := []*PlayerView{
 		NewPlayerView(&players.Player[0]),

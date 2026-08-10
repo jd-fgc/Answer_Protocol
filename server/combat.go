@@ -16,6 +16,8 @@ type ATTACK_TURN struct {
 type PLAYER_STATUS struct {
 	HP     int    `json:"hp"`
 	MAX_HP int    `json:"max_hp"`
+	COIN   int    `json:"coin"`
+	BOMB   int    `json:"bomb"`
 	STATUS string `json:"status"`
 }
 

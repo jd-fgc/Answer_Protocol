@@ -54,7 +54,8 @@ func handleMove(from string, args []string) string {
 	}
 
 	oldZone := session.Player.Zone
-	res := MOVE(session.Player, args[0])
+	zoneName := strings.Join(args, " ")
+	res := MOVE(session.Player, zoneName)
 
 	if strings.HasPrefix(res, "OK") {
 		newZone := session.Player.Zone
