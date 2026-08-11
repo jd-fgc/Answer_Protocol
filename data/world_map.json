@@ -5,15 +5,14 @@
             "NPC": [
                 {
                     "name": "Dummy",
-                    "hp": 10,
+                    "hp": 1000,
                     "ennemy": true,
                     "talk": ". . . *Un mannequin tout dechire*",
-                    "attack": 50
+                    "attack": 0
                 }
             ],
             "item": [
-                "<3",
-                "Map"
+                "<3", "coin"
             ],
             "North": "Dusty Corridor",
             "South": "",
@@ -40,7 +39,8 @@
                     "name": "Fly Swarm",
                     "talk": "*Un essaim de mouches bourdonne agressivement*",
                     "hp": 8,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 2
                 }
             ],
             "item": ["Kamikaze!"],
@@ -57,7 +57,8 @@
                     "name": "Gaper",
                     "talk": "*Une creature difforme titube en saignant*",
                     "hp": 12,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 3
                 }
             ],
             "item": [
@@ -77,10 +78,19 @@
                     "name": "Pooter",
                     "talk": "*Une mouche geante crache un projectile*",
                     "hp": 10,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 1
+                },
+                {
+                    "name": "Guppy",
+                    "talk": ". . . . *Votre chat, du moins les restes, la tete manque.*",
+                    "hp": 1,
+                    "ennemy": false,
+                    "quest": "Matricide",
+                    "room": "Bone Pile Room"
                 }
             ],
-            "item": ["Dessert"],
+            "item": ["Dessert", "key"],
             "North": "",
             "South": "Maggot Den",
             "East": "",
@@ -94,7 +104,8 @@
                     "name": "Horf",
                     "talk": "*Un zombie regurgite un liquide nauseabond*",
                     "hp": 15,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 4
                 }
             ],
             "item": [],
@@ -127,9 +138,7 @@
         {
             "name": "Rotten Larder",
             "NPC": [],
-            "item": [
-                "Compass"
-            ],
+            "item": [],
             "North": "Withered Chapel",
             "South": "Sealed Cistern",
             "East": "",
@@ -143,25 +152,36 @@
                     "name": "Larry Jr.",
                     "talk": "*Un ver segmente rampe vers vous en sifflant*",
                     "hp": 60,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 20
                 }
             ],
             "item": [],
-            "North": "Sacrificial Altar",
+            "North": "Shop",
             "South": "Rotten Larder",
             "East": "Faded Nursery",
             "West": "",
             "Type": "Boss_room"
         },
         {
-            "name": "Sacrificial Altar",
-            "NPC": [],
-            "item": [],
+            "name": "Shop",
+            "NPC": [
+                {
+                    "name": "Shop Keeper",
+                    "hp": 1,
+                    "ennemy": false,
+                    "talk": ". . . *Un corps pendu et desséché vous observe*",
+                    "attack": 0
+                }
+            ],
+            "item": [
+                "Map", "?Pill?", "Growth Hormones", "key"
+            ],
             "North": "",
             "South": "Withered Chapel",
             "East": "",
             "West": "",
-            "Type": "Special_room"
+            "Type": "Shop_room"
         },
         {
             "name": "Ash Covered Vestibule",
@@ -180,7 +200,8 @@
                     "name": "Boil",
                     "talk": "*Une masse gonflee palpite dangereusement*",
                     "hp": 14,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 5
                 }
             ],
             "item": [],
@@ -197,7 +218,8 @@
                     "name": "Spider",
                     "talk": "*Une araignee noire se precipite vers vous*",
                     "hp": 6,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 3
                 }
             ],
             "item": [],
@@ -224,7 +246,8 @@
                     "name": "Clotty",
                     "talk": "*Un caillot de sang rebondit dans votre direction*",
                     "hp": 9,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 2
                 }
             ],
             "item": [],
@@ -261,7 +284,8 @@
                     "name": "Attack Fly",
                     "talk": "*Une mouche rouge charge en piaille*",
                     "hp": 5,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 1
                 }
             ],
             "item": [],
@@ -278,7 +302,8 @@
                     "name": "Gemini",
                     "talk": "*Deux jumeaux difformes grondent en choeur*",
                     "hp": 75,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 15
                 }
             ],
             "item": [],
@@ -325,7 +350,8 @@
                     "name": "Fly Swarm",
                     "talk": "*Un essaim de mouches bourdonne agressivement*",
                     "hp": 8,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 4
                 }
             ],
             "item": [],
@@ -342,7 +368,8 @@
                     "name": "Gaper",
                     "talk": "*Une creature difforme titube en saignant*",
                     "hp": 12,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 8
                 }
             ],
             "item": [
@@ -386,12 +413,14 @@
                     "quest": "La rydelequest"
                 }
             ],
-            "item": [],
+            "item": [
+                "key"
+            ],
             "North": "",
             "South": "",
             "East": "",
             "West": "Forsaken Study",
-            "Type": "Shop_room"
+            "Type": "Standard_room"
         },
         {
             "name": "Gnawed Bone Room",
@@ -400,7 +429,8 @@
                     "name": "Pooter",
                     "talk": "*Une mouche geante crache un projectile*",
                     "hp": 10,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 3
                 }
             ],
             "item": ["PHD"],
@@ -417,7 +447,8 @@
                     "name": "Horf",
                     "talk": "*Un zombie regurgite un liquide nauseabond*",
                     "hp": 15,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 7
                 }
             ],
             "item": [],
@@ -454,7 +485,8 @@
                     "name": "Boil",
                     "talk": "*Une masse gonflee palpite dangereusement*",
                     "hp": 14,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 6
                 }
             ],
             "item": [],
@@ -485,7 +517,8 @@
                     "name": "The Duke of Flies",
                     "talk": "*Un nuage de mouches tourbillonne autour d'un cadavre couronne*",
                     "hp": 90,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 18
                 }
             ],
             "item": [],
@@ -502,7 +535,8 @@
                     "name": "Spider",
                     "talk": "*Une araignee noire se precipite vers vous*",
                     "hp": 6,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 3
                 }
             ],
             "item": [],
@@ -529,10 +563,11 @@
                     "name": "Mom",
                     "talk": "*Des pas titanesques ebranlent la piece entiere*",
                     "hp": 300,
-                    "ennemy": true
+                    "ennemy": true,
+                    "attack": 24
                 }
             ],
-            "item": ["hearth", "hearth", "hearth"],
+            "item": ["hearth", "hearth", "hearth", "key"],
             "North": "",
             "South": "Ash Covered Vestibule",
             "East": "",

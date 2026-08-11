@@ -50,21 +50,10 @@ func buildGroupTab() *fyne.Container {
 		groupStatus.SetText("Groupe : aucun")
 	})
 
-	inviteEntry := widget.NewEntry()
-	inviteEntry.SetPlaceHolder("Pseudo à inviter")
-	inviteBtn := widget.NewButton("INVITER", func() {
-		target := strings.TrimSpace(inviteEntry.Text)
-		if target == "" {
-			return
-		}
-		netClient.SendCommand("GROUP INVITE " + target)
-	})
-
 	return container.NewVBox(
 		groupStatus,
 		nameEntry,
 		container.NewHBox(createBtn, joinBtn, leaveBtn),
-		container.NewHBox(inviteEntry, inviteBtn),
 	)
 }
 

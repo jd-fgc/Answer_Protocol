@@ -34,6 +34,12 @@ func TAKE(usr *Player, query string) string {
 			if !found {
 				return "ERR 404 ITEM_NOT_FOUND"
 			}
+			if val.Type == "Shop_room" {
+				if usr.Coin < 15 {
+					return "ERR NOT_ENOUGH_MONEY"
+				}
+				usr.Coin -= 15
+			}
 			usr.Inventory = append(usr.Inventory, it.ID)
 			rooms.Rooms[i].Items = append(rooms.Rooms[i].Items[:idx], rooms.Rooms[i].Items[idx+1:]...)
 			update_players(*usr)
@@ -65,6 +71,9 @@ func DROP(usr *Player, query string) string {
 			for ri, r := range rooms.Rooms {
 				if r.Name == usr.Zone {
 					rooms.Rooms[ri].Items = append(rooms.Rooms[ri].Items, ItemInstance{ID: id, Name: name})
+					if r.Type == "Shop_room" {
+						usr.Coin += 7
+					}
 				}
 			}
 			update_players(*usr)
@@ -83,7 +92,11 @@ func handleInventory(from string) string {
 
 	var items []ItemInstance
 	for _, id := range session.Player.Inventory {
-		items = append(items, ItemInstance{ID: id, Name: itemDisplayName[id]})
+		if itemDisplayName[id] == "" {
+			items = append(items, ItemInstance{ID: id, Name: id})
+		} else {
+			items = append(items, ItemInstance{ID: id, Name: itemDisplayName[id]})
+		}
 	}
 
 	data, err := json.Marshal(items)

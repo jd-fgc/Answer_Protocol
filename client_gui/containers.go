@@ -49,6 +49,14 @@ func set_actions() {
 	actions.Add(widget.NewButton("COMPLETE_QUEST", func() {
 		set_complete_quests()
 	}))
+	actions.Add(widget.NewButton("WHO", func() {
+		lines, err := netClient.SendCommand("WHO")
+		if err != nil {
+			return
+		}
+		log_text.SetText(lines[0])
+		set_log()
+	}))
 	actions.Refresh()
 }
 

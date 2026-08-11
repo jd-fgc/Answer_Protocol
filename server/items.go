@@ -124,6 +124,12 @@ func useActiveItem(usr *Player, item_name string) (string, error) {
 	switch item_name {
 	case "hearth":
 		usr.CURRENT_HP = min(usr.CURRENT_HP+20, usr.MAX_HP)
+	case "coin":
+		usr.Coin += 1
+	case "bomb":
+		usr.Bomb += 1
+	case "key":
+		usr.Key += 1
 	case "The Book Of Belial":
 		applyBookOfBelial(usr)
 	case "Book Of Revelations":
@@ -320,6 +326,7 @@ func applyGrowthHormones(usr *Player) {
 func applyHalo(usr *Player) {
 	usr.ATK += 1
 	usr.MAX_HP += 20
+	usr.CURRENT_HP += 20
 }
 
 func applyInner(usr *Player) {
@@ -333,6 +340,7 @@ func applyLuckyFoot(usr *Player) {
 func applyMagicMush(usr *Player) {
 	usr.ATK += 2
 	usr.MAX_HP += 20
+	usr.CURRENT_HP += 20
 	usr.DMG_Mult += 1.5
 }
 
@@ -385,7 +393,7 @@ func applyJustice(usr *Player) {
 	usr.Bomb += 1
 	usr.Coin += 1
 	usr.Key += 1
-	usr.MAX_HP += 20
+	usr.CURRENT_HP += min(usr.MAX_HP, usr.CURRENT_HP + 20)
 }
 
 func applyTheHermit(usr *Player) {
@@ -395,7 +403,7 @@ func applyTheHermit(usr *Player) {
 }
 
 func applyStrength(usr *Player) {
-	usr.MAX_HP += 20
+	usr.CURRENT_HP += min(usr.MAX_HP, usr.CURRENT_HP + 20)
 	usr.ATK += 3
 }
 

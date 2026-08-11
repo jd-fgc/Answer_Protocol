@@ -6,11 +6,12 @@ import (
 )
 
 type playerStatus struct {
-	CURRENT_HP int64   `json:"hp"`
-	MaxHP      int64   `json:"max_hp"`
-	ATK        float64 `json:"atk"`
-	Coin       int64   `json:"coin"`
-	Bomb       int64   `json:"bomb"`
+	CURRENT_HP int     `json:"hp"`
+	MaxHP      int     `json:"max_hp"`
+	ATK        float32 `json:"atk"`
+	Coin       int     `json:"coin"`
+	Bomb       int     `json:"bomb"`
+	Key        int     `json:"key"`
 	Status     string  `json:"status"`
 }
 
@@ -40,6 +41,7 @@ func refreshPlayerStatus() {
 	player.ATK = float32(s.ATK)
 	player.COIN = int(s.Coin)
 	player.BOMB = int(s.Bomb)
+	player.KEY = s.Key
 
 	if pv := findPlayerViewSelf(); pv != nil {
 		pv.Refresh()

@@ -120,6 +120,7 @@ func NewPlayerView(p *Player) *PlayerView {
 		ATK:      widget.NewLabel(""),
 		Coin:     widget.NewLabel(""),
 		Bomb:     widget.NewLabel(""),
+		Key:      widget.NewLabel(""),
 	}
 
 	infoColumn := container.NewVBox(pv.Name, pv.HP, pv.ATK, pv.Coin, pv.Bomb)
@@ -141,6 +142,7 @@ func (pv *PlayerView) Refresh() {
 	pv.ATK.SetText(fmt.Sprintf("ATK : %.1f", p.ATK))
 	pv.Coin.SetText(fmt.Sprintf("Coins : %d", p.COIN))
 	pv.Bomb.SetText(fmt.Sprintf("Bombs : %d", p.BOMB))
+	pv.Key.SetText(fmt.Sprintf("Keys : %d", p.KEY))
 }
 
 func findPlayerTemplate(name string) Player {

@@ -1,8 +1,19 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"strings"
+
 	"fyne.io/fyne/v2/widget"
 )
+
+
+type questInfo struct {
+	Name string `json:"name"`
+	Desc string `json:"description"`
+}
+
 
 func set_quests() {
 	refreshRoomState(false)
@@ -15,12 +26,18 @@ func set_quests() {
 				for i, quest := range quests.Quest {
 					if quest.Name == q && player.Zone == val.Zone && quest.taken == false {
 						btn := widget.NewButton(quest.Name, func() {
-							line, err := netClient.SendCommand("QUEST " + val.Name)
+							lines, err := netClient.SendCommand("QUEST " + val.Name)
 							if err != nil {
 								return
 							}
 							player.Quests = append(player.Quests, quest)
-							log_text.SetText(line[0])
+							line := strings.Trim(lines[0], "OK ")
+							var qInfo questInfo
+							err = json.Unmarshal([]byte(line), &qInfo)
+							if err != nil {
+								return
+							}
+							log_text.SetText(fmt.Sprintf("Quest Name: %s. Quest Description: %s", quest.Name, quest.Description))
 							quests.Quest[i].taken = true
 							refreshRoomState(false)
 							set_log()
@@ -87,7 +104,6 @@ func check_quests() {
 					player.Quests[i].Completed = false
 				}
 			default:
-				
 			}
 		case "ennemy":
 			ennemy_alive := false
@@ -101,6 +117,7 @@ func check_quests() {
 			if ennemy_alive == false {
 				player.Quests[i].Completed = true
 			}
+		default:
 		}
 	}
 }
@@ -114,8 +131,5 @@ func get_quest_reward(quest Quest) {
 	case "key":
 		player.KEY += quest.Amount_reward
 	default:
-		// for i := 0; i < quest.Amount_reward; i++ {
-		// 	player.Inventory = append(player.Inventory, quest.Reward)
-		// } 
 	}
 }

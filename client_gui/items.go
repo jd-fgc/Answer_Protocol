@@ -75,6 +75,9 @@ func set_drop() {
 
 	for _, item := range inv {
 		item := item
+		if item.Name == "" {
+			item.Name = item.ID
+		}
 		inventory.Add(widget.NewButton(item.Name, func() {
 			lines, err := netClient.SendCommand("DROP " + item.ID)
 			if err != nil || len(lines) == 0 {
@@ -109,6 +112,9 @@ func set_use() {
 
 	for _, item := range inv {
 		item := item
+		if item.Name == "" {
+			item.Name = item.ID
+		}
 		inventory.Add(widget.NewButton(item.Name, func() {
 			lines, err := netClient.SendCommand("USE " + item.ID)
 			if err != nil || len(lines) == 0 {

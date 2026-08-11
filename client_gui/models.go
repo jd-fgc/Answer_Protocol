@@ -47,6 +47,7 @@ type PlayerView struct {
 	ATK      *widget.Label
 	Coin     *widget.Label
 	Bomb     *widget.Label
+	Key      *widget.Label
 
 	Container *fyne.Container
 }
