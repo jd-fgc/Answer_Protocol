@@ -98,7 +98,7 @@ func read_character_file(filepath string, start_zone string) (Players, error) {
 	if err != nil {
 		return Players{Player: nil}, errors.New(err.Error())
 	}
-	for i, _ := range charac {
+	for i := range charac {
 		charac[i].Zone = start_zone
 		charac[i].Character = charac[i].Name
 	}

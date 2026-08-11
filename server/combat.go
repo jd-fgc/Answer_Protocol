@@ -26,6 +26,7 @@ func ennemy_turn(ennemy NPC) {
 	for _, player := range sessions {
 		if rand_player == 0 {
 			player.Player.CURRENT_HP -= ennemy.ATK - int(float32(ennemy.ATK) * player.Player.Damage_Reduction)
+			checkAndRespawnPlayer(player.Player)
 			update_players(*player.Player)
 		}
 		rand_player -= 1
