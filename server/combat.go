@@ -36,8 +36,8 @@ func ennemy_turn(ennemy NPC, usr *Player) {
 	if r_player.Name == usr.Name {
 		usr.CURRENT_HP = r_player.CURRENT_HP
 	}
-	checkAndRespawnPlayer(&r_player)
-	update_players(r_player)
+	checkAndRespawnPlayer(usr)
+	update_players(*usr)
 }
 
 func fill_attack_info(usr Player, npc NPC, damage int) string {

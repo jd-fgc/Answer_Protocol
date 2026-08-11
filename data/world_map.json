@@ -62,7 +62,6 @@
                 }
             ],
             "item": [
-                "Brimstone",
                 "Charm Of The Vampire"
             ],
             "North": "Bone Pile Room",
@@ -222,7 +221,7 @@
                     "attack": 3
                 }
             ],
-            "item": [],
+            "item": ["coin"],
             "North": "",
             "South": "",
             "East": "Crumbling Hallway",
@@ -232,7 +231,7 @@
         {
             "name": "Web Choked Passage",
             "NPC": [],
-            "item": [],
+            "item": ["Deck of Cards"],
             "North": "",
             "South": "Flooded Tunnel",
             "East": "Moldy Storeroom",
@@ -288,7 +287,7 @@
                     "attack": 1
                 }
             ],
-            "item": [],
+            "item": ["XI Strength"],
             "North": "Web Choked Passage",
             "South": "Drowned Chamber",
             "East": "",
@@ -316,7 +315,7 @@
         {
             "name": "Whispering Crawlspace",
             "NPC": [],
-            "item": [],
+            "item": ["The Lovers"],
             "North": "Rusted Cage Room",
             "South": "Charred Alcove",
             "East": "",
@@ -326,7 +325,7 @@
         {
             "name": "Charred Alcove",
             "NPC": [],
-            "item": [],
+            "item": ["The Emperor"],
             "North": "Whispering Crawlspace",
             "South": "Ember Lit Cellar",
             "East": "",
@@ -373,7 +372,6 @@
                 }
             ],
             "item": [
-                "Halo",
                 "Inner",
                 "Lucky Foot"
             ],
@@ -500,7 +498,6 @@
             "name": "Sealed Cistern",
             "NPC": [],
             "item": [
-                "The Book Of Belial",
                 "Book Of Revelations",
                 "D6"
             ],
