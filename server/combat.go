@@ -31,17 +31,13 @@ func ennemy_turn(ennemy NPC, usr *Player) {
 		}
 	}
 	rand_player := rand.IntN(len(playerRoom))
-	for _, player := range playerRoom {
-		if rand_player == 0 {
-			player.CURRENT_HP -= ennemy.ATK - int(float32(ennemy.ATK)*player.Damage_Reduction)
-			checkAndRespawnPlayer(&player)
-			update_players(player)
-			if player.Name == usr.Name {
-				usr.CURRENT_HP = player.CURRENT_HP
-			}
-		}
-		rand_player -= 1
+	r_player := online_players.Players[rand_player]
+	r_player.CURRENT_HP -= ennemy.ATK - int(float32(ennemy.ATK)*r_player.Damage_Reduction)
+	if r_player.Name == usr.Name {
+		usr.CURRENT_HP = r_player.CURRENT_HP
 	}
+	checkAndRespawnPlayer(&r_player)
+	update_players(r_player)
 }
 
 func fill_attack_info(usr Player, npc NPC, damage int) string {
