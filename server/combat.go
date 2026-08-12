@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"math/rand/v2"
 	"strings"
 )
@@ -31,11 +30,9 @@ func ennemy_turn(ennemy NPC, usr *Player) {
 			playerRoom = append(playerRoom, val)
 		}
 	}
-	fmt.Println("DEBUG ", playerRoom, "-----------------")
 	rand_player := rand.IntN(len(playerRoom))
 	r_player := playerRoom[rand_player]
 	r_player.CURRENT_HP -= ennemy.ATK - int(float32(ennemy.ATK)*r_player.Damage_Reduction)
-	fmt.Println("DEBUG ", r_player, "-----------------")
 	if r_player.Name == usr.Name {
 		usr.CURRENT_HP = r_player.CURRENT_HP
 	}
