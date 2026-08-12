@@ -39,7 +39,7 @@ func hub(incoming chan Message) {
 		if checkAbuse(msg.From) {
 			logWarn("command_flooding", map[string]interface{}{"from": msg.From, "player": playerName})
 		}
-
+		nolog := false
 		var reply string
 		switch cmd {
 		case "CONNECT":
@@ -80,13 +80,19 @@ func hub(incoming chan Message) {
 			reply = handleQuests(msg.From)
 		case "COMPLETE_QUEST":
 			reply = handleCompleteQuest(msg.From, args)
+		case "REFRESH_ROOMS":
+			reply = REFRESH_ROOMS()
+			nolog = true
 		default:
 			reply = "ERR unknown command\n"
 		}
 
-		logInfo("response_sent", map[string]interface{}{
-			"from": msg.From, "player": playerName, "response": strings.TrimSpace(reply),
-		})
+		if nolog == false {
+			logInfo("response_sent", map[string]interface{}{
+				"from": msg.From, "player": playerName, "response": strings.TrimSpace(reply),
+			})
+		}
+		
 
 		msg.ReplyChan <- reply
 	}

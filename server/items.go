@@ -393,7 +393,7 @@ func applyJustice(usr *Player) {
 	usr.Bomb += 1
 	usr.Coin += 1
 	usr.Key += 1
-	usr.CURRENT_HP += min(usr.MAX_HP, usr.CURRENT_HP + 20)
+	usr.CURRENT_HP = min(usr.MAX_HP, usr.CURRENT_HP + 20)
 }
 
 func applyTheHermit(usr *Player) {
@@ -403,7 +403,7 @@ func applyTheHermit(usr *Player) {
 }
 
 func applyStrength(usr *Player) {
-	usr.CURRENT_HP += min(usr.MAX_HP, usr.CURRENT_HP + 20)
+	usr.CURRENT_HP = min(usr.MAX_HP, usr.CURRENT_HP + 20)
 	usr.ATK += 3
 }
 

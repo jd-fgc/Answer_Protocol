@@ -559,7 +559,7 @@
                 {
                     "name": "Mom",
                     "talk": "*Des pas titanesques ebranlent la piece entiere*",
-                    "hp": 300,
+                    "hp": 1300,
                     "ennemy": true,
                     "attack": 24
                 }

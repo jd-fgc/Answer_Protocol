@@ -187,3 +187,12 @@ func check_quests(usr *Player) {
 		}
 	}
 }
+
+
+func REFRESH_ROOMS() string {
+	data, err := json.Marshal(rooms)
+	if err != nil {
+		return err.Error()
+	}
+	return string(data) + "\n"
+}

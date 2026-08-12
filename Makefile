@@ -1,6 +1,10 @@
 GO=go
 PORT=9090
-IP=10.11.4.1
+IP=localhost
+
+install:
+	go mod download
+	go mod tidy
 
 build:
 	go build -o bin/server ./server
@@ -22,4 +26,4 @@ clean:
 lint:
 	go vet ./...
 
-.PHONY: build run-server run-client run-client-gui clean lint
+.PHONY: install build run-server run-client run-client-gui clean lint

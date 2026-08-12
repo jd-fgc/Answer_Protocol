@@ -57,6 +57,7 @@ func set_quests() {
 
 func set_complete_quests() {
 	actions.RemoveAll()
+	update_rooms()
 	check_quests()
 	for i, quest := range player.Quests {
 		if quest.Completed == true && quest.finished == false{
@@ -132,4 +133,17 @@ func get_quest_reward(quest Quest) {
 		player.KEY += quest.Amount_reward
 	default:
 	}
+}
+
+func update_rooms() {
+	data, err := netClient.SendCommand("REFRESH_ROOMS")
+	if err != nil {
+		return
+	}
+	var n_rooms Rooms
+	err = json.Unmarshal([]byte(data[0]), &n_rooms)
+	if err != nil {
+		return
+	}
+	rooms = n_rooms
 }

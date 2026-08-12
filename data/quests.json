@@ -5,7 +5,7 @@
             "type": "item",
             "description": "Ramener 4 keys a Ryan",
             "completed": false,
-            "reward": "Halo",
+            "reward": "Brimstone",
             "amount_reward": 1,
             "item_needed": "key",
             "needed_amount": 4
