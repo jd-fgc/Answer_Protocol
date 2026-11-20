@@ -1,5 +1,12 @@
 *This project has been created as part of the 42 curriculum by jogamber, nisalmon, erifflar.*
 
+<p align="center">
+  <img src="docs/screenshots/Screen1.png" width="32%" alt="TAP — The Answer Protocol">
+  <img src="docs/screenshots/Screen2.png" width="32%" alt="TAP — The Answer Protocol">
+  <img src="docs/screenshots/Screen3.png" width="32%" alt="TAP — The Answer Protocol">
+</p>
+
+
 # TAP — The Answer Protocol
 
 A shared-world, retro-style multiplayer text adventure (MUD) built around a custom line-based TCP protocol (RFC 42TAP), themed after *The Binding of Isaac*. The project ships a Go TCP server, a command-line client, and a graphical client built with Fyne.
